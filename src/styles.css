@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav_link{
+    @apply text-[14px] font-inter font-[500];
+}
+
+.active_nav_link{
+    @apply text-[14px] font-inter font-[700];
+}
+
+.auth_button{
+    @apply border px-[22px] font-inter py-2 rounded-md border-gray-500 text-[16px] text-center;
+}
+
+.create_button{
+    @apply border px-[22px] font-inter py-3 rounded-md border-gray-500 text-center text-[17px] text-[400];
+}
+
+.form_div{
+    @apply flex flex-col w-full justify-start space-y-2 mt-4; 
+}
