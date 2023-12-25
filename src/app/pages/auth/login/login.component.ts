@@ -5,6 +5,7 @@ import { LoginDTO } from '../../../models/user/user';
 import { AuthService } from '../../../services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ResponseDTO } from '../../../models/response/response';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ import { ResponseDTO } from '../../../models/response/response';
 })
 export class LoginComponent {
 
-  constructor(private authService:AuthService,private toastr: ToastrService){}
+  constructor(private authService:AuthService,private toastr: ToastrService, private router:Router){}
 
   loginForm = new FormGroup({
     email:new FormControl(),
@@ -34,7 +35,14 @@ login(){
     },
     complete:()=>{
      console.log("completed");
-     this.toastr.success("Login Successful", "Successful Operation")
+     const isAuthenticated : boolean = true; //this.authService.isAuthenticated();
+     if(isAuthenticated) {
+      this.toastr.success("Login Successful", "Successful Operation");
+      this.router.navigate(['home']);
+     }
+     else{
+      this.toastr.error("Something went wrong", 'unable to sign you in');
+     }
     },
     error:(e)=> {
      console.log(e);
