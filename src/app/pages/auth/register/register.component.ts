@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../../../components/layouts/header/header.component';
 import { FormControl, FormGroup,ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { Observable } from 'rxjs';
 import { RegisterUser } from '../../../models/user/user';
 import { Response } from '../../../models/response/response';
 import { ToastrService } from 'ngx-toastr';
 import { error } from 'console';
+import { Toastr } from '../../../utilities/toastr';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -38,9 +39,8 @@ export class RegisterComponent {
      },
      error:(e)=> {
       console.log(e);
-      this.toastr.error("Something went wrong", e);
+      Toastr.error("Something went wrong", "Invalid Operation");
     }
    })
-    console.log();
   }
 }

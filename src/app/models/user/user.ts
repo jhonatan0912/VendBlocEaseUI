@@ -6,3 +6,8 @@ export interface RegisterUser{
     name:string;
     password:string;
 }
+
+export interface LoginDTO{
+    email:string;
+    password:string;
+}
