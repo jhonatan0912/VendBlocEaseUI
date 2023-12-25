@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LoginDTO } from '../../../models/user/user';
 import { AuthService } from '../../../services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { Toastr } from '../../../utilities/toastr';
+import { ResponseDTO } from '../../../models/response/response';
 
 @Component({
   selector: 'app-login',
@@ -29,6 +29,9 @@ login(){
     password: formValue.password
   };
   this.authService.loginUser(loginData).subscribe({
+    next:(result : ResponseDTO)=>{
+      this.authService.storeToken(result.data.token);
+    },
     complete:()=>{
      console.log("completed");
      this.toastr.success("Login Successful", "Successful Operation")

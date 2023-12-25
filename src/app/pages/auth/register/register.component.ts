@@ -4,7 +4,7 @@ import { FormControl, FormGroup,ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Observable } from 'rxjs';
 import { RegisterUser } from '../../../models/user/user';
-import { Response } from '../../../models/response/response';
+import { ResponseDTO } from '../../../models/response/response';
 import { ToastrService } from 'ngx-toastr';
 import { error } from 'console';
 import { Toastr } from '../../../utilities/toastr';

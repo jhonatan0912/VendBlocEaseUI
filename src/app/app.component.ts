@@ -7,6 +7,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { HeaderComponent } from "./components/layouts/header/header.component";
 import { LandingComponent } from './pages/landing/landing.component';
+import { AuthService } from './services/auth/auth.service';
+import { Router } from 'express';
+import { HomeComponent } from './pages/home/home.component';
 
 
 @Component({
@@ -21,8 +24,23 @@ import { LandingComponent } from './pages/landing/landing.component';
         RegisterComponent,
         LoginComponent,
         LandingComponent,
-        RouterOutlet, RouterLink, RouterLinkActive, HeaderComponent]
+        HeaderComponent,
+        RouterOutlet, RouterLink, RouterLinkActive]
 })
 export class AppComponent {
   title = 'VendBlocEase';
+
+  constructor(private authService : AuthService){}
+
+  ngOnInit():void{
+    console.log('Starting Application');
+    const isAuthenticated : boolean = this.authService.isAuthenticated();
+    if(!isAuthenticated){
+      console.log("User is not Authenticated");
+    }
+    else{
+      console.log("User is Authenticated");
+    }
+   
+  }
 }
