@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginDTO, RegisterUser } from '../../models/user/user';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { LocalService } from '../local/local.service';
 
@@ -17,6 +17,9 @@ const httpOptions:any = {
 
 export class AuthService {
   private url:string = 'http://localhost:3002/';
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+
+  isAuthenticated$:Observable<boolean> = this.isAuthenticatedSubject.asObservable()
   constructor(private http : HttpClient, private local:LocalService) {}
 
   registerUser(data:RegisterUser): Observable<any> {
@@ -31,23 +34,27 @@ export class AuthService {
     this.local.saveData('token',token);
   }
 
-  isAuthenticated():boolean{
+  isUserAuthenticated():boolean{
 
     const token = this.local.getData('token');
-    console.log('token value',token);
     if(!token) return false;
     const decodedToken = jwtDecode(token);
     const now = new Date();
     const expires = (decodedToken.exp! * 1000)
     const expiringDate = new Date(expires);
-    console.log(expiringDate);
     if(expiringDate < now){
       this.logOut();
-      return false};
+      return false}
+    this.setAuthenticated(true)
     return true;
   }
 
   logOut():void{
     this.local.removeData('token');
+    this.setAuthenticated(false)
+  }
+
+  setAuthenticated(isAuthenticated: boolean): void {
+    this.isAuthenticatedSubject.next(isAuthenticated);
   }
 }

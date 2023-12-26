@@ -31,22 +31,23 @@ login(){
   };
   this.authService.loginUser(loginData).subscribe({
     next:(result : ResponseDTO)=>{
-      this.authService.storeToken(result.data.token);
+      if(result.status){
+        this.authService.storeToken(result.data.token);
+        this.toastr.success("Login Successful", "Successful Operation");
+      }
+      else{
+        this.toastr.error(result.message,"Something went wrong");
+      }
     },
     complete:()=>{
-     console.log("completed");
-     const isAuthenticated : boolean = true; //this.authService.isAuthenticated();
-     if(isAuthenticated) {
-      this.toastr.success("Login Successful", "Successful Operation");
-      this.router.navigate(['home']);
-     }
-     else{
-      this.toastr.error("Something went wrong", 'unable to sign you in');
-     }
+      const isAuthenticated : boolean = this.authService.isUserAuthenticated();
+      if(isAuthenticated) {
+       this.router.navigate(['home']);
+      }
     },
     error:(e)=> {
      console.log(e);
-     this.toastr.error("Something went wrong", e);
+     this.toastr.error("Something went wrong", "Something went wrong");
    }
   })
 }

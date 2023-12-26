@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,5 +9,14 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  isAuthenticated = false;
+
+  constructor(private authService:AuthService){}
+
+  ngOnInit(){
+    this.authService.isAuthenticated$.subscribe((result) => {
+      this.isAuthenticated = result;
+    })
+  }
 
 }

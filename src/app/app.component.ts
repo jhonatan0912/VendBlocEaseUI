@@ -9,6 +9,7 @@ import { HeaderComponent } from "./components/layouts/header/header.component";
 import { LandingComponent } from './pages/landing/landing.component';
 import { AuthService } from './services/auth/auth.service';
 import { HomeComponent } from './pages/home/home.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @Component({
@@ -26,7 +27,8 @@ import { HomeComponent } from './pages/home/home.component';
         HeaderComponent,
         RouterOutlet,
         RouterLink,
-        RouterLinkActive]
+        RouterLinkActive,
+        NgxSpinnerModule]
 })
 export class AppComponent {
   title = 'VendBlocEase';
@@ -37,7 +39,7 @@ export class AppComponent {
 
   ngOnInit():void{
     console.log('Starting Application');
-    const isAuthenticated : boolean = this.authService.isAuthenticated();
+    const isAuthenticated : boolean = this.authService.isUserAuthenticated();
     if(!isAuthenticated){
       console.log("User is not Authenticated");
       this.router.navigate(['login'])
