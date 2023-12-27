@@ -1,58 +1,48 @@
-<!-- Full Body -->
-
-<div class="flex w-full h-full">
-    <!-- image Div -->
-    <div class="hidden md:block md:w-[45%]">
-        <img class="w-full h-full object-cover" src="../../../../assets/createaccount.png" alt="">
-    </div>
-    <!-- content div -->
-    <div class="flex flex-col w-full lg:w-[55%] h-full pt-10 lg:pt-20 px-10 md:px-20 lg:px-28 xl:px-48">
-        <!-- Form -->
-        <form [formGroup]="loginForm" (submit)="login()">
-            <div class="flex flex-col w-full items-center">
-                <div class="flex flex-col md:w-[100%] items-center">
-                    <h1 class="font-bold text-3xl mb-4">LogIn to your Account</h1>
-                    <span class="text-center text-gray-500">Sign in to your account and orders and payments seamlessly</span>
-                </div>
-               
-                <div class="form_div">
-                    <label for="">Enter Your Email Address</label>
-                    <input class="border p-3 rounded-md" placeholder="adazionp@gmail.com" formControlName="email" type="email" required>
-                </div>
-                <div class="form_div">
-                    <label for="">Enter Password</label>
-                    <input class="border p-3 rounded-md" placeholder="************" formControlName="password" type="password" required>
-                </div>
-                <div class="w-full mt-4 justify-start flex-row space-x-3">
-                    <input type="checkbox" name="" id="">
-                    <label for="">Remember me</label>
-                </div>
-                <div class="form_div">
-                    <button class="create_button flex justify-center space-x-4 bg-[#0F172A] text-white hover:bg-[#FAFAFA] hover:text-[#0F172A] hover:shadow-lg duration-300" type="submit">
-                        <div class="animate-spin rounded-full border-t-4 w-8 h-8"></div>
-                        <span>Sign In</span></button>
-                </div>
-                <div class="mt-3">
-                    Or
-                </div>
-                <div class="form_div">
-                    <button class="flex items-center justify-center space-x-3 create_button text-[#0F172A] hover:shadow-lg duration-300">
-                        <img src="../../../../assets/google.png" class="w-6" alt="">
-                        <span>Sign in with Google</span>
-                    </button>
-                </div>
-                <!-- <div>
-                    <svg class="block w-full h-20 mx-auto animate-bounce" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke="var(--tds-icon--fill, #171a20)" stroke-width="1.5" d="m19.5 12.5-4.5 4-4.5-4" fill="none"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </div> -->
-                <div class="flex w-full mt-6 justify-center lg:justify-start flex-row space-x-1">
-                   <span class="text-gray-500 font-[400]"> Don't have an account ? </span>
-                   <a routerLink="/signup" routerLinkActive="active" class="hover:underline font-[500] hover:cursor-pointer">Create a free account</a>
-                </div>
+<app-auth-layout>
+    <form [formGroup]="loginForm" (submit)="login()">
+        <div class="flex flex-col w-full items-center">
+            <div class="flex flex-col md:w-[100%] items-center">
+                <h1 class="font-bold text-3xl mb-4">LogIn to your Account</h1>
+                <span class="text-center text-gray-500">Sign in to your account and orders and payments seamlessly</span>
             </div>
-        </form>
-        
-    </div>
-</div>
+           
+            <div class="form_div">
+                <label for="">Enter Your Email Address</label>
+                <input class="border p-3 rounded-md" placeholder="adazionp@gmail.com" formControlName="email" type="email" required>
+            </div>
+            <div class="form_div">
+                <label for="">Enter Password</label>
+                <input class="border p-3 rounded-md" placeholder="************" formControlName="password" type="password" required>
+            </div>
+            <div class="w-full mt-4 justify-start flex-row space-x-3">
+                <input type="checkbox" name="" id="">
+                <label for="">Remember me</label>
+            </div>
+            <div class="form_div">
+                <button class="create_button flex justify-center space-x-4 bg-[#0F172A] text-white hover:bg-[#FAFAFA] hover:text-[#0F172A] hover:shadow-lg duration-300" type="submit">
+                    <div class="animate-spin rounded-full border-t-4 w-8 h-8"></div>
+                    <span>Sign In</span></button>
+            </div>
+            <div class="mt-3">
+                Or
+            </div>
+            <div class="form_div">
+                <button class="flex items-center justify-center space-x-3 create_button text-[#0F172A] hover:shadow-lg duration-300">
+                    <img src="../../../../assets/google.png" class="w-6" alt="">
+                    <span>Sign in with Google</span>
+                </button>
+            </div>
+            <!-- <div>
+                <svg class="block w-full h-20 mx-auto animate-bounce" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke="var(--tds-icon--fill, #171a20)" stroke-width="1.5" d="m19.5 12.5-4.5 4-4.5-4" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div> -->
+            <div class="flex w-full mt-6 justify-center lg:justify-start flex-row space-x-1">
+               <span class="text-gray-500 font-[400]"> Don't have an account ? </span>
+               <a routerLink="/signup" routerLinkActive="active" class="hover:underline font-[500] hover:cursor-pointer">Create a free account</a>
+            </div>
+        </div>
+    </form>
+    
+</app-auth-layout>

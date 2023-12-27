@@ -8,10 +8,11 @@ import { ResponseDTO } from '../../../models/response/response';
 import { ToastrService } from 'ngx-toastr';
 import { error } from 'console';
 import { Toastr } from '../../../utilities/toastr';
+import { AuthLayoutComponent } from '../../../components/layouts/auth-layout/auth-layout.component';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [HeaderComponent, ReactiveFormsModule],
+  imports: [HeaderComponent, ReactiveFormsModule, AuthLayoutComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })

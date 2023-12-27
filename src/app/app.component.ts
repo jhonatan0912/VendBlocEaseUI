@@ -10,6 +10,7 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { AuthService } from './services/auth/auth.service';
 import { HomeComponent } from './pages/home/home.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { AuthLayoutComponent } from './components/layouts/auth-layout/auth-layout.component';
 
 
 @Component({
@@ -28,7 +29,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
         RouterOutlet,
         RouterLink,
         RouterLinkActive,
-        NgxSpinnerModule]
+        NgxSpinnerModule,
+      AuthLayoutComponent
+      ]
 })
 export class AppComponent {
   title = 'VendBlocEase';
