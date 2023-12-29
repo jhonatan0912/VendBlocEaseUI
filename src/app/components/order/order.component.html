@@ -1,0 +1,293 @@
+<div class="flex flex-col h-full w-full">
+  <!-- Restaurant Header -->
+  <div class="flex flex-col h-[10%] w-full">
+    <img
+      class="w-full h-auto object-cover"
+      src="../../../../assets/restaurant.png"
+      alt=""
+    />
+  </div>
+
+  <!-- Mobile Div -->
+<div class="flex flex-col md:hidden pt-4">
+  <div class="px-5 space-y-3">
+    <div class="flex flex-col space-y-3">
+      <span class="font-bold">Search Food</span>
+      <div class="flex items-center relative w-full">
+        <input
+          class="py-3 pl-12 px-1 rounded-lg w-full bg-[#7676801f] focus:outline-none"
+          type="text"
+          name=""
+          placeholder="Search"
+          id=""
+        />
+        <button class="absolute pl-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-8 text-gray-300 duration-200 hover:scale-110"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <circle cx="10" cy="10" r="7" />
+            <line x1="21" y1="21" x2="15" y2="15" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="flex flex-col space-y-0">
+      <span class="font-bold mb-2">Food Categories</span>
+      <div class="overflow-x-auto flex py-2">
+        @for( category of categories;track category.id){
+        <div
+          (click)="categoryProducts(category.id)"
+          class="flex flex-col sm:px-1 lg:px-2"
+        >
+          <div class="category_item_div group border hover:bg-[#0F172A] rounded-[20px] py-2 mr-5 px-2">
+            <span class="flex items-center group-hover:text-white">
+              <a class="px-2 text-[#0F172A] group-hover:text-white" href="">{{
+                category.name
+              }}</a>
+            </span>
+            <span class="text-[#0F172A] opacity-50 group-hover:text-white">{{
+              category.quantity
+            }}</span>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  <!-- Content Div -->
+  <div class="flex px-1 lg:px-10 xl:px-20 w-full pt-4 space-x-8 items-center md:items-start">
+    <!-- Categories Div -->
+    <div
+      class="hidden md:w-[25%] p-0 shadow-lg md:p-2 lg:p-4 h-fit md:flex md:flex-col bg-[#0f172a08] space-y-6"
+    >
+      <!-- Search Div -->
+      <div class="flex flex-col space-y-3">
+        <span class="font-bold">Search Food</span>
+        <div class="flex items-center relative w-full">
+          <input
+            class="py-3 pl-12 px-1 rounded-lg w-full bg-[#7676801f] focus:outline-none"
+            type="text"
+            name=""
+            placeholder="Search"
+            id=""
+          />
+          <button class="absolute pl-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-8 text-gray-300 duration-200 hover:scale-110"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <circle cx="10" cy="10" r="7" />
+              <line x1="21" y1="21" x2="15" y2="15" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="flex flex-col space-y-0">
+        <span class="sm:mb-2 lg:mb-4">Food Categories</span>
+        <!-- <div class="flex flex-col px-2">
+          <div
+            class="flex items-center justify-between bg-[#0F172A] px-2 py-4 hover:cursor-pointer"
+          >
+            <span class="flex items-center">
+              <svg
+                width="24"
+                height="24"
+                viewBox="none"
+                fill="#0f172a08"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="#FAFAFA"
+                  stroke-opacity="0.6"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <a class="px-2 text-white" href="">Proteins</a>
+            </span>
+            <span class="text-white opacity-50">10</span>
+          </div>
+        </div> -->
+        <div class="overflow-auto">
+          @for( category of categories;track category.id){
+          <div
+            (click)="categoryProducts(category.id)"
+            class="flex flex-col sm:px-1 lg:px-2"
+          >
+            <div class="category_item_div group">
+              <span class="flex items-center group-hover:text-white">
+                <svg
+                  class="stroke-[#0F172A] group-hover:stroke-white"
+                  width="24"
+                  height="24"
+                  viewBox="none"
+                  fill="#0f172a08"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9 18L15 12L9 6"
+                    stroke-opacity="0.6"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <a class="px-2 text-[#0F172A] group-hover:text-white" href="">{{
+                  category.name
+                }}</a>
+              </span>
+              <span class="text-[#0F172A] opacity-50 group-hover:text-white">{{
+                category.quantity
+              }}</span>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+    <!-- Products Div -->
+    <div class="w-[95%] m-0 px-0 sm:px-15 md:w-[39%] md:px-1">
+      <!-- List of Products -->
+      <div class="px-0 sm:px-1 lg:px-10 2xl:px-10">
+        @for(product of products; track product.id){
+          <div
+            class="flex items-center justify-start md:justify-between space-x-0 sm:space-x-2 w-full border-b"
+          >
+            <!-- Food Image and Info -->
+            <div class="flex flex-row w-[65%] space-x-4 sm:space-x-1 xl:space-x-4 xl:w-3/4 items-center">
+              <img
+                class="product_image"
+                src="../../../assets/meal.png"
+                alt=""
+              />
+              <!-- Info -->
+              <div class="flex flex-col">
+                <strong>{{ product.name }}</strong>
+                <div class="flex opacity-70 space-x-2 items-center">
+                  <span>Qty</span>
+                  <span>
+                    <strong (click)="updateProductQuantity(product.id, false)" class="hover:cursor-pointer text-2xl"> - </strong>
+                    <span
+                      ><input
+                        class="w-8 bg-gray-300 align-middle rounded-md p-1 px-2"
+                        min="1"
+                        value={{product.orderQuantity}}
+                        name=""
+                        id=""
+                    /></span>
+                    <strong (click)="updateProductQuantity(product.id, true)" class="hover:cursor-pointer text-2xl"> + </strong>
+                    </span
+                  >
+                </div>
+                <div class="flex opacity-70 space-x-2">
+                  <span>Price</span> <span>{{ product.price }}</span>
+                </div>
+              </div>
+            </div>
+            <!-- Add To Cart -->
+            <div class="flex w-[35%] justify-end pr-3 sm:pr-1 sm:1/2 xl:w-1/4">
+              <button
+                (click)="addToCart(product)"
+                style="background-color: #0f172a"
+                class="add_to_cart"
+              >
+                <span class="text-white">Add to Cart</span>
+              </button>
+            </div>
+          </div>
+          }  
+      </div>
+      <!-- Product item -->
+      
+    </div>
+
+    <!-- My Cart -->
+    <div
+      class="hidden md:flex md:flex-col md:w-[32%] lg:w-[28%] shadow-lg md:p-1 lg:p-4 bg-[#0f172a08] space-y-6"
+    >
+      <div class="flex flex-col space-y-3">
+        <span class="font-bold">My Cart ({{cartCount}})</span>
+        <!-- Cart list -->
+        <div class="flex max-h-[300px] flex-col overflow-auto">
+          @for(cartItem of cart; track cartItem.id){
+            <div
+              class="flex items-center justify-between space-x-2 w-full border-b py-1"
+            >
+              <!-- Cart Item -->
+              <div class="flex flex-row space-x-3 w-[70%]">
+                <img
+                  class="product_image"
+                  src="../../../assets/meal.png"
+                  alt=""
+                />
+                <!-- Info -->
+                <div class="flex flex-col">
+                  <strong>{{ cartItem.name }}</strong>
+                  <div class="flex opacity-70 space-x-2">
+                    <span>Qty</span> <span>- {{cartItem.orderQuantity}} +</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Remove from Cart -->
+              <div class="flex items-center w-[30%] space-x-2">
+                <span>{{ cartItem.price }}</span>
+                <span (click)="removeFromCart(cartItem)"
+                  class="flex items-center p-2 justify-center bg-[#E8E8EA] hover:cursor-pointer"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 18 18"
+                    fill="none"
+                  >
+                    <path
+                      d="M13.5 4.5L4.5 13.5"
+                      stroke="#0F172A"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M4.5 4.5L13.5 13.5"
+                      stroke="#0F172A"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            }
+        </div>
+       
+        <div>Total : {{ totalcost }}</div>
+        <div class="form_div">
+          <button style="background-color: #0f172a;" class="create_button flex justify-center p-3 space-x-4 text-white hover:shadow-lg duration-300" type="submit">
+              <span>Checkout</span></button>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

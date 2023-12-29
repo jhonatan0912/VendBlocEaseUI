@@ -34,16 +34,16 @@ login(){
     next:(result : ResponseDTO)=>{
       if(result.status){
         this.authService.storeToken(result.data.token);
-        this.toastr.success("Login Successful", "Successful Operation");
-      }
-      else{
-        this.toastr.error(result.message,"Something went wrong");
       }
     },
     complete:()=>{
       const isAuthenticated : boolean = this.authService.isUserAuthenticated();
       if(isAuthenticated) {
+        this.toastr.success("Login Successful", "Successful Operation");
        this.router.navigate(['home']);
+      }
+      else{
+        this.toastr.error('Unable to login you in',"Something went wrong");
       }
     },
     error:(e)=> {

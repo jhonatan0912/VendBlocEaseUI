@@ -37,6 +37,8 @@ export class AuthService {
   isUserAuthenticated():boolean{
 
     const token = this.local.getData('token');
+    console.log('Adesina');
+    console.log('token',token);
     if(!token) return false;
     const decodedToken = jwtDecode(token);
     const now = new Date();

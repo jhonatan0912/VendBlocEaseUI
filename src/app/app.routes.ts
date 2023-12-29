@@ -3,6 +3,7 @@ import { RegisterComponent } from './pages/auth/register/register.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { HomeComponent } from './pages/home/home.component';
+import { OrderComponent } from './components/order/order.component';
 
 export const routes: Routes = [
     {
@@ -19,5 +20,8 @@ export const routes: Routes = [
     },
     {
         path:'dashboard', component:LandingComponent
+    },
+    {
+        path:'order', component:OrderComponent
     }
 ];

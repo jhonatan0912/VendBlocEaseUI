@@ -16,7 +16,7 @@
       </svg>
       </div>
     <!-- Links -->
-    <div class="hidden lg:block lg:space-x-4 xl:space-x-8">
+    <div class="hidden lg:flex lg:space-x-4 xl:space-x-8 items-center">
       <a class="active_nav_link" href="#">Home</a>
       <a class="nav_link" href="#">Menu</a>
       <a class="nav_link" href="#">Services</a>
@@ -26,12 +26,16 @@
     <!-- auth buttons and cart -->
     <div class="flex items-center space-x-5">
       <span class="hidden md:block">
-          <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10.8333 19.6667C15.988 19.6667 20.1667 15.488 20.1667 10.3333C20.1667 5.17868 15.988 1 10.8333 1C5.67868 1 1.5 5.17868 1.5 10.3333C1.5 15.488 5.67868 19.6667 10.8333 19.6667Z" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+        <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.8333 22.6667C17.988 22.6667 22.1667 18.488 22.1667 13.3333C22.1667 8.17868 17.988 4 12.8333 4C7.67868 4 3.5 8.17868 3.5 13.3333C3.5 18.488 7.67868 22.6667 12.8333 22.6667Z" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M24.5 24.9998L19.425 19.9248" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          
               
       </span>
-      <span class="block"><svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+      
+      @if(isAuthenticated){
+        <span class="block"><svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_63_2219)">
           <path d="M9 26.5C9.55228 26.5 10 26.0523 10 25.5C10 24.9477 9.55228 24.5 9 24.5C8.44772 24.5 8 24.9477 8 25.5C8 26.0523 8.44772 26.5 9 26.5Z" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M20 26.5C20.5523 26.5 21 26.0523 21 25.5C21 24.9477 20.5523 24.5 20 24.5C19.4477 24.5 19 24.9477 19 25.5C19 26.0523 19.4477 26.5 20 26.5Z" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -46,7 +50,6 @@
           </defs>
           </svg>
           </span>
-      @if(isAuthenticated){
         <button class="hidden lg:block auth_button" type="button">Welcome User</button>
       }
       @else {

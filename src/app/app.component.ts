@@ -8,9 +8,9 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { HeaderComponent } from "./components/layouts/header/header.component";
 import { LandingComponent } from './pages/landing/landing.component';
 import { AuthService } from './services/auth/auth.service';
-import { HomeComponent } from './pages/home/home.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthLayoutComponent } from './components/layouts/auth-layout/auth-layout.component';
+import { OrderComponent } from './components/order/order.component';
 
 
 @Component({
@@ -25,6 +25,7 @@ import { AuthLayoutComponent } from './components/layouts/auth-layout/auth-layou
         RegisterComponent,
         LoginComponent,
         LandingComponent,
+        OrderComponent,
         HeaderComponent,
         RouterOutlet,
         RouterLink,
@@ -42,15 +43,9 @@ export class AppComponent {
 
   ngOnInit():void{
     console.log('Starting Application');
-    const isAuthenticated : boolean = this.authService.isUserAuthenticated();
-    if(!isAuthenticated){
-      console.log("User is not Authenticated");
-      this.router.navigate(['login'])
-    }
-    else{
-      console.log("User is Authenticated");
-      this.router.navigate(['home'])
-    }
-   
+    // const isAuthenticated : boolean = this.authService.isUserAuthenticated();
+    // if(!isAuthenticated){
+    //   this.router.navigate(['login'])
+    // }
   }
 }
