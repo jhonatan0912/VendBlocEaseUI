@@ -7,7 +7,10 @@ module.exports = {
     extend: {
        fontFamily:{
         'inter':['Inter']
-       }
+       },
+      colors:{
+        'vendblocblue':'#0F172A'
+      }
     },
   },
   plugins: [],

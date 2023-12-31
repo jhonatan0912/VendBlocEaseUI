@@ -9,64 +9,67 @@
   </div>
 
   <!-- Mobile Div -->
-<div class="flex flex-col md:hidden pt-4">
-  <div class="px-5 space-y-3">
-    <div class="flex flex-col space-y-3">
-      <span class="font-bold">Search Food</span>
-      <div class="flex items-center relative w-full">
-        <input
-          class="py-3 pl-12 px-1 rounded-lg w-full bg-[#7676801f] focus:outline-none"
-          type="text"
-          name=""
-          placeholder="Search"
-          id=""
-        />
-        <button class="absolute pl-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-8 text-gray-300 duration-200 hover:scale-110"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <circle cx="10" cy="10" r="7" />
-            <line x1="21" y1="21" x2="15" y2="15" />
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div class="flex flex-col space-y-0">
-      <span class="font-bold mb-2">Food Categories</span>
-      <div class="overflow-x-auto flex py-2">
-        @for( category of categories;track category.id){
-        <div
-          (click)="categoryProducts(category.id)"
-          class="flex flex-col sm:px-1 lg:px-2"
-        >
-          <div class="category_item_div group border hover:bg-[#0F172A] rounded-[20px] py-2 mr-5 px-2">
-            <span class="flex items-center group-hover:text-white">
-              <a class="px-2 text-[#0F172A] group-hover:text-white" href="">{{
-                category.name
-              }}</a>
-            </span>
-            <span class="text-[#0F172A] opacity-50 group-hover:text-white">{{
-              category.quantity
-            }}</span>
-          </div>
+  <div class="flex flex-col md:hidden pt-4">
+    <div class="px-5 space-y-3">
+      <div class="flex flex-col space-y-3">
+        <span class="font-bold">Search Food</span>
+        <div class="flex items-center relative w-full">
+          <input
+            class="py-3 pl-12 px-1 rounded-lg w-full bg-[#7676801f] focus:outline-none"
+            type="text"
+            name=""
+            placeholder="Search"
+            id=""
+          />
+          <button class="absolute pl-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-8 text-gray-300 duration-200 hover:scale-110"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <circle cx="10" cy="10" r="7" />
+              <line x1="21" y1="21" x2="15" y2="15" />
+            </svg>
+          </button>
         </div>
-        }
+      </div>
+      <div class="flex flex-col space-y-0">
+        <span class="font-bold mb-2">Food Categories</span>
+        <div class="overflow-x-auto flex py-2">
+          @for( category of categories;track category.id){
+          <div
+            (click)="categoryProducts(category.id)"
+            class="flex flex-col sm:px-1 lg:px-2"
+          >
+            <div
+              class="category_item_div group border border-vendblocblue hover:bg-[#0F172A] rounded-[20px] py-2 mr-5 px-2"
+            >
+              <span class="flex items-center group-hover:text-white">
+                <a class="px-2 text-[#0F172A] group-hover:text-white" href="">{{
+                  category.name
+                }}</a>
+              </span>
+              <span class="text-[#0F172A] opacity-50 group-hover:text-white">{{
+                category.quantity
+              }}</span>
+            </div>
+          </div>
+          }
+        </div>
       </div>
     </div>
   </div>
 
-</div>
-
   <!-- Content Div -->
-  <div class="flex px-1 lg:px-10 xl:px-10 w-full pt-4 space-x-5 lg:space-x-8 items-center md:items-start">
+  <div
+    class="flex px-1 lg:px-10 xl:px-10 w-full pt-4 space-x-5 lg:space-x-8 items-center md:items-start"
+  >
     <!-- Categories Div -->
     <div
       class="hidden md:w-[25%] p-0 shadow-lg md:p-2 lg:p-4 h-fit md:flex md:flex-col bg-[#0f172a08] space-y-6"
@@ -170,55 +173,82 @@
       <!-- List of Products -->
       <div class="px-0 sm:px-1 md:px-2 lg:px-6 2xl:px-10">
         @for(product of products; track product.id){
+        <div
+          class="flex items-center justify-start md:justify-between space-x-0 sm:space-x-2 md:space-x-1 w-full border-b py-2 sm:py-1"
+        >
+          <!-- Food Image and Info -->
           <div
-            class="flex items-center justify-start md:justify-between space-x-0 sm:space-x-2 md:space-x-1 w-full border-b py-2 sm:py-1"
+            class="flex flex-row w-[60%] md:w-[70%] xl:w-3/4 space-x-3 sm:space-x-1 xl:space-x-4 sm:items-center"
           >
-            <!-- Food Image and Info -->
-            <div class="flex flex-row w-[60%] md:w-[70%] xl:w-3/4 space-x-3 sm:space-x-1 xl:space-x-4 sm:items-center">
-              <img
-                class="product_image"
-                src="../../../assets/meal.png"
-                alt=""
-              />
-              <!-- Info -->
-              <div class="flex flex-col">
-                <strong>{{ product.name }}</strong>
-                <div class="flex opacity-70 space-x-8 md:space-x-4 items-center justify-center">
-                  <span>Qty</span>
-                  <span>
-                    <strong (click)="updateProductQuantity(product.id, false)" class="hover:cursor-pointer text-3xl"> - </strong>
-                    <span
-                      ><input
-                        class="w-8 bg-gray-300 align-middle rounded-md p-1 px-2 text-center"
-                        min="1"
-                        value={{product.orderQuantity}}
-                        name=""
-                        id=""
-                    /></span>
-                    <strong (click)="updateProductQuantity(product.id, true)" class="hover:cursor-pointer text-2xl"> + </strong>
-                    </span
-                  >
-                </div>
-                <div class="flex opacity-70 space-x-2">
-                  <span>Price</span> <span> ₦{{ product.price }}</span>
-                </div>
+            <img class="product_image" src="../../../assets/meal.png" alt="" />
+            <!-- Info -->
+            <div class="flex flex-col text-sm text-vendblocblue">
+              <span class="">{{ product.name }}</span>
+              <div
+                class="flex opacity-50 space-x-8 md:space-x-4 items-center justify-center"
+              >
+                <span>Qty</span>
+                <span class="flex items-center space-x-2">
+                  <span (click)="updateProductQuantity(product.id, false)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="2" viewBox="0 0 13 2" fill="none">
+                      <path d="M1 1H12.0194" stroke="#0F172A" stroke-width="1.57419" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span
+                    ><input
+                      class="w-6 text-sm bg-gray-300 align-middle rounded-md p-1 px-0.5 text-center"
+                      min="1"
+                      value="{{ product.orderQuantity }}"
+                      name=""
+                      id=""
+                  /></span>
+
+                  <span (click)="updateProductQuantity(product.id, true)">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="13"
+                      height="14"
+                      viewBox="0 0 13 14"
+                      fill="none"
+                    >
+                      <path
+                        d="M6.52881 1.49023V12.5096"
+                        stroke="#0F172A"
+                        stroke-width="1.57419"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M1.01953 7H12.0389"
+                        stroke="#0F172A"
+                        stroke-width="1.57419"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      /></svg>
+                    </span>
+                </span>
+              </div>
+              <div class="flex opacity-50 space-x-2">
+                <span>Price</span>
+                <span class="pl-4 sm:pl-0 opacity-70">₦2500</span> 
+                <!-- {{ product.price }} -->
               </div>
             </div>
-            <!-- Add To Cart -->
-            <div class="flex w-[40%] justify-end pr-1 sm:w-1/2 xl:w-1/4">
-              <button
-                (click)="addToCart(product)"
-                style="background-color: #0f172a"
-                class="add_to_cart"
-              >
-                <span class="text-white">Add to Cart</span>
-              </button>
-            </div>
           </div>
-          }  
+          <!-- Add To Cart -->
+          <div class="flex w-[40%] justify-end pr-1 sm:w-1/2 xl:w-1/4">
+            <button
+              (click)="addToCart(product)"
+              style="background-color: #0f172a"
+              class="add_to_cart"
+            >
+              <span class="text-white">Add to Cart</span>
+            </button>
+          </div>
+        </div>
+        }
       </div>
       <!-- Product item -->
-      
     </div>
 
     <!-- My Cart -->
@@ -226,85 +256,117 @@
       class="hidden md:flex m-0 md:flex-col md:w-[36%] lg:w-[28%] shadow-lg md:p-1 lg:p-4 bg-[#0f172a08] space-y-6"
     >
       <div class="flex flex-col space-y-3">
-        <span class="font-bold">My Cart ({{cartCount}})</span>
+        <span class="font-bold">My Cart ({{ cartCount }})</span>
         <!-- Cart list -->
         <div class="flex max-h-[300px] flex-col overflow-auto">
           @for(cartItem of cart; track cartItem.id){
-            <div
-              class="flex items-center justify-between space-x-2 w-full border-b py-1"
-            >
-              <!-- Cart Item -->
-              <div class="flex flex-row space-x-3 w-[70%]">
-                <img
-                  class="product_image"
-                  src="../../../assets/meal.png"
-                  alt=""
-                />
-                <!-- Info -->
-                <div class="flex flex-col">
-                  <strong>{{ cartItem.name }}</strong>
-                  <div class="flex opacity-70 space-x-2">
-                    <span>Qty</span> <span>- {{cartItem.orderQuantity}} +</span>
-                  </div>
+          <div
+            class="flex items-center justify-between space-x-2 w-full border-b py-1"
+          >
+            <!-- Cart Item -->
+            <div class="flex flex-row space-x-3 w-[70%]">
+              <img
+                class="product_image"
+                src="../../../assets/meal.png"
+                alt=""
+              />
+              <!-- Info -->
+              <div class="flex flex-col">
+                <strong>{{ cartItem.name }}</strong>
+                <div class="flex opacity-70 space-x-2">
+                  <span>Qty</span> <span>- {{ cartItem.orderQuantity }} +</span>
                 </div>
               </div>
-              <!-- Remove from Cart -->
-              <div class="flex items-center w-[30%] space-x-2">
-                <span>{{ cartItem.price }}</span>
-                <span (click)="removeFromCart(cartItem)"
-                  class="flex items-center p-2 justify-center bg-[#E8E8EA] hover:cursor-pointer"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                  >
-                    <path
-                      d="M13.5 4.5L4.5 13.5"
-                      stroke="#0F172A"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                    <path
-                      d="M4.5 4.5L13.5 13.5"
-                      stroke="#0F172A"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </span>
-              </div>
             </div>
-            }
+            <!-- Remove from Cart -->
+            <div class="flex items-center w-[30%] space-x-2">
+              <span>{{ cartItem.price }}</span>
+              <span
+                (click)="removeFromCart(cartItem)"
+                class="flex items-center p-2 justify-center bg-[#E8E8EA] hover:cursor-pointer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                >
+                  <path
+                    d="M13.5 4.5L4.5 13.5"
+                    stroke="#0F172A"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M4.5 4.5L13.5 13.5"
+                    stroke="#0F172A"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+          }
         </div>
-       
+
         <div>Total : {{ totalcost }}</div>
         <div class="form_div">
-          <button style="background-color: #0f172a;" class="create_button flex justify-center p-3 space-x-4 text-white hover:shadow-lg duration-300" type="submit">
-              <span>Checkout</span></button>
-      </div>
+          <button
+            style="background-color: #0f172a"
+            class="create_button flex justify-center p-3 space-x-4 text-white hover:shadow-lg duration-300"
+            type="submit"
+          >
+            <span>Checkout</span>
+          </button>
+        </div>
       </div>
     </div>
- 
+
     <!-- Floating Cart -->
-      <div class="bg-[hsl(222,47%,11%)] fixed p-4 rounded-full right-[50px] bottom-10 z-50 hover:p-5 duration-100 shadow-2xl">
-        <!-- <div class="absolute bg-red-600 rounded-full bottom-6 px-0.5 right-1">2</div> -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <g clip-path="url(#clip0_226_3727)">
-            <path d="M7.49984 18.3334C7.96007 18.3334 8.33317 17.9603 8.33317 17.5001C8.33317 17.0398 7.96007 16.6667 7.49984 16.6667C7.0396 16.6667 6.6665 17.0398 6.6665 17.5001C6.6665 17.9603 7.0396 18.3334 7.49984 18.3334Z" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M16.6668 18.3334C17.1271 18.3334 17.5002 17.9603 17.5002 17.5001C17.5002 17.0398 17.1271 16.6667 16.6668 16.6667C16.2066 16.6667 15.8335 17.0398 15.8335 17.5001C15.8335 17.9603 16.2066 18.3334 16.6668 18.3334Z" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M0.833496 0.833252H4.16683L6.40016 11.9916C6.47637 12.3752 6.68509 12.7199 6.98978 12.9652C7.29448 13.2104 7.67574 13.3407 8.06683 13.3333H16.1668C16.5579 13.3407 16.9392 13.2104 17.2439 12.9652C17.5486 12.7199 17.7573 12.3752 17.8335 11.9916L19.1668 4.99992H5.00016" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </g>
-          <defs>
-            <clipPath id="clip0_226_3727">
-              <rect width="20" height="20" fill="white"/>
-            </clipPath>
-          </defs>
-        </svg>
-      </div>
+    <div
+      class="bg-[hsl(222,47%,11%)] fixed p-4 rounded-full right-[50px] bottom-10 z-50 hover:p-5 duration-100 shadow-2xl"
+    >
+      <!-- <div class="absolute bg-red-600 rounded-full bottom-6 px-0.5 right-1">2</div> -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+      >
+        <g clip-path="url(#clip0_226_3727)">
+          <path
+            d="M7.49984 18.3334C7.96007 18.3334 8.33317 17.9603 8.33317 17.5001C8.33317 17.0398 7.96007 16.6667 7.49984 16.6667C7.0396 16.6667 6.6665 17.0398 6.6665 17.5001C6.6665 17.9603 7.0396 18.3334 7.49984 18.3334Z"
+            stroke="#FAFAFA"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M16.6668 18.3334C17.1271 18.3334 17.5002 17.9603 17.5002 17.5001C17.5002 17.0398 17.1271 16.6667 16.6668 16.6667C16.2066 16.6667 15.8335 17.0398 15.8335 17.5001C15.8335 17.9603 16.2066 18.3334 16.6668 18.3334Z"
+            stroke="#FAFAFA"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M0.833496 0.833252H4.16683L6.40016 11.9916C6.47637 12.3752 6.68509 12.7199 6.98978 12.9652C7.29448 13.2104 7.67574 13.3407 8.06683 13.3333H16.1668C16.5579 13.3407 16.9392 13.2104 17.2439 12.9652C17.5486 12.7199 17.7573 12.3752 17.8335 11.9916L19.1668 4.99992H5.00016"
+            stroke="#FAFAFA"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_226_3727">
+            <rect width="20" height="20" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
   </div>
 </div>

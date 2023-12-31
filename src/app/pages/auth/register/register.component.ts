@@ -9,10 +9,12 @@ import { ToastrService } from 'ngx-toastr';
 import { error } from 'console';
 import { Toastr } from '../../../utilities/toastr';
 import { AuthLayoutComponent } from '../../../components/layouts/auth-layout/auth-layout.component';
+import { RouterLink, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [HeaderComponent, ReactiveFormsModule, AuthLayoutComponent],
+  imports: [RouterOutlet,
+    RouterLink, HeaderComponent, ReactiveFormsModule, AuthLayoutComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })

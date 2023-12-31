@@ -17,7 +17,7 @@ const httpOptions:any = {
 
 export class AuthService {
   private url:string = 'http://localhost:3002/';
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.getInitialAuthState());
 
   isAuthenticated$:Observable<boolean> = this.isAuthenticatedSubject.asObservable()
   constructor(private http : HttpClient, private local:LocalService) {}
@@ -35,10 +35,7 @@ export class AuthService {
   }
 
   isUserAuthenticated():boolean{
-
     const token = this.local.getData('token');
-    console.log('Adesina');
-    console.log('token',token);
     if(!token) return false;
     const decodedToken = jwtDecode(token);
     const now = new Date();
@@ -46,7 +43,6 @@ export class AuthService {
     const expiringDate = new Date(expires);
     if(expiringDate < now){
       this.logOut();
-      console.log('Trying to log you baba, you are not valid')
       return false
     }
     this.setAuthenticated(true)
@@ -58,7 +54,13 @@ export class AuthService {
     this.setAuthenticated(false)
   }
 
+  private getInitialAuthState(): boolean {
+    const storedAuthState = this.local.getData('isAuthenticated');
+    return storedAuthState ? JSON.parse(storedAuthState) : false;
+  }
+
   setAuthenticated(isAuthenticated: boolean): void {
     this.isAuthenticatedSubject.next(isAuthenticated);
+    this.local.saveData('isAuthenticated',JSON.stringify(isAuthenticated));
   }
 }

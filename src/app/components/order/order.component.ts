@@ -50,9 +50,15 @@ export class OrderComponent {
   }
 
   addToCart(product:any){
-    this.cartCount++
-    this.totalcost = this.totalcost + (product.price)
-    this.cart.push(product)
+    this.cartCount++;
+    this.totalcost = this.totalcost + (product.price);
+    const isProductInCart = this.cart.findIndex(x=>x.id == product.id);
+    if(isProductInCart < 0){
+      this.cart.push({...product});
+    }
+    else{
+      this.cart[isProductInCart].orderQuantity += product.orderQuantity;
+    }
     this.toastr.success('Added To Cart', 'Success')
   }
 

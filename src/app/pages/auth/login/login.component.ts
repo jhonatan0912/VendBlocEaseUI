@@ -5,13 +5,17 @@ import { LoginDTO } from '../../../models/user/user';
 import { AuthService } from '../../../services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ResponseDTO } from '../../../models/response/response';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthLayoutComponent } from '../../../components/layouts/auth-layout/auth-layout.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [HeaderComponent, ReactiveFormsModule, AuthLayoutComponent],
+  imports: [RouterOutlet,
+    RouterLink,
+    HeaderComponent,
+    ReactiveFormsModule, 
+    AuthLayoutComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
