@@ -7,8 +7,8 @@
     @apply flex items-center justify-between sm:px-1 lg:px-2 sm:py-3 lg:py-4 hover:bg-[#0F172A] hover:cursor-pointer hover:text-white;
 }
 
-.add_to_cart{
-    @apply rounded-2xl px-2 py-1 hover:py-1.5 duration-300;
+.add_to_cart{   
+    @apply rounded-2xl px-3 py-1 hover:py-1.5 duration-300;
 }
 
 .product_image{

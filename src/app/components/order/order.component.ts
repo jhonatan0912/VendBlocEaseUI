@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-order',
@@ -8,8 +9,8 @@ import { Component } from '@angular/core';
   styleUrl: './order.component.css'
 })
 export class OrderComponent {
-
-  constructor(){
+ 
+  constructor(private toastr: ToastrService){
     this.categoryProducts(1);
   }
   
@@ -52,6 +53,7 @@ export class OrderComponent {
     this.cartCount++
     this.totalcost = this.totalcost + (product.price)
     this.cart.push(product)
+    this.toastr.success('Added To Cart', 'Success')
   }
 
   updateProductQuantity(productId:number, increment : boolean){
@@ -72,6 +74,7 @@ export class OrderComponent {
     this.totalcost = this.totalcost - (product.price)
     const item = this.products.findIndex(x=>x.id == product.id)
     this.cart.splice(item, 1);
+    this.toastr.warning('Removing item from cart', 'Success')
   }
 
 }

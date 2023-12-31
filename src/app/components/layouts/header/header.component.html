@@ -35,6 +35,11 @@
       </span>
       
       @if(isAuthenticated){
+        <span class="block">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="17" viewBox="0 0 24 17" fill="none">
+            <path d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
         <span class="block"><svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_63_2219)">
           <path d="M9 26.5C9.55228 26.5 10 26.0523 10 25.5C10 24.9477 9.55228 24.5 9 24.5C8.44772 24.5 8 24.9477 8 25.5C8 26.0523 8.44772 26.5 9 26.5Z" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -53,8 +58,8 @@
         <button class="hidden lg:block auth_button" type="button">Welcome User</button>
       }
       @else {
-        <button class="hidden lg:block auth_button" type="button">SignUp</button>
-        <button class="hidden lg:block auth_button bg-black text-white" type="button">LogIn</button>  
+        <button class="hidden lg:block auth_button" routerLink="/register" routerLinkActive="active" routerLinkActive="router-link-active"  type="button">SignUp</button>
+        <button class="hidden lg:block auth_button bg-black text-white" routerLink="/login" type="button">LogIn</button>  
       }
       <span class="lg:hidden"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_63_2514)">

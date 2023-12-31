@@ -46,7 +46,9 @@ export class AuthService {
     const expiringDate = new Date(expires);
     if(expiringDate < now){
       this.logOut();
-      return false}
+      console.log('Trying to log you baba, you are not valid')
+      return false
+    }
     this.setAuthenticated(true)
     return true;
   }
