@@ -6,11 +6,3 @@
 .category_item_div{
     @apply flex items-center justify-between sm:px-1 lg:px-2 sm:py-3 lg:py-4 hover:bg-[#0F172A] hover:cursor-pointer hover:text-white;
 }
-
-.add_to_cart{   
-    @apply rounded-2xl px-3 py-1 hover:py-1.5 duration-300;
-}
-
-.product_image{
-    @apply w-[60px] h-auto lg:w-[70px] object-contain;
-}

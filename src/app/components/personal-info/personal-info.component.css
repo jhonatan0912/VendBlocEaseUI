@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.text_title{
+    @apply font-semibold text-[22px] font-inter;
+}
+
+.info_title{
+    @apply text-base font-medium font-inter text-vendblocblue
+}

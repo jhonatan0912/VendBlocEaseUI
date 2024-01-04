@@ -45,10 +45,10 @@
           @for( category of categories;track category.id){
           <div
             (click)="categoryProducts(category.id)"
-            class="flex flex-col sm:px-1 lg:px-2"
+            class="flex flex-col px-0.5 sm:px-2 lg:px-2"
           >
             <div
-              class="category_item_div group border border-vendblocblue hover:bg-[#0F172A] rounded-[20px] py-2 mr-5 px-2"
+              class="category_item_div group border border-vendblocblue hover:bg-[#0F172A] rounded-[20px] py-2 mr-5 px-3"
             >
               <span class="flex items-center group-hover:text-white">
                 <a class="px-2 text-[#0F172A] group-hover:text-white" href="">{{
@@ -105,65 +105,9 @@
       </div>
       <div class="flex flex-col space-y-0">
         <span class="sm:mb-2 lg:mb-4">Food Categories</span>
-        <!-- <div class="flex flex-col px-2">
-          <div
-            class="flex items-center justify-between bg-[#0F172A] px-2 py-4 hover:cursor-pointer"
-          >
-            <span class="flex items-center">
-              <svg
-                width="24"
-                height="24"
-                viewBox="none"
-                fill="#0f172a08"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M9 18L15 12L9 6"
-                  stroke="#FAFAFA"
-                  stroke-opacity="0.6"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-              <a class="px-2 text-white" href="">Proteins</a>
-            </span>
-            <span class="text-white opacity-50">10</span>
-          </div>
-        </div> -->
         <div class="overflow-auto">
           @for( category of categories;track category.id){
-          <div
-            (click)="categoryProducts(category.id)"
-            class="flex flex-col sm:px-1 lg:px-2"
-          >
-            <div class="category_item_div group">
-              <span class="flex items-center group-hover:text-white">
-                <svg
-                  class="stroke-[#0F172A] group-hover:stroke-white"
-                  width="24"
-                  height="24"
-                  viewBox="none"
-                  fill="#0f172a08"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M9 18L15 12L9 6"
-                    stroke-opacity="0.6"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <a class="px-2 text-[#0F172A] group-hover:text-white" href="">{{
-                  category.name
-                }}</a>
-              </span>
-              <span class="text-[#0F172A] opacity-50 group-hover:text-white">{{
-                category.quantity
-              }}</span>
-            </div>
-          </div>
+          
           }
         </div>
       </div>
@@ -183,12 +127,12 @@
             <img class="product_image" src="../../../assets/meal.png" alt="" />
             <!-- Info -->
             <div class="flex flex-col text-sm text-vendblocblue">
-              <span class="">{{ product.name }}</span>
+              <span class="font-inter">{{ product.name }}</span>
               <div
-                class="flex opacity-50 space-x-8 md:space-x-4 items-center justify-center"
+                class="flex space-x-5 md:space-x-4 items-center justify-center"
               >
-                <span>Qty</span>
-                <span class="flex items-center space-x-2">
+                <span class="opacity-50 font-inter">Qty</span>
+                <span class="flex items-center space-x-1">
                   <span (click)="updateProductQuantity(product.id, false)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="2" viewBox="0 0 13 2" fill="none">
                       <path d="M1 1H12.0194" stroke="#0F172A" stroke-width="1.57419" stroke-linecap="round" stroke-linejoin="round"/>
@@ -196,7 +140,7 @@
                   </span>
                   <span
                     ><input
-                      class="w-6 text-sm bg-gray-300 align-middle rounded-md p-1 px-0.5 text-center"
+                      class="w-6 text-sm text-vendblocblue bg-gray-300 align-middle rounded-md p-1 px-0.5 text-center"
                       min="1"
                       value="{{ product.orderQuantity }}"
                       name=""
@@ -228,9 +172,9 @@
                     </span>
                 </span>
               </div>
-              <div class="flex opacity-50 space-x-2">
-                <span>Price</span>
-                <span class="pl-4 sm:pl-0 opacity-70">₦2500</span> 
+              <div class="flex space-x-1">
+                <span class="opacity-50 font-inter">Price</span>
+                <span class="pl-2 sm:pl-0 opacity-70 font-inter">₦2500</span> 
                 <!-- {{ product.price }} -->
               </div>
             </div>
@@ -324,49 +268,6 @@
           </button>
         </div>
       </div>
-    </div>
-
-    <!-- Floating Cart -->
-    <div
-      class="bg-[hsl(222,47%,11%)] fixed p-4 rounded-full right-[50px] bottom-10 z-50 hover:p-5 duration-100 shadow-2xl"
-    >
-      <!-- <div class="absolute bg-red-600 rounded-full bottom-6 px-0.5 right-1">2</div> -->
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 20 20"
-        fill="none"
-      >
-        <g clip-path="url(#clip0_226_3727)">
-          <path
-            d="M7.49984 18.3334C7.96007 18.3334 8.33317 17.9603 8.33317 17.5001C8.33317 17.0398 7.96007 16.6667 7.49984 16.6667C7.0396 16.6667 6.6665 17.0398 6.6665 17.5001C6.6665 17.9603 7.0396 18.3334 7.49984 18.3334Z"
-            stroke="#FAFAFA"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M16.6668 18.3334C17.1271 18.3334 17.5002 17.9603 17.5002 17.5001C17.5002 17.0398 17.1271 16.6667 16.6668 16.6667C16.2066 16.6667 15.8335 17.0398 15.8335 17.5001C15.8335 17.9603 16.2066 18.3334 16.6668 18.3334Z"
-            stroke="#FAFAFA"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M0.833496 0.833252H4.16683L6.40016 11.9916C6.47637 12.3752 6.68509 12.7199 6.98978 12.9652C7.29448 13.2104 7.67574 13.3407 8.06683 13.3333H16.1668C16.5579 13.3407 16.9392 13.2104 17.2439 12.9652C17.5486 12.7199 17.7573 12.3752 17.8335 11.9916L19.1668 4.99992H5.00016"
-            stroke="#FAFAFA"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </g>
-        <defs>
-          <clipPath id="clip0_226_3727">
-            <rect width="20" height="20" fill="white" />
-          </clipPath>
-        </defs>
-      </svg>
     </div>
   </div>
 </div>

@@ -1,0 +1,23 @@
+<!-- Entire Div -->
+<div class="flex flex-row min-h-full">
+  <!-- Side Bar -->
+  <section class="w-[25%] flex flex-col bg-white items-center pt-10">
+    <img
+      src="../../../assets/dashboarduser.png"
+      class="rounded-full w-[150px]"
+      alt=""
+    />
+    <span class="font-inter font-semibold text-[#0F172AB2] mt-2"
+      >Ugwumba Ogechi</span
+    >
+    <div class="flex flex-col w-[90%] mt-5">
+     <app-side-menu-item menuName="Personal Information"></app-side-menu-item>
+     <app-side-menu-item menuName="My Order"></app-side-menu-item>
+     <app-side-menu-item menuName="Change Password"></app-side-menu-item>
+     <app-side-menu-item menuName="Log Out"></app-side-menu-item>
+    </div>
+  </section>
+  <div class="w-full bg-[#F2F2F2] flex flex-col px-10 py-6">
+   <ng-content></ng-content>
+  </div>
+</div>

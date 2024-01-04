@@ -9,7 +9,9 @@ module.exports = {
         'inter':['Inter']
        },
       colors:{
-        'vendblocblue':'#0F172A'
+        'vendblocblue':'#0F172A',
+        'vendblocgrey':'#0F172A33',
+        'vendblocyen':'#81036733'
       }
     },
   },

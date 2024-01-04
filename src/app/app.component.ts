@@ -12,6 +12,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthLayoutComponent } from './components/layouts/auth-layout/auth-layout.component';
 import { OrderComponent } from './components/order/order.component';
 import { FooterComponent } from './components/layouts/footer/footer.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 
 @Component({
@@ -27,6 +28,7 @@ import { FooterComponent } from './components/layouts/footer/footer.component';
         ReactiveFormsModule,
         RegisterComponent,
         LoginComponent,
+        DashboardComponent,
         LandingComponent,
         OrderComponent,
         HeaderComponent,

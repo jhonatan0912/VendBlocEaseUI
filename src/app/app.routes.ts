@@ -4,6 +4,8 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { HomeComponent } from './pages/home/home.component';
 import { OrderComponent } from './components/order/order.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
 
 export const routes: Routes = [
     {
@@ -19,7 +21,13 @@ export const routes: Routes = [
         path:'register', component:RegisterComponent
     },
     {
-        path:'dashboard', component:LandingComponent
+        path:'landing', component:LandingComponent
+    },
+    {
+        path:'dashboard', component:DashboardComponent
+    },
+    {
+        path:'info', component:PersonalInfoComponent
     },
     {
         path:'order', component:OrderComponent
