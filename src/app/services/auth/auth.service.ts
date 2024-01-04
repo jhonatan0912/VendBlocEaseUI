@@ -16,7 +16,7 @@ const httpOptions:any = {
 })
 
 export class AuthService {
-  private url:string = 'http://localhost:3002/';
+  private url:string = 'https://localhost:7026/';
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.getInitialAuthState());
 
   isAuthenticated$:Observable<boolean> = this.isAuthenticatedSubject.asObservable()
@@ -28,6 +28,10 @@ export class AuthService {
 
   loginUser(data:LoginDTO):Observable<any>{
     return this.http.post(this.url+'api/user/login', data, httpOptions);
+  }
+
+  requestEmailVerification(email:string):Observable<any>{
+    return this.http.get(this.url+'api/user/requestverification/'+email);
   }
 
   storeToken(token:string):void{

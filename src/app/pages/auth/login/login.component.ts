@@ -39,6 +39,9 @@ login(){
       if(result.status){
         this.authService.storeToken(result.data.token);
       }
+      else{
+        this.toastr.error(result.message);
+      }
     },
     complete:()=>{
       const isAuthenticated : boolean = this.authService.isUserAuthenticated();
@@ -46,9 +49,9 @@ login(){
         this.toastr.success("Login Successful", "Successful Operation");
        this.router.navigate(['home']);
       }
-      else{
-        this.toastr.error('Unable to login you in',"Something went wrong");
-      }
+      // else{
+      //   this.toastr.error('Unable to login you in',"Something went wrong");
+      // }
     },
     error:(e)=> {
      console.log(e);

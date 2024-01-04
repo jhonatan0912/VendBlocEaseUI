@@ -6,6 +6,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { OrderComponent } from './components/order/order.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
+import { EmailVerificationComponent } from './pages/auth/email-verification/email-verification.component';
 
 export const routes: Routes = [
     {
@@ -19,6 +20,9 @@ export const routes: Routes = [
     },
     {
         path:'register', component:RegisterComponent
+    },
+    {
+        path:'request-verication', component:EmailVerificationComponent
     },
     {
         path:'landing', component:LandingComponent

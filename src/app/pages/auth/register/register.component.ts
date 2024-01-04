@@ -36,13 +36,19 @@ export class RegisterComponent {
       password:formvalue?.password ?? ''
     };
    this.authService.registerUser(userData).subscribe({
+    next:(result : ResponseDTO)=>{
+      if(result.status){
+        this.toastr.success(result.message)
+      }
+      else{
+        this.toastr.error(result.message);
+      }
+    },
      complete:()=>{
-      console.log("completed");
-      this.toastr.success("Successful Operation");
      },
      error:(e)=> {
       console.log(e);
-      Toastr.error("Something went wrong", "Invalid Operation");
+      this.toastr.error("Something went wrong", "Invalid Operation");
     }
    })
   }

@@ -1,1 +1,25 @@
-<p>email-verification works!</p>
+<app-auth-layout>
+    <form [formGroup]="requestVerificationForm" (submit)="requestVerification()">
+        <div class="flex flex-col w-full items-center lg:mt-10">
+            <div class="flex flex-col md:w-[100%] items-center">
+                <h1 class="font-bold text-3xl mb-4">Request Email Verification</h1>
+                <span class="text-center text-gray-500">Request email verification so you can login to your account</span>
+            </div>
+           
+            <div class="form_div">
+                <label for="">Enter Your Email Address</label>
+                <input class="border p-3 rounded-md" placeholder="adazionp@gmail.com" formControlName="email" type="email" required>
+            </div>
+            <div class="form_div">
+                <button class="create_button flex justify-center space-x-4 bg-[#0F172A] text-white hover:bg-[#FAFAFA] hover:text-[#0F172A] hover:shadow-lg duration-300" type="submit">
+                    <!-- <div class="animate-spin rounded-full border-t-4 w-8 h-8"></div> -->
+                    <span>Send Email Verification</span></button>
+            </div>
+            <div class="flex w-full mt-6 justify-center lg:justify-start flex-row space-x-1">
+               <span class="text-gray-500 font-[400]"> Already have an account ? </span>
+               <a routerLink="/login" routerLinkActive="active" class="hover:underline font-[500] hover:cursor-pointer">Proceed to Sign In</a>
+            </div>
+        </div>
+    </form>
+    
+</app-auth-layout>
