@@ -13,6 +13,8 @@ import { AuthLayoutComponent } from './components/layouts/auth-layout/auth-layou
 import { OrderComponent } from './components/order/order.component';
 import { FooterComponent } from './components/layouts/footer/footer.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @Component({

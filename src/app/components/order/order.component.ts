@@ -1,45 +1,67 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { SideMenuItemComponent } from "../side-menu-item/side-menu-item.component";
+import { OrderService } from '../../services/order/order.service';
+import { ResponseDTO } from '../../models/response/response';
+import { ProductCategory } from '../../models/product-category/product-category';
+import { Product } from '../../models/product/product';
+import { Order } from '../../models/order/order';
+import { Inventory } from '../../models/inventory/inventory';
 
 @Component({
-  selector: 'app-order',
-  standalone: true,
-  imports: [],
-  templateUrl: './order.component.html',
-  styleUrl: './order.component.css'
+    selector: 'app-order',
+    standalone: true,
+    templateUrl: './order.component.html',
+    styleUrl: './order.component.css',
+    imports: [SideMenuItemComponent]
 })
 export class OrderComponent {
  
-  constructor(private toastr: ToastrService){
-    this.categoryProducts(1);
+  constructor(private toastr: ToastrService, private orderService:OrderService){
+    //this.categoryProducts(1);
+  }
+
+  ngOnInit() {
+    this.fetchCategories(3);
+    this.fetchInventory(3);
+}
+  
+  public fetchCategories(outletId:number){
+    this.orderService.getProductsCategories(3).subscribe({
+      next:(result:ResponseDTO)=>{
+        if(result.status){
+          this.categories = result.data
+        }
+        else{
+          console.log("something went wrong");
+        }
+      },
+      error:()=> {
+        console.log("Something went wrong");
+      }
+    })
+  }
+
+  public fetchInventory(outletId:number){
+    this.orderService.getInventoryByOutlet(3).subscribe({
+      next:(result:ResponseDTO)=>{
+        if(result.status){
+          this.allproducts = result.data
+          console.log(result.data);
+        }
+        else{
+          console.log("uable to fetch inventory")
+        }
+      
+      }
+    })
   }
   
   cartCount : number = 0;
 
-  categories : any[] = [
-    {id:1,name:'Swallow', quantity:10},
-    {id:2, name:'Protein', quantity:8},
-    {id:3,name:'Drinks', quantity:12},
-    {id:4,name:'Grills', quantity:13},
-    {id:5,name:'Alcohol', quantity:7}
-  ]
+  categories : ProductCategory[] = [];
 
-  allproducts : any[] = [
-    {id:1,name:'Eba', quantity:10, unitprice:300, price:300, productCategoryId:1, orderQuantity : 1},
-    {id:2, name:'Semo', quantity:8, unitprice:300, price:300,productCategoryId:1, orderQuantity : 1},
-    {id:3,name:'Amala', quantity:12, unitprice:300,price:300, productCategoryId:1, orderQuantity : 1},
-    {id:4,name:'Fufu', quantity:13, unitprice:300, price:300, productCategoryId:1, orderQuantity : 1},
-    {id:5,name:'Santana', quantity:7, unitprice:300, price:300, productCategoryId:1, orderQuantity : 1},
-    {id:6,name:'Viju (Choco)', quantity:7, unitprice:300, price:500, productCategoryId:3, orderQuantity : 1},
-    {id:7,name:'Water', quantity:10, unitprice:300, price:300, productCategoryId:3, orderQuantity : 1},
-    {id:8, name:'Fanta', quantity:8, unitprice:300, price:300, productCategoryId:3, orderQuantity : 1},
-    {id:9,name:'Coke', quantity:12,unitprice:300, price:300, productCategoryId:3, orderQuantity : 1},
-    {id:10,name:'5 Alive', quantity:13,unitprice:300, price:300, productCategoryId:3, orderQuantity : 1},
-    {id:11,name:'Hollandia', quantity:7,unitprice:300, price:300, productCategoryId:3, orderQuantity : 1},
-    {id:12,name:'Monster', quantity:7,unitprice:300, price:500, productCategoryId:3, orderQuantity : 1},
-    {id:11,name:'Viju', quantity:7,unitprice:300, price:300, productCategoryId:3, orderQuantity : 1},
-    {id:12,name:'Pulpy', quantity:7,unitprice:300, price:500, productCategoryId:3, orderQuantity : 1}
-  ];
+  allproducts : Inventory[] = [];
 
   products : any[] = [];
   cart: any[] = [];
@@ -50,20 +72,24 @@ export class OrderComponent {
   }
 
   addToCart(product:any){
-    this.cartCount++;
+    const price = product.salesPrice * product.orderQuantity;
+    product.price = price;
     this.totalcost = this.totalcost + (product.price);
-    const isProductInCart = this.cart.findIndex(x=>x.id == product.id);
+    const isProductInCart = this.cart.findIndex(x=>x.productId == product.productId);
     if(isProductInCart < 0){
       this.cart.push({...product});
+      this.cartCount++;
     }
     else{
       this.cart[isProductInCart].orderQuantity += product.orderQuantity;
+      this.cart[isProductInCart].price += (product.price);
     }
+    product.orderQuantity = 1;
     this.toastr.success('Added To Cart', 'Success')
   }
 
   updateProductQuantity(productId:number, increment : boolean){
-    const index = this.products.findIndex(x=>x.id == productId);
+    const index = this.products.findIndex(x=>x.productId == productId);
     if(increment){
       this.products[index].orderQuantity = this.products[index].orderQuantity + 1;
     }
@@ -72,15 +98,37 @@ export class OrderComponent {
         this.products[index].orderQuantity = this.products[index].orderQuantity - 1;
       }
     }
-    this.products[index].price = this.products[index].unitprice * this.products[index].orderQuantity;
+    
   }
 
   removeFromCart(product:any){
     this.cartCount--
     this.totalcost = this.totalcost - (product.price)
-    const item = this.products.findIndex(x=>x.id == product.id)
+    const item = this.products.findIndex(x=>x.productId == product.productId)
     this.cart.splice(item, 1);
     this.toastr.warning('Removing item from cart', 'Success')
+  }
+
+  checkout(){
+
+    const order : Order = {
+      products : this.cart,
+      outletId : 3,
+      customerEmail : 'adeshiname@gmail.com',
+      amount:this.totalcost
+    };
+    console.log("Products to buy", this.cart);
+    this.orderService.checkout(order).subscribe({
+      next:(result)=>{
+        if(result.status){
+          console.log(result);
+          window.location.href = result.data;
+        }
+      },
+      error:(e) => {
+        console.log(e);
+      }
+    })
   }
 
 }

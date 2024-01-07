@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 import { RouterLink,  RouterOutlet } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +14,7 @@ import { RouterLink,  RouterOutlet } from '@angular/router';
 })
 export class HeaderComponent {
   isAuthenticated = false;
+  name:string = environment.me
 
   constructor(private authService:AuthService){}
 

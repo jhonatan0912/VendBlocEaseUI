@@ -4,6 +4,7 @@ import { LoginDTO, RegisterUser } from '../../models/user/user';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { LocalService } from '../local/local.service';
+import { environment } from '../../../environments/environment';
 
 const httpOptions:any = {
   Headers:new HttpHeaders({
@@ -16,7 +17,7 @@ const httpOptions:any = {
 })
 
 export class AuthService {
-  private url:string = 'https://localhost:7026/';
+  private url:string = environment.baseUrl;
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.getInitialAuthState());
 
   isAuthenticated$:Observable<boolean> = this.isAuthenticatedSubject.asObservable()

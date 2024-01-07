@@ -1,5 +1,6 @@
-export interface Product {
-    id:number
+export interface Inventory {
+    inventoryId:number
+    productId:number
     salesPrice:number
     quantity:number
     product:string

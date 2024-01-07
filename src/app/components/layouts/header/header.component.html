@@ -1,4 +1,4 @@
-<header class="flex justify-between px-5 md:px-12 py-[22px] border">
+<header class="flex justify-between px-5 md:px-12 xl:px-24 py-[22px] border-b">
   <!-- Logo -->
   <div>
     <svg
@@ -121,12 +121,9 @@
         />
       </svg>
     </span>
-
     @if(isAuthenticated){
     
-    <button class="hidden lg:block auth_button" type="button">
-      User
-    </button>
+    <img src="../../../../assets/dashboarduser.png"  class="w-8 h-8 rounded-full object-cover cursor-pointer">
     } @else {
     <a class="hidden lg:block auth_button" routerLink="/register">SignUp</a>
     <a

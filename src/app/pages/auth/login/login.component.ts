@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ResponseDTO } from '../../../models/response/response';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthLayoutComponent } from '../../../components/layouts/auth-layout/auth-layout.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -14,50 +15,60 @@ import { AuthLayoutComponent } from '../../../components/layouts/auth-layout/aut
   imports: [RouterOutlet,
     RouterLink,
     HeaderComponent,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     AuthLayoutComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
 
-  constructor(private authService:AuthService,private toastr: ToastrService, private router:Router){}
+  constructor(private authService: AuthService, private toastr: ToastrService,
+    private router: Router,
+    private spinner: NgxSpinnerService) { }
+
+  //    ngOnInit() {
+  //     this.spinner.show();
+  //     setTimeout(() => {
+  //          this.spinner.hide();
+  //     }, 5000);
+  // }
 
   loginForm = new FormGroup({
-    email:new FormControl(),
-    password:new FormControl(),
-})
-
-login(){
-  const formValue = this.loginForm.value;
-  const loginData : LoginDTO = {
-    email : formValue.email,
-    password: formValue.password
-  };
-  this.authService.loginUser(loginData).subscribe({
-    next:(result : ResponseDTO)=>{
-      if(result.status){
-        this.authService.storeToken(result.data.token);
-      }
-      else{
-        this.toastr.error(result.message);
-      }
-    },
-    complete:()=>{
-      const isAuthenticated : boolean = this.authService.isUserAuthenticated();
-      if(isAuthenticated) {
-        this.toastr.success("Login Successful", "Successful Operation");
-       this.router.navigate(['home']);
-      }
-      // else{
-      //   this.toastr.error('Unable to login you in',"Something went wrong");
-      // }
-    },
-    error:(e)=> {
-     console.log(e);
-     this.toastr.error("Something went wrong", "Something went wrong");
-   }
+    email: new FormControl(),
+    password: new FormControl(),
   })
-}
+
+  login() {
+    const formValue = this.loginForm.value;
+    const loginData: LoginDTO = {
+      email: formValue.email,
+      password: formValue.password
+    };
+    setTimeout(() => { this.spinner.show(); }, 30)
+    this.authService.loginUser(loginData).subscribe({
+      next: (result: ResponseDTO) => {
+        if (result.status) {
+          this.authService.storeToken(result.data.token);
+        }
+        else {
+          this.toastr.error(result.message);
+        }
+      },
+      complete: () => {
+
+        const isAuthenticated: boolean = this.authService.isUserAuthenticated();
+        if (isAuthenticated) {
+          this.spinner.hide();
+          this.toastr.success("Login Successful", "Successful Operation");
+          this.router.navigate(['home']);
+        }
+      },
+      error: (e) => {
+        console.log(e);
+        this.toastr.error("Something went wrong", "Something went wrong");
+      }
+    })
+    this.spinner.hide();
+  }
 
 }
