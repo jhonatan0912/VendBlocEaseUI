@@ -36,7 +36,7 @@ export const routes: Routes = [
         path:'info', component:PersonalInfoComponent
     },
     {
-        path:'order', component:OrderComponent, canActivate:[authGuard]
+        path:'order', component:OrderComponent , canActivate:[authGuard]
     },
     {
         path:'my-orders', component:MyOrdersComponent

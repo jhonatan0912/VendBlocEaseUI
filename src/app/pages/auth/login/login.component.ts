@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ResponseDTO } from '../../../models/response/response';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthLayoutComponent } from '../../../components/layouts/auth-layout/auth-layout.component';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { LoadingService } from '../../../services/loading/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -24,14 +24,7 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private toastr: ToastrService,
     private router: Router,
-    private spinner: NgxSpinnerService) { }
-
-  //    ngOnInit() {
-  //     this.spinner.show();
-  //     setTimeout(() => {
-  //          this.spinner.hide();
-  //     }, 5000);
-  // }
+    private loadingService: LoadingService) { }
 
   loginForm = new FormGroup({
     email: new FormControl(),
@@ -39,12 +32,12 @@ export class LoginComponent {
   })
 
   login() {
+    this.loadingService.isLoading.next(true);
     const formValue = this.loginForm.value;
     const loginData: LoginDTO = {
       email: formValue.email,
       password: formValue.password
     };
-    setTimeout(() => { this.spinner.show(); }, 30)
     this.authService.loginUser(loginData).subscribe({
       next: (result: ResponseDTO) => {
         if (result.status) {
@@ -53,12 +46,13 @@ export class LoginComponent {
         else {
           this.toastr.error(result.message);
         }
+        this.loadingService.isLoading.next(false);
       },
       complete: () => {
 
         const isAuthenticated: boolean = this.authService.isUserAuthenticated();
         if (isAuthenticated) {
-          this.spinner.hide();
+          this.loadingService.isLoading.next(false);
           this.toastr.success("Login Successful", "Successful Operation");
           this.router.navigate(['home']);
         }
@@ -66,9 +60,9 @@ export class LoginComponent {
       error: (e) => {
         console.log(e);
         this.toastr.error("Something went wrong", "Something went wrong");
+        this.loadingService.isLoading.next(false);
       }
     })
-    this.spinner.hide();
   }
 
 }

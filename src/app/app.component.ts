@@ -15,6 +15,7 @@ import { FooterComponent } from './components/layouts/footer/footer.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { LoadingComponent } from "./components/loading/loading.component";
 
 
 @Component({
@@ -37,8 +38,7 @@ import { BrowserModule } from '@angular/platform-browser';
         FooterComponent,
         RouterModule,
         NgxSpinnerModule,
-      AuthLayoutComponent
-      ]
+        AuthLayoutComponent, LoadingComponent]
 })
 export class AppComponent {
   title = 'VendBlocEase';

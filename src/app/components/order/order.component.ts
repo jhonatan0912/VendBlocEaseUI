@@ -7,13 +7,14 @@ import { ProductCategory } from '../../models/product-category/product-category'
 import { Product } from '../../models/product/product';
 import { Order } from '../../models/order/order';
 import { Inventory } from '../../models/inventory/inventory';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-order',
     standalone: true,
     templateUrl: './order.component.html',
     styleUrl: './order.component.css',
-    imports: [SideMenuItemComponent]
+    imports: [SideMenuItemComponent, CommonModule]
 })
 export class OrderComponent {
  
@@ -67,8 +68,10 @@ export class OrderComponent {
   cart: any[] = [];
   totalcost:number = 0;
 
-  categoryProducts(productCategoryId:number){
+  categoryProducts(event: Event, productCategoryId:number){
+    event.preventDefault();
     this.products = this.allproducts.filter(x=>x.productCategoryId === productCategoryId)
+    console.log(this.products)
   }
 
   addToCart(product:any){
@@ -112,6 +115,7 @@ export class OrderComponent {
   checkout(){
 
     const order : Order = {
+      id:0,
       products : this.cart,
       outletId : 3,
       customerEmail : 'adeshiname@gmail.com',

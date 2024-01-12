@@ -33,4 +33,12 @@ export class OrderService {
     return this.http.post(this.baseUrl+'api/Order/Checkout', order, httpOptions)
   }
 
+  getUserOrders(email:string):Observable<any>{
+    return this.http.get<ResponseDTO>(this.baseUrl+'api/Order/GetOrdersByUser/'+email);
+  }
+
+  getOrder(id:number):Observable<any>{
+    return this.http.get<ResponseDTO>(this.baseUrl+'api/Order/'+id);
+  }
+
 }

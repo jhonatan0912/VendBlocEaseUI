@@ -5,4 +5,5 @@ export interface Order {
     products:Product[]
     outletId:number
     amount:number
+    id:number
 }

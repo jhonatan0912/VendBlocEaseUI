@@ -1,6 +1,6 @@
 <app-dashboard>
 
-    <div class="font-semibold text-2xl text-vendblocblue mb-4">Order History</div>
+    <div class="font-semibold text-2xl text-vendblocblue mb-4">Order 1</div>
     
     <!-- Content Div -->
     <div class="flex flex-col min-h-[45%] mt-8 w-full bg-white">
@@ -15,7 +15,7 @@
               </tr>
             </thead>
             <tbody>
-              @for (order of orders; track order.id) {
+             
                 <tr class="text-center border-b">
                   <td class="py-3">#3548</td>
                   <td>Dec 29, 2023</td>
@@ -23,7 +23,7 @@
                   <td># 3500</td>
                   <td class="underline underline-offset-4 cursor-pointer">View Detail</td>
                 </tr>
-              }
+      
             </tbody>
           </table>
     </div>
