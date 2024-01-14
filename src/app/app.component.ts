@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 import { FormsModule, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,6 +16,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { LoadingComponent } from "./components/loading/loading.component";
+import { LoadingService } from './services/loading/loading.service';
 
 
 @Component({
@@ -43,7 +44,21 @@ import { LoadingComponent } from "./components/loading/loading.component";
 export class AppComponent {
   title = 'VendBlocEase';
 
-  constructor(private authService : AuthService, private router: Router){
+  constructor(private authService : AuthService, private router: Router, private loadingService:LoadingService){
+    // this.router.events.subscribe((event:any)=>{
+    //   switch(true){
+    //     case event instanceof NavigationStart:{
+    //       this.loadingService.isLoading.next(true);
+    //       break;
+    //     }
+    //     case event instanceof NavigationEnd:
+    //     case event instanceof NavigationCancel:
+    //     case event instanceof NavigationError:{
+    //       this.loadingService.isLoading.next(false);
+    //       break;
+    //     }
+    //   }
+    // })
   }
 
 

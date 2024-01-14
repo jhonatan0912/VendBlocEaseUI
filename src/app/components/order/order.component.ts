@@ -4,10 +4,10 @@ import { SideMenuItemComponent } from "../side-menu-item/side-menu-item.componen
 import { OrderService } from '../../services/order/order.service';
 import { ResponseDTO } from '../../models/response/response';
 import { ProductCategory } from '../../models/product-category/product-category';
-import { Product } from '../../models/product/product';
 import { Order } from '../../models/order/order';
 import { Inventory } from '../../models/inventory/inventory';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-order',
@@ -17,18 +17,21 @@ import { CommonModule } from '@angular/common';
     imports: [SideMenuItemComponent, CommonModule]
 })
 export class OrderComponent {
- 
-  constructor(private toastr: ToastrService, private orderService:OrderService){
-    //this.categoryProducts(1);
+
+  outlet:number = 0;
+  constructor(private toastr: ToastrService, private orderService:OrderService, private route:ActivatedRoute){
   }
 
   ngOnInit() {
-    this.fetchCategories(3);
-    this.fetchInventory(3);
+    this.route.params.subscribe(params =>{
+      this.outlet = params['id']
+    })
+    this.fetchCategories(this.outlet);
+    this.fetchInventory(this.outlet);
 }
   
-  public fetchCategories(outletId:number){
-    this.orderService.getProductsCategories(3).subscribe({
+  public fetchCategories(outlet:number){
+    this.orderService.getProductsCategories(outlet).subscribe({
       next:(result:ResponseDTO)=>{
         if(result.status){
           this.categories = result.data
@@ -43,8 +46,8 @@ export class OrderComponent {
     })
   }
 
-  public fetchInventory(outletId:number){
-    this.orderService.getInventoryByOutlet(3).subscribe({
+  public fetchInventory(outlet:number){
+    this.orderService.getInventoryByOutlet(outlet).subscribe({
       next:(result:ResponseDTO)=>{
         if(result.status){
           this.allproducts = result.data
@@ -89,10 +92,11 @@ export class OrderComponent {
     }
     product.orderQuantity = 1;
     this.toastr.success('Added To Cart', 'Success')
+    console.log(this.cart)
   }
 
   updateProductQuantity(productId:number, increment : boolean){
-    const index = this.products.findIndex(x=>x.productId == productId);
+    const index = this.products.findIndex(x=>x.productId === productId);
     if(increment){
       this.products[index].orderQuantity = this.products[index].orderQuantity + 1;
     }
@@ -101,15 +105,15 @@ export class OrderComponent {
         this.products[index].orderQuantity = this.products[index].orderQuantity - 1;
       }
     }
-    
   }
 
   removeFromCart(product:any){
     this.cartCount--
-    this.totalcost = this.totalcost - (product.price)
-    const item = this.products.findIndex(x=>x.productId == product.productId)
-    this.cart.splice(item, 1);
-    this.toastr.warning('Removing item from cart', 'Success')
+    this.totalcost = this.totalcost - product.price
+    const itemIndex = this.cart.findIndex(x=>x.productId === product.productId)
+    if(itemIndex !== -1){
+      this.cart.splice(itemIndex, 1);
+    }
   }
 
   checkout(){

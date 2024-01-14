@@ -1,4 +1,4 @@
-<div class="px-6 md:px-12 xl:px-24 pt-12 xl:pt-14 pb-10">
+<div class="px-6 md:px-12 xl:px-12 2xl:px-24 pt-12 xl:pt-14 pb-10">
   <!-- Top Div -->
   <div class="flex flex-col-reverse md:flex-row md:space-y-0">
 <!-- Wording DIV -->
@@ -62,7 +62,7 @@
   <div class="flex mb-5">
     <div class="overflow-x-auto flex">
       @for (r of restaurants; track r.id) {
-        <app-restaurant-card store={{r.store}} outlet={{r.name}} ></app-restaurant-card>
+        <app-restaurant-card outletId={{r.id}} store={{r.store}} outlet={{r.name}} ></app-restaurant-card>
       }
     </div>
     

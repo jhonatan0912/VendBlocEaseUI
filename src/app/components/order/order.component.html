@@ -68,11 +68,11 @@
 
   <!-- Content Div -->
   <div
-    class="flex px-1 lg:px-10 xl:px-24 w-full pt-4 space-x-5 lg:space-x-8 items-center md:items-start"
+    class="flex px-1 lg:px-10 xl:px-12 2xl:px-24 w-full pt-4 space-x-5 lg:space-x-8 items-center md:items-start justify-between"
   >
     <!-- Categories Div -->
     <div
-      class="hidden md:w-[25%] xl:w-[20%] p-0 shadow-lg md:p-2 lg:p-4 h-fit md:flex md:flex-col bg-[#0f172a08] space-y-6"
+      class="hidden md:w-[25%] lg:w-[22%] 2xl:w-[27%] p-0 shadow-lg md:p-2 lg:p-4 h-fit md:flex md:flex-col bg-[#0f172a08] space-y-6"
     >
       <!-- Search Div -->
       <div class="flex flex-col space-y-3">
@@ -113,7 +113,7 @@
       </div>
     </div>
     <!-- Products Div -->
-    <div class="w-[95%] px-0 md:w-[45%]">
+    <div class="w-[95%] md:w-[45%] lg:w-[45%] 2xl:w-full">
       <!-- List of Products -->
       <div class="px-0 sm:px-1 md:px-2 lg:px-6 2xl:px-10">
         @for(product of products; track product.productId){
@@ -197,7 +197,7 @@
 
     <!-- My Cart -->
     <div
-      class="hidden md:flex m-0 md:flex-col md:w-[36%] lg:w-[28%] shadow-lg md:p-1 lg:p-4 bg-[#0f172a08] space-y-6"
+      class="hidden md:flex m-0 md:flex-col md:w-[36%] lg:w-[30%] 2xl:w-[55%] shadow-lg md:p-1 lg:p-3 xl:p-4 bg-[#0f172a08] space-y-6"
     >
       <div class="flex flex-col space-y-3">
         <span class="font-bold">My Cart ({{ cartCount }})</span>
@@ -223,7 +223,7 @@
               </div>
             </div>
             <!-- Remove from Cart -->
-            <div class="flex items-center w-[30%] space-x-2">
+            <div class="flex items-center justify-between w-[30%] space-x-2">
               <span class="text-vendblocblue opacity-60">{{ cartItem.price }}</span>
               <span
                 (click)="removeFromCart(cartItem)"
