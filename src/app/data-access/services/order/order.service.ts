@@ -1,10 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { ResponseDTO } from '../../models/response/response';
-import { Product } from '../../models/product/product';
-import { Order } from '../../models/order/order';
+import { environment } from '../../../../environments/environment';
+import { Order } from '../../../models/order/order';
+import { ResponseDTO } from '../../../models/response/response';
 
 
 const httpOptions:any = {

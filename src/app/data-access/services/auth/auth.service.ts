@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { LoginDTO, RegisterUser } from '../../models/user/user';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { LocalService } from '../local/local.service';
-import { environment } from '../../../environments/environment';
+import { LoginDTO, RegisterUser } from '../../../models/user/user';
+import { environment } from '../../../../environments/environment';
 
 const httpOptions:any = {
   Headers:new HttpHeaders({

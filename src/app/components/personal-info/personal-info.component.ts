@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { StatCardComponent } from '../stat-card/stat-card.component';
-import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-personal-info',

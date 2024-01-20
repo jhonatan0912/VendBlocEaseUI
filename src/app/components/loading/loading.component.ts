@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { LoadingService } from '../../services/loading/loading.service';
+import { LoadingService } from '../../data-access/services/loading/loading.service';
 
 @Component({
   selector: 'app-loading',

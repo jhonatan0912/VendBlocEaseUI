@@ -1,14 +1,14 @@
 import { Routes } from '@angular/router';
-import { RegisterComponent } from './pages/auth/register/register.component';
-import { LoginComponent } from './pages/auth/login/login.component';
-import { LandingComponent } from './pages/landing/landing.component';
-import { HomeComponent } from './pages/home/home.component';
 import { OrderComponent } from './components/order/order.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
-import { EmailVerificationComponent } from './pages/auth/email-verification/email-verification.component';
-import { authGuard } from './guards/auth.guard';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
+import { authGuard } from './utils/guards/auth.guard';
+import { HomeComponent } from './components/home/home.component';
+import { EmailVerificationComponent } from './components/auth/email-verification/email-verification.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { LandingComponent } from './components/landing/landing.component';
 
 export const routes: Routes = [
     {

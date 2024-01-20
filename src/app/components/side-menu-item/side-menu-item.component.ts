@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-side-menu-item',
@@ -10,4 +11,15 @@ import { Component, Input } from '@angular/core';
 })
 export class SideMenuItemComponent {
   @Input() menuName : string = '';
+  @Input() link : string = '';
+
+
+  constructor(private router: Router){}
+
+  navigate(){
+    if(this.link !== ''){
+      this.router.navigate([this.link])
+    }
+    
+  }
 }

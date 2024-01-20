@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
-import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { LoadingService } from '../services/loading/loading.service';
+import { LoadingService } from '../../data-access/services/loading/loading.service';
+import { AuthService } from '../../data-access/services/auth/auth.service';
 
 export const authGuard: CanActivateFn = (route, state) : Observable<boolean> |  Promise<boolean> | boolean => {
   const loadingService = inject(LoadingService);

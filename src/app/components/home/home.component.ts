@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { RestaurantCardComponent } from "../../components/restaurant-card/restaurant-card.component";
-import { OrderService } from '../../services/order/order.service';
-import { OutletService } from '../../services/outlet/outlet.service';
 import { Outlet } from '../../models/outlet/outlet';
 import { ResponseDTO } from '../../models/response/response';
+import { OutletService } from '../../data-access/services/outlet/outlet.service';
 
 @Component({
     selector: 'app-home',

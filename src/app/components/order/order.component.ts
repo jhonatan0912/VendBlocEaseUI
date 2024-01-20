@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { SideMenuItemComponent } from "../side-menu-item/side-menu-item.component";
-import { OrderService } from '../../services/order/order.service';
 import { ResponseDTO } from '../../models/response/response';
 import { ProductCategory } from '../../models/product-category/product-category';
 import { Order } from '../../models/order/order';
 import { Inventory } from '../../models/inventory/inventory';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { OrderService } from '../../data-access/services/order/order.service';
 
 @Component({
     selector: 'app-order',
@@ -127,10 +127,14 @@ export class OrderComponent {
     };
     console.log("Products to buy", this.cart);
     this.orderService.checkout(order).subscribe({
-      next:(result)=>{
+      next:(result:ResponseDTO)=>{
         if(result.status){
-          console.log(result);
+          this.toastr.success('Trying to set up your payment link', 'Order Created')
           window.location.href = result.data;
+         
+        }
+        else{
+          this.toastr.error(result.message);
         }
       },
       error:(e) => {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
-import { OrderService } from '../../services/order/order.service';
 import { ResponseDTO } from '../../models/response/response';
+import { OrderService } from '../../data-access/services/order/order.service';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
     selector: 'app-my-orders',

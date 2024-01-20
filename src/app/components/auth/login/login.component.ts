@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from '../../../components/layouts/header/header.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LoginDTO } from '../../../models/user/user';
-import { AuthService } from '../../../services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ResponseDTO } from '../../../models/response/response';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { AuthLayoutComponent } from '../../../components/layouts/auth-layout/auth-layout.component';
-import { LoadingService } from '../../../services/loading/loading.service';
+import { AuthLayoutComponent } from '../../layouts/auth-layout/auth-layout.component';
+import { AuthService } from '../../../data-access/services/auth/auth.service';
+import { LoadingService } from '../../../data-access/services/loading/loading.service';
+
 
 @Component({
   selector: 'app-login',
@@ -57,7 +58,7 @@ export class LoginComponent {
           this.router.navigate(['home']);
         }
       },
-      error: (e) => {
+      error: (e:any) => {
         console.log(e);
         this.toastr.error("Something went wrong", "Something went wrong");
         this.loadingService.isLoading.next(false);

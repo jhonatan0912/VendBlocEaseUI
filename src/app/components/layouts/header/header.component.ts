@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../../services/auth/auth.service';
 import { RouterLink,  RouterOutlet } from '@angular/router';
 import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../data-access/services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +14,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class HeaderComponent {
   isAuthenticated = false;
+  profileDropDown = false;
   name:string = environment.me
 
   constructor(private authService:AuthService){}
@@ -24,6 +25,10 @@ export class HeaderComponent {
       console.log(result);
       this.isAuthenticated = result;
     })
+  }
+
+  toggleProfileDropdown() {
+    this.profileDropDown = !this.profileDropDown
   }
 
 }

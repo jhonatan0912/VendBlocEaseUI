@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../../../components/layouts/header/header.component';
 import { FormControl, FormGroup,ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../../services/auth/auth.service';
-import { Observable } from 'rxjs';
 import { RegisterUser } from '../../../models/user/user';
 import { ResponseDTO } from '../../../models/response/response';
 import { ToastrService } from 'ngx-toastr';
-import { error } from 'console';
-import { Toastr } from '../../../utilities/toastr';
 import { AuthLayoutComponent } from '../../../components/layouts/auth-layout/auth-layout.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../../data-access/services/auth/auth.service';
 @Component({
   selector: 'app-register',
   standalone: true,

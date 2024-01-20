@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { AuthLayoutComponent } from '../../../components/layouts/auth-layout/auth-layout.component';
-import { AuthService } from '../../../services/auth/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ResponseDTO } from '../../../models/response/response';
 import { ToastrService } from 'ngx-toastr';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../../data-access/services/auth/auth.service';
 
 @Component({
   selector: 'app-email-verification',
