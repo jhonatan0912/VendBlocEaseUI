@@ -7,8 +7,9 @@
         <table class="table-auto">
             <thead>
               <tr class="text-center bg-vendblocblue text-white">
-                <th class="py-3">Order #</th>
+                <th class="py-3">#</th>
                 <th>Date</th>
+                <th>Delivery Mode</th>
                 <th>Status</th>
                 <th>Amount</th>
                 <th>Action</th>
@@ -17,10 +18,11 @@
             <tbody>
               @for (order of orders; track order.id) {
                 <tr class="text-center border-b">
-                  <td class="py-3">#3548</td>
-                  <td>Dec 29, 2023</td>
-                  <td>Completed</td>
-                  <td># 3500</td>
+                  <td class="py-3">#{{order.id}}</td>
+                  <td class="py-3">Dec 2023</td>
+                  <td>{{order.deliveryMode}}</td>
+                  <td>{{order.status}}</td>
+                  <td>{{order.amount}}</td>
                   <td class="underline underline-offset-4 cursor-pointer">View Detail</td>
                 </tr>
               }

@@ -9,6 +9,7 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LandingComponent } from './components/landing/landing.component';
+import { VerifyPaymentComponent } from './components/verify-payment/verify-payment.component';
 
 export const routes: Routes = [
     {
@@ -37,6 +38,9 @@ export const routes: Routes = [
     },
     {
         path:'order/:id', component:OrderComponent , canActivate:[authGuard]
+    },
+    {
+        path:'verify-payment/:reference', component:VerifyPaymentComponent , canActivate:[authGuard]
     },
     {
         path:'my-orders', component:MyOrdersComponent

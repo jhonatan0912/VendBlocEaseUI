@@ -62,14 +62,12 @@ export class OrderComponent {
   }
   
   cartCount : number = 0;
-
   categories : ProductCategory[] = [];
-
   allproducts : Inventory[] = [];
-
   products : any[] = [];
   cart: any[] = [];
   totalcost:number = 0;
+  canCheckOut:boolean = false;
 
   categoryProducts(event: Event, productCategoryId:number){
     event.preventDefault();
@@ -117,7 +115,10 @@ export class OrderComponent {
   }
 
   checkout(){
-
+    if(this.cartCount < 1){
+      this.toastr.error("Add Items to cart Before Checking Out");
+      return;
+    }
     const order : Order = {
       id:0,
       products : this.cart,

@@ -12,8 +12,8 @@
       >Ugwumba Ogechi</span
     >
     <div class="flex flex-col w-[90%] mt-5">
-     <app-side-menu-item (click)="navigate('info')"  menuName="Personal Information"></app-side-menu-item>
-     <app-side-menu-item menuName="My Order"></app-side-menu-item>
+     <app-side-menu-item (click)="navigate($event,'info')" menuName="Personal Information"></app-side-menu-item>
+     <app-side-menu-item (click)="navigate($event,'my-orders')" menuName="My Orders"></app-side-menu-item>
      <app-side-menu-item menuName="Change Password"></app-side-menu-item>
      <app-side-menu-item menuName="Log Out"></app-side-menu-item>
     </div>

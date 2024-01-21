@@ -40,4 +40,10 @@ export class OrderService {
     return this.http.get<ResponseDTO>(this.baseUrl+'api/Order/'+id);
   }
 
+  verifyPayment(reference:string):Observable<any>{
+    console.log("trying to verify payment ", reference)
+    console.log(this.baseUrl);
+    return this.http.get<ResponseDTO>(this.baseUrl+'api/Payments/VerifyOrder?reference='+reference);
+  }
+
 }

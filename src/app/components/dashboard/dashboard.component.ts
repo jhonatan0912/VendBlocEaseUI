@@ -13,7 +13,8 @@ export class DashboardComponent {
 
   constructor(private router:Router){}
 
-  navigate(link:string){
+  navigate(event:Event, link:string){
+    event.preventDefault();
     if(link !== ''){
       this.router.navigate([link])
     }}

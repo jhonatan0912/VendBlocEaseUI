@@ -54,7 +54,7 @@
                 >{{ category.name }}</span
               >
               <span class="text-[#0F172A] opacity-50 group-hover:text-white"
-                >{{ category.quantity }} 5</span
+                >{{ category.quantity }}</span
               >
             </div>
           </div>
@@ -117,7 +117,7 @@
       <div class="px-0 sm:px-1 md:px-2 lg:px-6 2xl:px-10">
         @for(product of products; track product.productId){
         <div
-          class="flex items-center justify-start md:justify-between space-x-0 sm:space-x-2 md:space-x-1 w-full border-b py-2 sm:py-1"
+          class="flex items-center justify-start md:justify-between space-x-0 sm:space-x-2 md:space-x-1 w-full border-b py-2 sm:py-1 my-1"
         >
           <!-- Food Image and Info -->
           <div
@@ -223,7 +223,7 @@
         <div class="flex max-h-[300px] flex-col overflow-auto">
           @for(cartItem of cart; track cartItem.id){
           <div
-            class="flex items-center justify-between space-x-2 w-full border-b py-1"
+            class="flex items-center justify-between space-x-2 w-full border-b py-1 my-1"
           >
             <!-- Cart Item -->
             <div class="flex flex-row space-x-3 w-[70%]">
