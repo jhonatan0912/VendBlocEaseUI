@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthLayoutComponent } from '../../../components/layouts/auth-layout/auth-layout.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../data-access/services/auth/auth.service';
+import { LoadingService } from '../../../data-access/services/loading/loading.service';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -17,7 +18,7 @@ import { AuthService } from '../../../data-access/services/auth/auth.service';
 })
 export class RegisterComponent {
 
-  constructor(private authService:AuthService,private toastr: ToastrService){}
+  constructor(private authService:AuthService,private toastr: ToastrService, private loadingService:LoadingService){}
 
   registerForm = new FormGroup({
     name: new FormControl(''),
@@ -26,6 +27,7 @@ export class RegisterComponent {
   });
 
   registerUser(){
+    this.loadingService.isLoading.next(true);
     const formvalue = this.registerForm?.value;
     const userData : RegisterUser = {
       name: formvalue?.name ?? '',
@@ -35,17 +37,19 @@ export class RegisterComponent {
    this.authService.registerUser(userData).subscribe({
     next:(result : ResponseDTO)=>{
       if(result.status){
-        this.toastr.success(result.message)
+        this.toastr.success(result.message, 'Proceed to your email for verification')
       }
       else{
         this.toastr.error(result.message);
       }
+      this.loadingService.isLoading.next(false);
     },
      complete:()=>{
      },
      error:(e)=> {
       console.log(e);
       this.toastr.error("Something went wrong", "Invalid Operation");
+      this.loadingService.isLoading.next(false);
     }
    })
   }

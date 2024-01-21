@@ -8,6 +8,7 @@ import { Inventory } from '../../models/inventory/inventory';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { OrderService } from '../../data-access/services/order/order.service';
+import { LoadingService } from '../../data-access/services/loading/loading.service';
 
 @Component({
     selector: 'app-order',
@@ -19,7 +20,7 @@ import { OrderService } from '../../data-access/services/order/order.service';
 export class OrderComponent {
 
   outlet:number = 0;
-  constructor(private toastr: ToastrService, private orderService:OrderService, private route:ActivatedRoute){
+  constructor(private toastr: ToastrService, private orderService:OrderService, private route:ActivatedRoute, private loadingService:LoadingService){
   }
 
   ngOnInit() {
@@ -116,9 +117,10 @@ export class OrderComponent {
 
   checkout(){
     if(this.cartCount < 1){
-      this.toastr.error("Add Items to cart Before Checking Out");
+      this.toastr.warning("Add Items to cart Before Checking Out");
       return;
     }
+    this.loadingService.isLoading.next(true);
     const order : Order = {
       id:0,
       products : this.cart,
@@ -126,20 +128,21 @@ export class OrderComponent {
       customerEmail : 'adeshiname@gmail.com',
       amount:this.totalcost
     };
-    console.log("Products to buy", this.cart);
     this.orderService.checkout(order).subscribe({
       next:(result:ResponseDTO)=>{
         if(result.status){
+          this.loadingService.isLoading.next(false);
           this.toastr.success('Trying to set up your payment link', 'Order Created')
           window.location.href = result.data;
          
         }
         else{
           this.toastr.error(result.message);
+          this.loadingService.isLoading.next(false);
         }
       },
-      error:(e) => {
-        console.log(e);
+      error:(e) => {        
+        this.loadingService.isLoading.next(false);
       }
     })
   }

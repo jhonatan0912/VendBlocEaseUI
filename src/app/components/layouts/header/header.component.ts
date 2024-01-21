@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink,  RouterOutlet } from '@angular/router';
+import { Router, RouterLink,  RouterOutlet } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../data-access/services/auth/auth.service';
 
@@ -17,7 +17,7 @@ export class HeaderComponent {
   profileDropDown = false;
   name:string = environment.me
 
-  constructor(private authService:AuthService){}
+  constructor(private authService:AuthService, private router:Router){}
 
   ngOnInit(){
     console.log("The header Component");
@@ -31,4 +31,8 @@ export class HeaderComponent {
     this.profileDropDown = !this.profileDropDown
   }
 
+  logout(){
+    this.authService.logOut();
+    this.router.navigate(['login']);
+  }
 }
