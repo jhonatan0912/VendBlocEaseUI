@@ -59,7 +59,6 @@ export class LoginComponent {
         }
       },
       error: (e:any) => {
-        console.log(e);
         this.toastr.error("Something went wrong", "Something went wrong");
         this.loadingService.isLoading.next(false);
       }

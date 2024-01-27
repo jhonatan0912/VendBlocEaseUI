@@ -32,7 +32,6 @@ export class MyOrdersComponent implements OnInit {
             next:(result:ResponseDTO)=>{
                 if(result.status){
                     this.orders = result.data
-                    console.log(result.data);
                 }
             },
             error:(e)=>{

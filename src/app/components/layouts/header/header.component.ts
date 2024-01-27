@@ -20,9 +20,7 @@ export class HeaderComponent {
   constructor(private authService:AuthService, private router:Router){}
 
   ngOnInit(){
-    console.log("The header Component");
     this.authService.isAuthenticated$.subscribe((result) => {
-      console.log(result);
       this.isAuthenticated = result;
     })
   }

@@ -24,7 +24,6 @@ export class EmailVerificationComponent {
 
   requestVerification(){
     const formValue = this.requestVerificationForm.value;
-    console.log(formValue.email)
     this.authService.requestEmailVerification(formValue.email).subscribe({
       next : (response:ResponseDTO)=>{
         if(response.status){

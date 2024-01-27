@@ -18,7 +18,6 @@ export class VerifyPaymentComponent {
     const reference = this.route.snapshot.queryParamMap.get('reference') ?? '';
     this.orderService.verifyPayment(reference).subscribe({
       next:(result:ResponseDTO) => {
-        console.log("Completed", result)
         const orderId = result.data.id
         this.router.navigate(['my-orders'])
       },

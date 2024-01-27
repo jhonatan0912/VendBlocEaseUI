@@ -52,7 +52,6 @@ export class OrderComponent {
       next:(result:ResponseDTO)=>{
         if(result.status){
           this.allproducts = result.data
-          console.log(result.data);
         }
         else{
           console.log("uable to fetch inventory")
@@ -73,7 +72,6 @@ export class OrderComponent {
   categoryProducts(event: Event, productCategoryId:number){
     event.preventDefault();
     this.products = this.allproducts.filter(x=>x.productCategoryId === productCategoryId)
-    console.log(this.products)
   }
 
   addToCart(product:any){
@@ -91,7 +89,6 @@ export class OrderComponent {
     }
     product.orderQuantity = 1;
     this.toastr.success('Added To Cart', 'Success')
-    console.log(this.cart)
   }
 
   updateProductQuantity(productId:number, increment : boolean){
