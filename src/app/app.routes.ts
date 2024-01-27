@@ -40,7 +40,7 @@ export const routes: Routes = [
         path:'order/:id', component:OrderComponent , canActivate:[authGuard]
     },
     {
-        path:'verify-payment/:reference', component:VerifyPaymentComponent , canActivate:[authGuard]
+        path:'verify-payment', component:VerifyPaymentComponent , canActivate:[authGuard]
     },
     {
         path:'my-orders', component:MyOrdersComponent

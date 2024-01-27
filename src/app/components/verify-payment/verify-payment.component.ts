@@ -11,16 +11,12 @@ import { ResponseDTO } from '../../models/response/response';
   styleUrl: './verify-payment.component.css'
 })
 export class VerifyPaymentComponent {
- 
-  reference:string = '';
 
   constructor(private route:ActivatedRoute, private router:Router, private orderService:OrderService){}
 
   ngOnInit() {
-    this.route.params.subscribe(params =>{
-      this.reference = params['reference']
-    })
-    this.orderService.verifyPayment(this.reference).subscribe({
+    const reference = this.route.snapshot.queryParamMap.get('reference') ?? '';
+    this.orderService.verifyPayment(reference).subscribe({
       next:(result:ResponseDTO) => {
         console.log("Completed", result)
         const orderId = result.data.id
@@ -30,6 +26,5 @@ export class VerifyPaymentComponent {
         console.log(e);
       }
     })
-
 }
 }
