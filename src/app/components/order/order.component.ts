@@ -6,9 +6,10 @@ import { ProductCategory } from '../../models/product-category/product-category'
 import { Order } from '../../models/order/order';
 import { Inventory } from '../../models/inventory/inventory';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from '../../data-access/services/order/order.service';
 import { LoadingService } from '../../data-access/services/loading/loading.service';
+import { LocalService } from '../../data-access/services/local/local.service';
 
 @Component({
     selector: 'app-order',
@@ -20,7 +21,12 @@ import { LoadingService } from '../../data-access/services/loading/loading.servi
 export class OrderComponent {
 
   outlet:number = 0;
-  constructor(private toastr: ToastrService, private orderService:OrderService, private route:ActivatedRoute, private loadingService:LoadingService){
+  constructor(private toastr: ToastrService, 
+    private orderService:OrderService, 
+    private route:ActivatedRoute, 
+    private loadingService:LoadingService,
+    private localStorage:LocalService,
+    private router:Router){
   }
 
   ngOnInit() {
@@ -54,9 +60,8 @@ export class OrderComponent {
           this.allproducts = result.data
         }
         else{
-          console.log("uable to fetch inventory")
+          console.log("Unable to fetch inventory")
         }
-      
       }
     })
   }
@@ -113,6 +118,8 @@ export class OrderComponent {
   }
 
   checkout(){
+    const email = this.localStorage.getData('email');
+    if(!email) this.router.navigate(['login'])
     if(this.cartCount < 1){
       this.toastr.warning("Add Items to cart Before Checking Out");
       return;
@@ -122,8 +129,8 @@ export class OrderComponent {
       id:0,
       products : this.cart,
       outletId : 3,
-      customerEmail : 'adeshiname@gmail.com',
-      amount:this.totalcost
+      customerEmail : email,
+      amount:this.totalcost,
     };
     this.orderService.checkout(order).subscribe({
       next:(result:ResponseDTO)=>{

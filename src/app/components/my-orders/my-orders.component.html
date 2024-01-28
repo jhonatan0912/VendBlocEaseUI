@@ -18,8 +18,8 @@
             <tbody>
               @for (order of orders; track order.id) {
                 <tr class="text-center border-b">
-                  <td class="py-3">#{{order.id}}</td>
-                  <td class="py-3">Dec 2023</td>
+                  <td class="py-3">{{order.id}}</td>
+                  <td class="py-3">{{order.formattedDate}}</td>
                   <td>{{order.deliveryMode}}</td>
                   <td>{{order.status}}</td>
                   <td>{{order.amount}}</td>

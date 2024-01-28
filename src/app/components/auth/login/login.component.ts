@@ -42,7 +42,8 @@ export class LoginComponent {
     this.authService.loginUser(loginData).subscribe({
       next: (result: ResponseDTO) => {
         if (result.status) {
-          this.authService.storeToken(result.data.token);
+          this.authService.storeData('token',result.data.token);
+          this.authService.storeData('email', loginData.email);
         }
         else {
           this.toastr.error(result.message);
@@ -50,7 +51,6 @@ export class LoginComponent {
         this.loadingService.isLoading.next(false);
       },
       complete: () => {
-
         const isAuthenticated: boolean = this.authService.isUserAuthenticated();
         if (isAuthenticated) {
           this.loadingService.isLoading.next(false);

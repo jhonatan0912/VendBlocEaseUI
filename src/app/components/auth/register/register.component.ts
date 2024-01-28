@@ -5,7 +5,7 @@ import { RegisterUser } from '../../../models/user/user';
 import { ResponseDTO } from '../../../models/response/response';
 import { ToastrService } from 'ngx-toastr';
 import { AuthLayoutComponent } from '../../../components/layouts/auth-layout/auth-layout.component';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../data-access/services/auth/auth.service';
 import { LoadingService } from '../../../data-access/services/loading/loading.service';
 @Component({
@@ -18,7 +18,8 @@ import { LoadingService } from '../../../data-access/services/loading/loading.se
 })
 export class RegisterComponent {
 
-  constructor(private authService:AuthService,private toastr: ToastrService, private loadingService:LoadingService){}
+  constructor(private authService:AuthService,private toastr: ToastrService, 
+    private loadingService:LoadingService, private router:Router){}
 
   registerForm = new FormGroup({
     name: new FormControl(''),
@@ -38,6 +39,7 @@ export class RegisterComponent {
     next:(result : ResponseDTO)=>{
       if(result.status){
         this.toastr.success(result.message, 'Proceed to your email for verification')
+        this.router.navigate(['login']);
       }
       else{
         this.toastr.error(result.message);

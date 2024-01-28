@@ -17,20 +17,4 @@ export class OrderStateService implements OnInit{
     ngOnInit(): void {
         // this.orderService.getUserOrders("adeshiname@gmail.com").sub
     }
-
-    // fetchOrders(email:string){
-    //     this.orderService.getUserOrders(email).subscribe({
-    //         next:(result:ResponseDTO)=>{
-    //             if(result.status){
-    //                 this.orders = result.data
-    //             }else{
-
-    //             }
-    //         },
-    //         error:(e)=>{
-    //             console.log(e);
-    //         }
-    //     })
-    // }
-
 }

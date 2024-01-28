@@ -35,12 +35,16 @@ export class AuthService {
     return this.http.get(this.url+'api/user/requestverification/'+email);
   }
 
-  storeToken(token:string):void{
-    this.local.saveData('token',token);
+  storeData(key:string, value:string):void{
+    this.local.saveData(key, value);
+  }
+
+  fetchLocalData(key:string){
+    return this.local.getData(key);
   }
 
   isUserAuthenticated():boolean{
-    const token = this.local.getData('token');
+    const token = this.fetchLocalData('token');
     if(!token) return false;
     const decodedToken = jwtDecode(token);
     const now = new Date();
