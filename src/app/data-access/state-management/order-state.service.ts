@@ -15,6 +15,6 @@ export class OrderStateService implements OnInit{
     constructor(private orderService:OrderService){}
 
     ngOnInit(): void {
-        // this.orderService.getUserOrders("adeshiname@gmail.com").sub
+        
     }
 }

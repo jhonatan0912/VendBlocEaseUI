@@ -17,6 +17,7 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LandingComponent } from './components/landing/landing.component';
+import { NbThemeModule } from '@nebular/theme';
 
 
 @Component({
@@ -39,7 +40,8 @@ import { LandingComponent } from './components/landing/landing.component';
         FooterComponent,
         RouterModule,
         NgxSpinnerModule,
-        AuthLayoutComponent, LoadingComponent]
+        AuthLayoutComponent,
+        LoadingComponent]
 })
 export class AppComponent {
   title = 'VendBlocEase';

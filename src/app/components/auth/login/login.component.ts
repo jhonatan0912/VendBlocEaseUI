@@ -42,7 +42,7 @@ export class LoginComponent {
     this.authService.loginUser(loginData).subscribe({
       next: (result: ResponseDTO) => {
         if (result.status) {
-          this.authService.storeData('token',result.data.token);
+          this.authService.saveUserDetails(result.data);
           this.authService.storeData('email', loginData.email);
         }
         else {

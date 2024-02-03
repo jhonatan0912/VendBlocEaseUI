@@ -1,6 +1,6 @@
 <app-dashboard>
 
-    <span class="text-sm font-medium text-vendblocblue">Hello Ogechi</span>
+    <span class="text-sm font-medium text-vendblocblue">Hello {{user?.name}}</span>
     <span class="text_title">Welcome to your Profile</span>
     
     <div class="flex justify-between mt-5">
@@ -17,13 +17,14 @@
             <div class="flex flex-col space-y-4">
                 <span class="info_title">Name</span>
                 <span class="info_title">Email</span>
+                
                 <!-- <span class="info_title">Phone</span>
                 <span class="info_title">Address</span> -->
             </div>
 
             <div class="flex flex-col space-y-4">
-                <span class="info_title opacity-70">Ugwumba Ogechi Prisca</span>
-                <span class="info_title opacity-70">adazionp&#64;gmail.com</span>
+                <span class="info_title opacity-70">{{user?.name}}</span>
+                <span class="info_title opacity-70">{{user?.email}}</span>
                 <!-- <span class="info_title opacity-70">2348169289524</span>
                 <span class="info_title opacity-70">Robert Robertson, 1234 NW Bobcat Lane, St. Robert, MO 65584-5678</span> -->
             </div>

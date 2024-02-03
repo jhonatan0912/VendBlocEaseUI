@@ -10,6 +10,7 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { VerifyPaymentComponent } from './components/verify-payment/verify-payment.component';
+import { NebulaSampleComponent } from './components/nebula-sample/nebula-sample.component';
 
 export const routes: Routes = [
     {
@@ -44,5 +45,8 @@ export const routes: Routes = [
     },
     {
         path:'my-orders', component:MyOrdersComponent
+    },
+    {
+        path:'nebula-sample', component:NebulaSampleComponent
     }
 ];

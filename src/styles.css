@@ -11,7 +11,7 @@
 }
 
 .auth_button{
-    @apply border px-[22px] font-inter py-2 rounded-md border-gray-500 text-[16px] text-center;
+    @apply border px-[22px] font-inter py-2 rounded-md text-[16px] text-center;
 }
 
 .create_button{

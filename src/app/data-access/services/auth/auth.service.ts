@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { LocalService } from '../local/local.service';
-import { LoginDTO, RegisterUser } from '../../../models/user/user';
+import { LoginDTO, RegisterUser, User } from '../../../models/user/user';
 import { environment } from '../../../../environments/environment';
 
 const httpOptions:any = {
@@ -19,7 +19,11 @@ const httpOptions:any = {
 export class AuthService {
   private url:string = environment.baseUrl;
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.getInitialAuthState());
+  private userSubject = new BehaviorSubject<User | null>(this.getInitialUserState());
+  private userEmailSubject = new BehaviorSubject<string>('');
 
+  user$:Observable<User | null> = this.userSubject.asObservable();
+  userEmail$ = this.userEmailSubject.asObservable();
   isAuthenticated$:Observable<boolean> = this.isAuthenticatedSubject.asObservable()
   constructor(private http : HttpClient, private local:LocalService) {}
 
@@ -41,6 +45,19 @@ export class AuthService {
 
   fetchLocalData(key:string){
     return this.local.getData(key);
+  }
+
+  saveUserDetails(loginData:any){
+    this.storeData('token',loginData.token);
+    const decodedToken : any = jwtDecode(loginData.token);
+    const newuser : User = {
+      name : decodedToken.name as string,
+      email: decodedToken.email as string
+    }
+    this.storeData('name', newuser.name);
+    this.setUser(newuser);
+    console.log('user data', newuser);
+    console.log(this.user$)
   }
 
   isUserAuthenticated():boolean{
@@ -71,5 +88,15 @@ export class AuthService {
   setAuthenticated(isAuthenticated: boolean): void {
     this.isAuthenticatedSubject.next(isAuthenticated);
     this.local.saveData('isAuthenticated',JSON.stringify(isAuthenticated));
+  }
+
+  setUser(user:User):void{
+    this.userSubject.next(user);
+    this.local.saveData('user', JSON.stringify(user));
+  }
+
+  private getInitialUserState(): User | null {
+    const storedUserState = this.local.getData('user');
+    return storedUserState ? JSON.parse(storedUserState) : null;
   }
 }
