@@ -41,6 +41,7 @@ export class LoginComponent {
     };
     this.authService.loginUser(loginData).subscribe({
       next: (result: ResponseDTO) => {
+        console.log(result);
         if (result.status) {
           this.authService.saveUserDetails(result.data);
           this.authService.storeData('email', loginData.email);

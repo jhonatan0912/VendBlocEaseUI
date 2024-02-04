@@ -1,28 +1,9 @@
-<app-dashboard>
+<nb-layout>
+  <nb-layout-header fixed>Company Name</nb-layout-header>
 
-    <div class="font-semibold text-2xl text-vendblocblue mb-4">Order History</div>
-    
-    <!-- Content Div -->
-    <div class="flex flex-col min-h-[45%] mt-8 w-full bg-white">
-        <nb-card status="success">
-            <nb-card-header>Nebula</nb-card-header>
-            <nb-card-body>
-              A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-              Originally, nebula was a name for any diffuse astronomical object,
-              including galaxies beyond the Milky Way.
-            </nb-card-body>
-            <nb-card-footer>By Wikipedia</nb-card-footer>
-          </nb-card>
-          
-          <nb-card status="danger">
-            <nb-card-header>Nebula</nb-card-header>
-            <nb-card-body>
-              A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-              Originally, nebula was a name for any diffuse astronomical object,
-              including galaxies beyond the Milky Way.
-            </nb-card-body>
-            <nb-card-footer>By Wikipedia</nb-card-footer>
-          </nb-card>
-    </div>
-
-</app-dashboard>
+  <nb-sidebar>Sidebar Content</nb-sidebar>
+  
+  <nb-layout-column>
+    Page Content <button nbButton>Hello World</button>
+  </nb-layout-column>
+</nb-layout>

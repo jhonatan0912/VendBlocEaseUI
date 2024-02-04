@@ -6,7 +6,8 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
-import { NbThemeModule } from '@nebular/theme';
+import { NbThemeModule } from '@nebular/theme/theme.module';
+import { NB_THEME_OPTIONS } from '@nebular/theme';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),

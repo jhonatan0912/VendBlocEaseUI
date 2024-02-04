@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 import { FormsModule, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,9 +17,17 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LandingComponent } from './components/landing/landing.component';
-import { NbThemeModule } from '@nebular/theme';
+import { NB_THEME_OPTIONS, NbSpinnerService, NbThemeModule, NbThemeOptions, NbThemeService } from '@nebular/theme';
+import { CartItemComponent } from './components/cart-item/cart-item.component';
 
 
+const myThemeOptions: NbThemeOptions = {
+  name:'default'
+};
+
+function createDocument(): Document {
+  return document;
+}
 @Component({
     selector: 'app-root',
     standalone: true,
@@ -41,8 +49,18 @@ import { NbThemeModule } from '@nebular/theme';
         RouterModule,
         NgxSpinnerModule,
         AuthLayoutComponent,
-        LoadingComponent]
+        LoadingComponent,
+        NbThemeModule, 
+        CartItemComponent
+],
+        providers:[ 
+          {provide:NbThemeService, useValue:myThemeOptions},
+           {provide:NbSpinnerService},
+           
+          ]
 })
+
+
 export class AppComponent {
   title = 'VendBlocEase';
 

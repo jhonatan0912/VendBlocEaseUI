@@ -47,6 +47,6 @@ export const routes: Routes = [
         path:'my-orders', component:MyOrdersComponent
     },
     {
-        path:'nebula-sample', component:NebulaSampleComponent
+        path:'nebula', component:NebulaSampleComponent
     }
 ];

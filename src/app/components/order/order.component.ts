@@ -10,16 +10,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from '../../data-access/services/order/order.service';
 import { LoadingService } from '../../data-access/services/loading/loading.service';
 import { LocalService } from '../../data-access/services/local/local.service';
+import { CartItemComponent } from "../cart-item/cart-item.component";
 
 @Component({
     selector: 'app-order',
     standalone: true,
     templateUrl: './order.component.html',
     styleUrl: './order.component.css',
-    imports: [SideMenuItemComponent, CommonModule]
+    imports: [SideMenuItemComponent, CommonModule, CartItemComponent]
 })
 export class OrderComponent {
-
+  showModalCart : boolean = false;
   outlet:number = 0;
   constructor(private toastr: ToastrService, 
     private orderService:OrderService, 
@@ -109,11 +110,25 @@ export class OrderComponent {
   }
 
   removeFromCart(product:any){
-    this.cartCount--
-    this.totalcost = this.totalcost - product.price
-    const itemIndex = this.cart.findIndex(x=>x.productId === product.productId)
+    this.cartCount--;
+    this.totalcost = this.totalcost - product.price;
+    const itemIndex = this.cart.findIndex(x=>x.productId === product.productId);
     if(itemIndex !== -1){
       this.cart.splice(itemIndex, 1);
+    }
+  }
+
+  showmodal(){
+    this.showModalCart = !this.showModalCart;
+    const mydialog = document.getElementById('dialog');
+    if(this.showModalCart){
+     // mydialog?.classList.remove('hidden');
+      // mydialog?.classList.remove('opacity-0');
+      // console.log("trying to show modal");
+    }
+    else{
+      // mydialog?.classList.add('opacity-0');
+      //mydialog?.classList.add('hidden');
     }
   }
 

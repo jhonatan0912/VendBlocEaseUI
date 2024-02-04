@@ -1,2 +1,5 @@
-export class Cart {
+export interface Cart {
+    price:number,
+    product:string,
+    orderQuantity:number
 }
