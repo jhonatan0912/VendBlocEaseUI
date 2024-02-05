@@ -4,8 +4,6 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 import { FormsModule, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
 import { AuthService } from './data-access/services/auth/auth.service';
 import { LoadingService } from './data-access/services/loading/loading.service';
 import { AuthLayoutComponent } from './components/layouts/auth-layout/auth-layout.component';
@@ -17,8 +15,9 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LandingComponent } from './components/landing/landing.component';
-import { NB_THEME_OPTIONS, NbSpinnerService, NbThemeModule, NbThemeOptions, NbThemeService } from '@nebular/theme';
+import { NbSpinnerService, NbThemeModule, NbThemeOptions, NbThemeService } from '@nebular/theme';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
+
 
 
 const myThemeOptions: NbThemeOptions = {
@@ -56,7 +55,7 @@ function createDocument(): Document {
         providers:[ 
           {provide:NbThemeService, useValue:myThemeOptions},
            {provide:NbSpinnerService},
-           
+           {provide: NbThemeModule}
           ]
 })
 
