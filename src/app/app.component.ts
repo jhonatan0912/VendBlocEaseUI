@@ -15,18 +15,8 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LandingComponent } from './components/landing/landing.component';
-import { NbSpinnerService, NbThemeModule, NbThemeOptions, NbThemeService } from '@nebular/theme';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
 
-
-
-const myThemeOptions: NbThemeOptions = {
-  name:'default'
-};
-
-function createDocument(): Document {
-  return document;
-}
 @Component({
     selector: 'app-root',
     standalone: true,
@@ -49,14 +39,8 @@ function createDocument(): Document {
         NgxSpinnerModule,
         AuthLayoutComponent,
         LoadingComponent,
-        NbThemeModule, 
         CartItemComponent
-],
-        providers:[ 
-          {provide:NbThemeService, useValue:myThemeOptions},
-           {provide:NbSpinnerService},
-           {provide: NbThemeModule}
-          ]
+]
 })
 
 
