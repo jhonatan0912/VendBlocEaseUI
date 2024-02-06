@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { LocalService } from '../local/local.service';
-import { LoginDTO, RegisterUser, User } from '../../../models/user/user';
+import { LoginDTO, RegisterUser, ResetPasswordDTO, User } from '../../../models/user/user';
 import { environment } from '../../../../environments/environment';
 
 const httpOptions:any = {
@@ -35,8 +35,24 @@ export class AuthService {
     return this.http.post(this.url+'api/user/login', data, httpOptions);
   }
 
+  resetPassword(data:ResetPasswordDTO):Observable<any>{
+    return this.http.post(this.url+'api/user/ResetPassword', data, httpOptions);
+  }
+
   requestEmailVerification(email:string):Observable<any>{
     return this.http.get(this.url+'api/user/requestverification/'+email);
+  }
+
+  EmailVerification(user:string, code:string):Observable<any>{
+    return this.http.get(this.url+'api/user/emailVerification/'+user+'/'+code);
+  }
+
+  ForgotPassword(email:string):Observable<any>{
+    return this.http.get(this.url+'api/user/ForgotPassword/'+email);
+  }
+
+  GetUserById(id:string):Observable<any>{
+    return this.http.get(this.url+'api/user/GetUserById/'+id);
   }
 
   storeData(key:string, value:string):void{
@@ -77,6 +93,8 @@ export class AuthService {
 
   logOut():void{
     this.local.removeData('token');
+    this.local.removeData('user');
+    this.local.removeData('name');
     this.setAuthenticated(false)
   }
 

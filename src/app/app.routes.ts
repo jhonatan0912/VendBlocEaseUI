@@ -10,6 +10,9 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { VerifyPaymentComponent } from './components/verify-payment/verify-payment.component';
+import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './components/auth/verify-email/verify-email.component';
+import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 
 export const routes: Routes = [
     {
@@ -22,7 +25,16 @@ export const routes: Routes = [
         path:'login', component:LoginComponent
     },
     {
+        path:'verify-email/:user/:code', component:VerifyEmailComponent
+    },
+    {
+        path:'reset-password/:user/:code', component:ResetPasswordComponent
+    },
+    {
         path:'register', component:RegisterComponent
+    },
+    {
+        path:'forgot-password', component:ForgotPasswordComponent
     },
     {
         path:'request-verication', component:EmailVerificationComponent
