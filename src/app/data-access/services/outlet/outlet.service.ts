@@ -16,4 +16,8 @@ export class OutletService {
     return this.http.get<ResponseDTO>(this.baseUrl+'api/outlets');
   }
 
+  public getOutlet(id:number):Observable<ResponseDTO>{
+    return this.http.get<ResponseDTO>(this.baseUrl+'api/outlets/'+id);
+  }
+
 }

@@ -3,4 +3,7 @@ export interface Outlet {
     name : string
     storeId: number
     store : string
+    currencyId: number
+    currency : string
+    deliveryFee?:number
 }

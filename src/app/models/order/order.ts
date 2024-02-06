@@ -6,5 +6,6 @@ export interface Order {
     outletId:number
     amount:number
     id?:number,
+    deliveryMode?:number,
     orderDate?:Date
 }

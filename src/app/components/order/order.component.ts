@@ -13,6 +13,10 @@ import { LocalService } from '../../data-access/services/local/local.service';
 import { CartItemComponent } from "../cart-item/cart-item.component";
 import { FormsModule } from '@angular/forms';
 import { DeliveryOptionComponent } from "../delivery-option/delivery-option.component";
+import { OutletService } from '../../data-access/services/outlet/outlet.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from '../../models/user/user';
+import { Outlet } from '../../models/outlet/outlet';
 
 @Component({
     selector: 'app-order',
@@ -23,23 +27,62 @@ import { DeliveryOptionComponent } from "../delivery-option/delivery-option.comp
 })
 export class OrderComponent {
   showModalCart : boolean = false;
-  outlet:number = 0;
+  outletId:number = 0;
+  outlet :Outlet | undefined = undefined;
+  cartCount : number = 0;
+  categories : ProductCategory[] = [];
+  allproducts : Inventory[] = [];
+  products : any[] = [];
+  cart: any[] = [];
+  deliveryFee : number = this.outlet?.deliveryFee ?? 0;
+  ordersCost: number = 0;
+  totalcost:number = 0;
+  canCheckOut:boolean = false;
+  currentCategory = -1;
+  selectedDeliveryMode : number = 1;
+  delivery : boolean = true;
+  
   constructor(private toastr: ToastrService, 
     private orderService:OrderService, 
+    private outletService:OutletService,
     private route:ActivatedRoute, 
     private loadingService:LoadingService,
     private localStorage:LocalService,
     private router:Router){
   }
 
+  private outletSubject = new BehaviorSubject<any>('');
+
+  outlet$:Observable<any | null> = this.outletSubject.asObservable();
+
   ngOnInit() {
     this.route.params.subscribe(params =>{
-      this.outlet = params['id']
+      this.outletId = params['id']
     })
-    this.fetchCategories(this.outlet);
-    this.fetchInventory(this.outlet);
-}
-  
+    this.fetchOutlet(this.outletId);
+    this.fetchCategories(this.outletId);
+    this.fetchInventory(this.outletId);
+    this.outlet$.subscribe((response) => {
+        this.outlet = response;
+        this.deliveryFee = this.outlet?.deliveryFee ?? 0
+    });
+  }
+  public fetchOutlet(outlet:number){
+    this.outletService.getOutlet(outlet).subscribe({
+      next:(result:ResponseDTO) => {
+        if(result.status){
+          this.outletSubject.next(result.data);
+        }
+          else{
+            console.log("something went wrong");
+          }
+        },
+        error:()=> {
+          console.log("Something went wrong");
+        }
+    })
+  }  
+
   public fetchCategories(outlet:number){
     this.orderService.getProductsCategories(outlet).subscribe({
       next:(result:ResponseDTO)=>{
@@ -68,25 +111,16 @@ export class OrderComponent {
       }
     })
   }
-  
-  cartCount : number = 0;
-  categories : ProductCategory[] = [];
-  allproducts : Inventory[] = [];
-  products : any[] = [];
-  cart: any[] = [];
-  deliveryFee : number = 200;
-  totalcost:number = (this.deliveryFee);
-  canCheckOut:boolean = false;
-  currentCategory = -1;
-  selectedDeliveryMode :string = '1';
-  
 
   deliveryModeChanged(delivery:boolean):void{
     console.log("i got ", delivery);
+    this.delivery = delivery;
     if(!delivery){
-      this.totalcost = this.totalcost - this.deliveryFee;
+      this.deliveryFee = 0;
+      this.selectedDeliveryMode = 0;
     }else{
-      this.totalcost = this.totalcost + this.deliveryFee;
+      this.deliveryFee = this.outlet?.deliveryFee as number;
+      this.selectedDeliveryMode = 1;
     }
   }
 
@@ -100,7 +134,7 @@ export class OrderComponent {
   addToCart(product:any){
     const price = product.salesPrice * product.orderQuantity;
     product.price = price;
-    this.totalcost = this.totalcost + (product.price);
+    this.ordersCost = this.ordersCost + (product.price);
     const isProductInCart = this.cart.findIndex(x=>x.productId == product.productId);
     if(isProductInCart < 0){
       this.cart.push({...product});
@@ -128,7 +162,7 @@ export class OrderComponent {
 
   removeFromCart(product:any){
     this.cartCount--;
-    this.totalcost = this.totalcost - product.price;
+    this.ordersCost = this.ordersCost - product.price;
     const itemIndex = this.cart.findIndex(x=>x.productId === product.productId);
     if(itemIndex !== -1){
       this.cart.splice(itemIndex, 1);
@@ -158,11 +192,11 @@ export class OrderComponent {
     }
     this.loadingService.isLoading.next(true);
     const order : Order = {
-      id:0,
       products : this.cart,
-      outletId : 3,
+      outletId : this.outletId,
       customerEmail : email,
-      amount:this.totalcost,
+      amount:this.ordersCost + this.deliveryFee,
+      deliveryMode:this.selectedDeliveryMode
     };
     this.orderService.checkout(order).subscribe({
       next:(result:ResponseDTO)=>{

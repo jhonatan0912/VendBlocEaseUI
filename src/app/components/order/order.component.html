@@ -297,7 +297,10 @@
           ></app-cart-item>
           }
         </div>
-        <div> <span class="font-semibold">Total</span> : {{ totalcost }}</div>
+        <div> <span class="font-semibold">Cost</span> : {{ ordersCost }}</div>
+         @if(delivery){
+        <div> <span class="font-semibold">Delivery Cost</span> : {{deliveryFee}}</div>
+        } 
         <app-delivery-option (selectedDeliveryModeEmitter)="deliveryModeChanged($event)"></app-delivery-option>
         <div class="form_div">
           <button
