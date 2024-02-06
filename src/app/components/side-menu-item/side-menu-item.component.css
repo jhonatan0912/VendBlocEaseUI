@@ -2,5 +2,5 @@
 
 
 .category_item_div{
-    @apply flex items-center justify-between sm:px-1 lg:px-2 sm:py-3 lg:py-4 hover:bg-[#0F172A] hover:cursor-pointer hover:text-white;
+    @apply flex items-center justify-between sm:px-1 lg:px-2 py-2 sm:py-3 lg:py-4 hover:bg-[#0F172A] hover:cursor-pointer hover:text-white;
 }

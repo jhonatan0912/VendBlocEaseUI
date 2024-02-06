@@ -1,7 +1,7 @@
 <app-dashboard>
 
     <span class="text-sm font-medium text-vendblocblue">Hello {{user?.name}}</span>
-    <span class="text_title">Welcome to your Profile</span>
+    <span class="text_title">Welcome!</span>
     
     <div class="flex justify-between mt-5">
         @for (stat of stats; track $index) {
@@ -11,22 +11,17 @@
     </div>
     
     <!-- Content Div -->
-    <div class="flex flex-col min-h-[45%] mt-8 bg-white">
+    <div class="flex flex-col min-h-[45%] mt-8 bg-white px-5 py-3">
         <span class="text_title">Personal Information</span>
         <div class="flex space-x-5 mt-5">
             <div class="flex flex-col space-y-4">
                 <span class="info_title">Name</span>
                 <span class="info_title">Email</span>
-                
-                <!-- <span class="info_title">Phone</span>
-                <span class="info_title">Address</span> -->
             </div>
 
             <div class="flex flex-col space-y-4">
                 <span class="info_title opacity-70">{{user?.name}}</span>
                 <span class="info_title opacity-70">{{user?.email}}</span>
-                <!-- <span class="info_title opacity-70">2348169289524</span>
-                <span class="info_title opacity-70">Robert Robertson, 1234 NW Bobcat Lane, St. Robert, MO 65584-5678</span> -->
             </div>
         </div>
     </div>

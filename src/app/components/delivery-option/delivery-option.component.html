@@ -1,0 +1,28 @@
+<div><span class="font-inter">Select delivery option:</span></div>
+<div class="font-inter flex justify-between">
+  <div class="flex items-center space-x-1">
+    <input
+      type="radio"
+      [(ngModel)]="selectedDeliveryMode"
+      (change)="deliveryModeChanged($event)"
+      value="1"
+      class="accent-vendblocblue w-4 h-4 rounded"
+      checked
+      [attr.name]="'delivery_' + uniqueId"
+      id="deliver"
+    />
+    <label for="deliver">Delivery</label>
+  </div>
+  <div class="flex items-center space-x-1">
+    <input
+      type="radio"
+      [(ngModel)]="selectedDeliveryMode"
+      (change)="deliveryModeChanged($event)"
+      value="0"
+      class="accent-vendblocblue w-4 h-4 rounded"
+      [attr.name]="'delivery_' + uniqueId"
+      id="pickup"
+    />
+    <label for="pickup">Pick Up</label>
+  </div>
+</div>

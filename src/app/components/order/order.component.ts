@@ -11,13 +11,15 @@ import { OrderService } from '../../data-access/services/order/order.service';
 import { LoadingService } from '../../data-access/services/loading/loading.service';
 import { LocalService } from '../../data-access/services/local/local.service';
 import { CartItemComponent } from "../cart-item/cart-item.component";
+import { FormsModule } from '@angular/forms';
+import { DeliveryOptionComponent } from "../delivery-option/delivery-option.component";
 
 @Component({
     selector: 'app-order',
     standalone: true,
     templateUrl: './order.component.html',
     styleUrl: './order.component.css',
-    imports: [SideMenuItemComponent, CommonModule, CartItemComponent]
+    imports: [SideMenuItemComponent, CommonModule, CartItemComponent, FormsModule, DeliveryOptionComponent]
 })
 export class OrderComponent {
   showModalCart : boolean = false;
@@ -72,12 +74,27 @@ export class OrderComponent {
   allproducts : Inventory[] = [];
   products : any[] = [];
   cart: any[] = [];
-  totalcost:number = 0;
+  deliveryFee : number = 200;
+  totalcost:number = (this.deliveryFee);
   canCheckOut:boolean = false;
+  currentCategory = -1;
+  selectedDeliveryMode :string = '1';
+  
+
+  deliveryModeChanged(delivery:boolean):void{
+    console.log("i got ", delivery);
+    if(!delivery){
+      this.totalcost = this.totalcost - this.deliveryFee;
+    }else{
+      this.totalcost = this.totalcost + this.deliveryFee;
+    }
+  }
 
   categoryProducts(event: Event, productCategoryId:number){
     event.preventDefault();
-    this.products = this.allproducts.filter(x=>x.productCategoryId === productCategoryId)
+    this.currentCategory = productCategoryId;
+    this.products = this.allproducts.filter(x=>x.productCategoryId === productCategoryId);
+    console.log(this.products);
   }
 
   addToCart(product:any){
@@ -121,15 +138,15 @@ export class OrderComponent {
   showmodal(){
     this.showModalCart = !this.showModalCart;
     const mydialog = document.getElementById('dialog');
-    if(this.showModalCart){
-     // mydialog?.classList.remove('hidden');
-      // mydialog?.classList.remove('opacity-0');
-      // console.log("trying to show modal");
-    }
-    else{
-      // mydialog?.classList.add('opacity-0');
-      //mydialog?.classList.add('hidden');
-    }
+    // if(this.showModalCart){
+    //  // mydialog?.classList.remove('hidden');
+    //   // mydialog?.classList.remove('opacity-0');
+    //   // console.log("trying to show modal");
+    // }
+    // else{
+    //   // mydialog?.classList.add('opacity-0');
+    //   //mydialog?.classList.add('hidden');
+    // }
   }
 
   checkout(){

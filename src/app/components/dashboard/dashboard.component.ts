@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { SideMenuItemComponent } from '../../components/side-menu-item/side-menu-item.component';
 import { Router } from '@angular/router';
+import { AuthService } from '../../data-access/services/auth/auth.service';
+import { User } from '../../models/user/user';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +13,15 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent {
 
-  constructor(private router:Router){}
+  user : User | null = null ;
+  constructor(private router:Router, private authService:AuthService){}
+
+  ngOnInit(){
+    this.authService.user$.subscribe((response) => {
+      console.log(response);
+      this.user = response;
+    });
+  }
 
   navigate(event:Event, link:string){
     event.preventDefault();

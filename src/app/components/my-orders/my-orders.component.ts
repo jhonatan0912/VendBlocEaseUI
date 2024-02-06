@@ -22,6 +22,7 @@ export class MyOrdersComponent {
 
     user : User | null = null ;
     orders : any[] = [];
+   
 
     constructor(private orderService:OrderService,
          private authService:AuthService,

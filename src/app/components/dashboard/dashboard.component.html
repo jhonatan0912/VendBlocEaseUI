@@ -2,19 +2,18 @@
 <div class="flex flex-row min-h-full ">
   <!-- Side Bar -->
   <section class="w-[27%] border 2xl:px-24 flex flex-col bg-white items-center pt-10">
-    <div class="font-semibold text-2xl text-vendblocblue mb-4">My Dashboard</div>
+    <div class="font-semibold text-sm lg:text-2xl text-vendblocblue mb-4">My Dashboard</div>
     <img
       src="../../../assets/dashboarduser.png"
-      class="rounded-full w-[150px]"
+      class="rounded-full w-[50px] lg:w-[150px]"
       alt=""
     />
-    <span class="font-inter font-semibold text-[#0F172AB2] mt-2"
-      >Ugwumba Ogechi</span
+    <span class="flex text-center font-inter text-sm lg:text-2xl font-semibold text-[#0F172AB2] mt-2"
+      >{{user?.name}}</span
     >
     <div class="flex flex-col w-[90%] mt-5">
      <app-side-menu-item (click)="navigate($event,'info')" menuName="Personal Information"></app-side-menu-item>
      <app-side-menu-item (click)="navigate($event,'my-orders')" menuName="My Orders"></app-side-menu-item>
-     <app-side-menu-item (click)="navigate($event,'nebula-sample')" menuName="Nebula"></app-side-menu-item>
      <app-side-menu-item menuName="Change Password"></app-side-menu-item>
      <app-side-menu-item menuName="Log Out"></app-side-menu-item>
     </div>
