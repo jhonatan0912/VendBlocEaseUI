@@ -15,7 +15,6 @@ import { FormsModule } from '@angular/forms';
 import { DeliveryOptionComponent } from "../delivery-option/delivery-option.component";
 import { OutletService } from '../../data-access/services/outlet/outlet.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../../models/user/user';
 import { Outlet } from '../../models/outlet/outlet';
 
 @Component({

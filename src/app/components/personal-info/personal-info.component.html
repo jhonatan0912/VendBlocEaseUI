@@ -3,7 +3,7 @@
     <span class="text-sm font-medium text-vendblocblue">Hello {{user?.name}}</span>
     <span class="text_title">Welcome!</span>
     
-    <div class="flex justify-between mt-5">
+    <div class="hidden md:flex justify-between mt-5">
         @for (stat of stats; track $index) {
             <app-stat-card cardCount={{stat.count}} cardName={{stat.name}} iconBackgroundColor={{stat.color}}></app-stat-card>
         }

@@ -1,9 +1,13 @@
 <div class="flex flex-col h-full w-full">
   <!-- Restaurant Header -->
-  <div class="flex flex-col h-[10%] w-full">
+  <div class="relative flex flex-col h-[10%] w-full">
+    <div class="absolute w-full bg-transparent h-full justify-center text-white flex flex-col">
+      <span class="text-white font-semibold text-lg md:text-[50px] xl:text-5xl text-center font-inter">{{outlet?.store}}</span>
+      <span class="text-white font-medium text-xs md:text-sm xl:text-lg text-center font-inter">{{outlet?.name}}</span>
+    </div>
     <img
       class="w-full h-auto object-cover"
-      src="../../../../assets/restaurant.png"
+      src="../../../../assets/background-image.png"
       alt=""
     />
   </div>
@@ -78,7 +82,7 @@
             type="text"
             name=""
             placeholder="Search"
-            id=""
+            id="" disabled
           />
           <button class="absolute pl-2">
             <svg
@@ -125,7 +129,7 @@
 
   <!-- Content Div -->
   <div
-    class="flex px-1 lg:px-10 xl:px-12 2xl:px-24 w-full pt-4 space-x-5 lg:space-x-8 items-center md:items-start justify-between"
+    class="flex px-1 lg:px-10 xl:px-12 2xl:px-24 w-full pt-4 space-x-5 lg:space-x-8 items-center md:items-start justify-between mb-20"
   >
     <!-- Categories Div -->
     <div
@@ -140,7 +144,7 @@
             type="text"
             name=""
             placeholder="Search"
-            id=""
+            id="" disabled
           />
           <button class="absolute pl-2">
             <svg
@@ -317,7 +321,7 @@
 
 
         <!-- Floating Cart -->
-        <div (click)="showmodal()" class="bg-[hsl(222,47%,11%)] fixed p-4 rounded-full right-[50px] bottom-10 z-50 hover:p-5 duration-100 shadow-2xl mb-12">
+        <div (click)="showmodal()" class="flex md:hidden bg-[hsl(222,47%,11%)] fixed p-4 rounded-full right-[50px] bottom-20 z-10 hover:p-5 duration-100 shadow-2xl mb-12">
           <!-- <div class="absolute bg-red-600 rounded-full bottom-6 px-0.5 right-1">2</div> -->
           <svg  xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
             <g clip-path="url(#clip0_226_3727)">
