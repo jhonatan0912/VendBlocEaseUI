@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  vendbloceaseui:
+    ports:
+      - "4200:80"
+    image: ${DOCKER_REGISTRY-}vendbloceaseui-prod
+    build:
+      context: .
+      dockerfile: Dockerfile
