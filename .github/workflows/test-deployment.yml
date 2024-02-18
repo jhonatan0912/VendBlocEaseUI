@@ -1,0 +1,23 @@
+name: Deploy to Test Environment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: SSH into Linux server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.UBUNTU_SERVER }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd  /opt/Test/VendBlocEase/
+            git pull https://${{ secrets.PAT }}@github.com/Oluwashenor/VendBloc.git || exit 1
+            docker-compose up -d --build || exit 1

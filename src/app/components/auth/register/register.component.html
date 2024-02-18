@@ -1,43 +1,68 @@
 <app-auth-layout>
-<!-- Form -->
-<form [formGroup]="registerForm" (submit)="registerUser()">
+  <!-- Form -->
+  <form [formGroup]="registerForm" (submit)="registerUser()">
     <div class="flex flex-col w-full items-center">
-        <h1 class="font-bold text-3xl mb-4">Create your Account</h1>
-        <div class="form_div">
-            <label for="">Enter Full Name</label>
-            <input class="border p-3 rounded-md" placeholder="Full Name" formControlName="name" type="text" required>
-        </div>
-        <div class="form_div">
-            <label for="">Enter Your Email Address</label>
-            <input class="border p-3 rounded-md" placeholder="Email Address" formControlName="email" type="email" required>
-        </div>
-        <div class="form_div">
-            <label for="">Enter Password</label>
-            <input class="border p-3 rounded-md" placeholder="********" formControlName="password" type="password" required>
-        </div>
-        <div class="w-full mt-4 justify-start flex-row space-x-3">
-            <input type="checkbox" name="" id="">
-            <label for="">Remember me</label>
-        </div>
-        <div class="form_div">
-            <button class="create_button bg-[#0F172A] text-white" type="submit">Create your Account</button>
-        </div>
-        <div class="mt-3">
-            Or
-        </div>
-        <div class="form_div">
-            <button class="flex items-center justify-center space-x-3 create_button text-[#0F172A]">
-                <img src="../../../../assets/google.png" class="w-6" alt="">
-                <span>Sign up with Google</span>
-            </button>
-        </div>
-        <div class="w-full mt-6 justify-start flex-row space-x-1">
-           <span class="text-gray-500 font-[400]"> Already have an account ? </span>
-           <a routerLink="/login" routerLinkActive="active" class="hover:underline font-[500] hover:cursor-pointer">Sign in here</a>
-        </div>
+      <h1 class="font-bold text-3xl mb-4">Create your Account</h1>
+      <div class="form_div">
+        <label for="">Enter Full Name</label>
+        <input
+          class="border p-3 rounded-md"
+          placeholder="Full Name"
+          formControlName="name"
+          type="text"
+          required
+        />
+      </div>
+      <div class="form_div">
+        <label for="">Enter Your Email Address</label>
+        <input
+          class="border p-3 rounded-md"
+          placeholder="Email Address"
+          formControlName="email"
+          type="email"
+          required
+        />
+      </div>
+      <div class="form_div">
+        <label for="">Enter Password</label>
+        <input
+          class="border p-3 rounded-md"
+          placeholder="********"
+          formControlName="password"
+          type="password"
+          required
+        />
+      </div>
+      <div class="w-full mt-4 justify-between flex flex-col">
+        <app-info textItem="Password must contain numbers"></app-info>
+        <app-info textItem="Password must have at least 8 characters"></app-info>
+        <app-info textItem="Password must contain special characters"></app-info>
+      </div>
+      <div class="form_div">
+        <button class="create_button bg-[#0F172A] text-white" type="submit">
+          Create your Account
+        </button>
+      </div>
+      <div class="mt-3">Or</div>
+      <div class="form_div">
+        <button
+          class="flex items-center justify-center space-x-3 create_button text-[#0F172A]"
+        >
+          <img src="../../../../assets/google.png" class="w-6" alt="" />
+          <span>Sign up with Google</span>
+        </button>
+      </div>
+      <div class="w-full mt-6 justify-start flex-row space-x-1">
+        <span class="text-gray-500 font-[400]">
+          Already have an account ?
+        </span>
+        <a
+          routerLink="/login"
+          routerLinkActive="active"
+          class="hover:underline font-[500] hover:cursor-pointer"
+          >Sign in here</a
+        >
+      </div>
     </div>
-</form>
-
-
-
+  </form>
 </app-auth-layout>

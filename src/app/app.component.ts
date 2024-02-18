@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
+import { GuardsCheckEnd, GuardsCheckStart, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 import { FormsModule, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -44,32 +44,26 @@ import { CartItemComponent } from './components/cart-item/cart-item.component';
 })
 
 
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'VendBlocEase';
 
   constructor(private authService : AuthService, private router: Router, private loadingService:LoadingService){
-    // this.router.events.subscribe((event:any)=>{
-    //   switch(true){
-    //     case event instanceof NavigationStart:{
-    //       this.loadingService.isLoading.next(true);
-    //       break;
-    //     }
-    //     case event instanceof NavigationEnd:
-    //     case event instanceof NavigationCancel:
-    //     case event instanceof NavigationError:{
-    //       this.loadingService.isLoading.next(false);
-    //       break;
-    //     }
-    //   }
-    // })
+    
   }
 
 
   ngOnInit():void{
-    console.log('Starting Application');
-    // const isAuthenticated : boolean = this.authService.isUserAuthenticated();
-    // if(!isAuthenticated){
-    //   this.router.navigate(['login'])
-    // }
-  }
+    this.GuardLoader()
+}
+
+async GuardLoader(){
+  this.router.events.subscribe(async (event:any)=>{
+    if(event instanceof GuardsCheckStart){
+      this.loadingService.isLoading.next(true);
+    }
+    if (event instanceof GuardsCheckEnd || event instanceof NavigationCancel) {
+      this.loadingService.isLoading.next(false);
+    }
+});
+}
 }

@@ -171,15 +171,6 @@ export class OrderComponent {
   showmodal(){
     this.showModalCart = !this.showModalCart;
     const mydialog = document.getElementById('dialog');
-    // if(this.showModalCart){
-    //  // mydialog?.classList.remove('hidden');
-    //   // mydialog?.classList.remove('opacity-0');
-    //   // console.log("trying to show modal");
-    // }
-    // else{
-    //   // mydialog?.classList.add('opacity-0');
-    //   //mydialog?.classList.add('hidden');
-    // }
   }
 
   checkout(){

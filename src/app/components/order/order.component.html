@@ -1,9 +1,17 @@
 <div class="flex flex-col h-full w-full">
   <!-- Restaurant Header -->
   <div class="relative flex flex-col h-[10%] w-full">
-    <div class="absolute w-full bg-transparent h-full justify-center text-white flex flex-col">
-      <span class="text-white font-semibold text-lg md:text-[50px] xl:text-5xl text-center font-inter">{{outlet?.store}}</span>
-      <span class="text-white font-medium text-xs md:text-sm xl:text-lg text-center font-inter">{{outlet?.name}}</span>
+    <div
+      class="absolute w-full bg-transparent h-full justify-center text-white flex flex-col"
+    >
+      <span
+        class="text-white font-semibold text-lg md:text-[50px] xl:text-5xl text-center font-inter"
+        >{{ outlet?.store }}</span
+      >
+      <span
+        class="text-white font-medium text-xs md:text-sm xl:text-lg text-center font-inter"
+        >{{ outlet?.name }}</span
+      >
     </div>
     <img
       class="w-full h-auto object-cover"
@@ -14,27 +22,33 @@
 
   @if(showModalCart){
   <!-- Modal [ngClass]="showModalCart ? 'opacity-50' : 'hidden opacity-0'"-->
-  <div id="dialog" class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen z-50">
-     <!-- Close Button -->
-     <div (click)="showmodal()"
-     class="group absolute top-16 right-2 flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full md:bg-white md:top-4 hover:cursor-pointer hover:-translate-y-0.5 transition duration-150"
-   >
-     <svg
-       xmlns="http://www.w3.org/2000/svg"
-       class="w-6 h-6 text-black group-hover:text-gray-600"
-       viewBox="0 0 24 24"
-       stroke-width="1.5"
-       stroke="currentColor"
-       fill="none"
-       stroke-linecap="round"
-       stroke-linejoin="round"
-     >
-       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-       <line x1="18" y1="6" x2="6" y2="18" />
-       <line x1="6" y1="6" x2="18" y2="18" />
-     </svg>
-   </div>
-    <div class="bg-white rounded-xl shadow-md p-4 mx-auto my-20 w-[90%] max-h-[80%] border">
+  <div
+    id="dialog"
+    class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen z-50"
+  >
+    <!-- Close Button -->
+    <div
+      (click)="showmodal()"
+      class="group absolute top-16 right-2 flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full md:bg-white md:top-4 hover:cursor-pointer hover:-translate-y-0.5 transition duration-150"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-6 h-6 text-black group-hover:text-gray-600"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </div>
+    <div
+      class="bg-white rounded-xl shadow-md p-4 mx-auto my-20 w-[90%] max-h-[80%] border"
+    >
       <div class="flex items-center gap-5">
         <div
           class="m-0 md:flex-col shadow-lg w-full md:p-1 lg:p-3 xl:p-4 bg-[#0f172a08] space-y-6"
@@ -51,9 +65,20 @@
               }
             </div>
 
-            <div> <span class="font-semibold">Total</span> : {{ totalcost }}</div>
-            <app-delivery-option uniqueId="mobile" (selectedDeliveryModeEmitter)="deliveryModeChanged($event)"></app-delivery-option>
-       
+            <div>
+              <span class="font-semibold">Item(s) Cost</span> : {{ ordersCost }}
+            </div>
+            @if(delivery){
+            <div>
+              <span class="font-semibold">Delivery Cost</span> :
+              {{ deliveryFee }}
+            </div>
+            }
+            <app-delivery-option
+              uniqueId="mobile"
+              (selectedDeliveryModeEmitter)="deliveryModeChanged($event)"
+            ></app-delivery-option>
+
             <div class="form_div">
               <button
                 (click)="checkout()"
@@ -69,7 +94,7 @@
       </div>
     </div>
   </div>
-}
+  }
 
   <!-- Mobile Div -->
   <div class="flex flex-col md:hidden pt-4">
@@ -82,7 +107,8 @@
             type="text"
             name=""
             placeholder="Search"
-            id="" disabled
+            id=""
+            disabled
           />
           <button class="absolute pl-2">
             <svg
@@ -144,7 +170,8 @@
             type="text"
             name=""
             placeholder="Search"
-            id="" disabled
+            id=""
+            disabled
           />
           <button class="absolute pl-2">
             <svg
@@ -194,13 +221,13 @@
                 class="flex space-x-5 md:space-x-4 items-center justify-start"
               >
                 <span class="opacity-50 font-inter">Qty</span>
-                <span class="flex items-center space-x-1">
+                <span class="flex items-center space-x-3 lg:space-x-1">
                   <span
                     (click)="updateProductQuantity(product.productId, false)"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="13"
+                      width="14"
                       height="2"
                       viewBox="0 0 13 2"
                       fill="none"
@@ -254,9 +281,9 @@
               <div class="flex space-x-1">
                 <span class="opacity-50 font-inter">Price</span>
                 <span class="pl-2 sm:pl-0 opacity-70 font-inter"
-                  >₦{{ product.salesPrice }}</span
+                  >₦{{ product.salesPrice }} @if(product.orderQuantity > 1){({{ product.salesPrice * product.orderQuantity }})}</span
                 >
-                <!-- {{ product.price }} -->
+               
               </div>
             </div>
           </div>
@@ -271,14 +298,16 @@
             </button>
           </div>
         </div>
-        }
-        @if(products.length === 0){
-          <div class="font-inter text-lg md:text-xl text-center">
+        } @if(products.length === 0){
+        <div class="font-inter text-lg md:text-xl text-center">
           @if(currentCategory === -1){
-            <div class="flex justify-center items-center"><span>Please select a category to see the products</span></div>
-          }
-          @else {
-            <div class="flex justify-center items-center"><span>There are no products in this current category</span></div>
+          <div class="flex justify-center items-center">
+            <span>Please select a category to see the products</span>
+          </div>
+          } @else {
+          <div class="flex justify-center items-center">
+            <span>There are no products in this current category</span>
+          </div>
           }
         </div>
         }
@@ -301,11 +330,15 @@
           ></app-cart-item>
           }
         </div>
-        <div> <span class="font-semibold">Cost</span> : {{ ordersCost }}</div>
-         @if(delivery){
-        <div> <span class="font-semibold">Delivery Cost</span> : {{deliveryFee}}</div>
-        } 
-        <app-delivery-option (selectedDeliveryModeEmitter)="deliveryModeChanged($event)"></app-delivery-option>
+        <div><span class="font-semibold">Item(s) Cost</span> : {{ ordersCost }}</div>
+        @if(delivery){
+        <div>
+          <span class="font-semibold">Delivery Cost</span> : {{ deliveryFee }}
+        </div>
+        }
+        <app-delivery-option
+          (selectedDeliveryModeEmitter)="deliveryModeChanged($event)"
+        ></app-delivery-option>
         <div class="form_div">
           <button
             (click)="checkout()"
@@ -319,24 +352,48 @@
       </div>
     </div>
 
-
-        <!-- Floating Cart -->
-        <div (click)="showmodal()" class="flex md:hidden bg-[hsl(222,47%,11%)] fixed p-4 rounded-full right-[50px] bottom-20 z-10 hover:p-5 duration-100 shadow-2xl mb-12">
-          <!-- <div class="absolute bg-red-600 rounded-full bottom-6 px-0.5 right-1">2</div> -->
-          <svg  xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <g clip-path="url(#clip0_226_3727)">
-              <path d="M7.49984 18.3334C7.96007 18.3334 8.33317 17.9603 8.33317 17.5001C8.33317 17.0398 7.96007 16.6667 7.49984 16.6667C7.0396 16.6667 6.6665 17.0398 6.6665 17.5001C6.6665 17.9603 7.0396 18.3334 7.49984 18.3334Z" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M16.6668 18.3334C17.1271 18.3334 17.5002 17.9603 17.5002 17.5001C17.5002 17.0398 17.1271 16.6667 16.6668 16.6667C16.2066 16.6667 15.8335 17.0398 15.8335 17.5001C15.8335 17.9603 16.2066 18.3334 16.6668 18.3334Z" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M0.833496 0.833252H4.16683L6.40016 11.9916C6.47637 12.3752 6.68509 12.7199 6.98978 12.9652C7.29448 13.2104 7.67574 13.3407 8.06683 13.3333H16.1668C16.5579 13.3407 16.9392 13.2104 17.2439 12.9652C17.5486 12.7199 17.7573 12.3752 17.8335 11.9916L19.1668 4.99992H5.00016" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </g>
-            <defs>
-              <clipPath id="clip0_226_3727">
-                <rect width="20" height="20" fill="white"/>
-              </clipPath>
-            </defs>
-          </svg>
-        </div>
-
-
+    <!-- Floating Cart -->
+    <div
+      (click)="showmodal()"
+      class="flex md:hidden bg-[hsl(222,47%,11%)] fixed p-4 rounded-full right-[50px] bottom-20 z-10 hover:p-5 duration-100 shadow-2xl mb-12"
+    >
+      <!-- <div class="absolute bg-red-600 rounded-full bottom-6 px-0.5 right-1">2</div> -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+      >
+        <g clip-path="url(#clip0_226_3727)">
+          <path
+            d="M7.49984 18.3334C7.96007 18.3334 8.33317 17.9603 8.33317 17.5001C8.33317 17.0398 7.96007 16.6667 7.49984 16.6667C7.0396 16.6667 6.6665 17.0398 6.6665 17.5001C6.6665 17.9603 7.0396 18.3334 7.49984 18.3334Z"
+            stroke="#FAFAFA"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M16.6668 18.3334C17.1271 18.3334 17.5002 17.9603 17.5002 17.5001C17.5002 17.0398 17.1271 16.6667 16.6668 16.6667C16.2066 16.6667 15.8335 17.0398 15.8335 17.5001C15.8335 17.9603 16.2066 18.3334 16.6668 18.3334Z"
+            stroke="#FAFAFA"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M0.833496 0.833252H4.16683L6.40016 11.9916C6.47637 12.3752 6.68509 12.7199 6.98978 12.9652C7.29448 13.2104 7.67574 13.3407 8.06683 13.3333H16.1668C16.5579 13.3407 16.9392 13.2104 17.2439 12.9652C17.5486 12.7199 17.7573 12.3752 17.8335 11.9916L19.1668 4.99992H5.00016"
+            stroke="#FAFAFA"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_226_3727">
+            <rect width="20" height="20" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
   </div>
 </div>

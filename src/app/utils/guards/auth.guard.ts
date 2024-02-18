@@ -6,14 +6,11 @@ import { LoadingService } from '../../data-access/services/loading/loading.servi
 import { AuthService } from '../../data-access/services/auth/auth.service';
 
 export const authGuard: CanActivateFn = (route, state) : Observable<boolean> |  Promise<boolean> | boolean => {
-  const loadingService = inject(LoadingService);
-  loadingService.isLoading.next(true)
-  let isAuthenticated : boolean = false;
-  const auth = inject(AuthService);
+  let loadingService = inject(LoadingService);
   const router = inject(Router);
-  auth.isAuthenticated$.subscribe((result) => {
-   isAuthenticated = result;
-  })
+  const authService = inject(AuthService);
+  loadingService.isLoading.next(true)
+  const isAuthenticated : boolean = authService.isUserAuthenticated();
   if(!isAuthenticated){
     loadingService.isLoading.next(false)
     router.navigate(['login'])

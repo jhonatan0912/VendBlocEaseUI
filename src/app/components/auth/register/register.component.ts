@@ -8,13 +8,14 @@ import { AuthLayoutComponent } from '../../../components/layouts/auth-layout/aut
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../data-access/services/auth/auth.service';
 import { LoadingService } from '../../../data-access/services/loading/loading.service';
+import { InfoComponent } from "../../info/info.component";
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [RouterOutlet,
-    RouterLink, HeaderComponent, ReactiveFormsModule, AuthLayoutComponent],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+    selector: 'app-register',
+    standalone: true,
+    templateUrl: './register.component.html',
+    styleUrl: './register.component.css',
+    imports: [RouterOutlet,
+        RouterLink, HeaderComponent, ReactiveFormsModule, AuthLayoutComponent, InfoComponent]
 })
 export class RegisterComponent {
 
