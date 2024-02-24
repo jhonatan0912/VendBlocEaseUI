@@ -35,7 +35,7 @@ export class LoginComponent {
  async login() {
     this.authService.logOut();
     this.loadingService.isLoading.next(true);
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    // await new Promise(resolve => setTimeout(resolve, 3000));
     const formValue = this.loginForm.value;
     const loginData: LoginDTO = {
       email: formValue.email,

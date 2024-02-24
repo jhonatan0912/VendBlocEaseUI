@@ -4,9 +4,14 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoadingService } from '../../data-access/services/loading/loading.service';
 import { AuthService } from '../../data-access/services/auth/auth.service';
+import { Injectable } from '@angular/core';
 
-export const authGuard: CanActivateFn = (route, state) : Observable<boolean> |  Promise<boolean> | boolean => {
-  let loadingService = inject(LoadingService);
+@Injectable({
+  providedIn: 'root'
+})
+class PermissionService{
+  canActivate(): boolean{
+    let loadingService = inject(LoadingService);
   const router = inject(Router);
   const authService = inject(AuthService);
   loadingService.isLoading.next(true)
@@ -14,7 +19,13 @@ export const authGuard: CanActivateFn = (route, state) : Observable<boolean> |  
   if(!isAuthenticated){
     loadingService.isLoading.next(false)
     router.navigate(['login'])
+    return isAuthenticated;
   }
   loadingService.isLoading.next(false)
   return isAuthenticated;
+  }
+}
+
+export const authGuard: CanActivateFn = (route, state) : Observable<boolean> |  Promise<boolean> | boolean => {
+  return inject(PermissionService).canActivate();
 };

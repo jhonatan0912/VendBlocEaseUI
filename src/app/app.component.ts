@@ -46,9 +46,7 @@ import { CartItemComponent } from './components/cart-item/cart-item.component';
 
 export class AppComponent implements OnInit{
   title = 'VendBlocEase';
-
   constructor(private authService : AuthService, private router: Router, private loadingService:LoadingService){
-    
   }
 
 

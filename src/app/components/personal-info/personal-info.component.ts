@@ -21,7 +21,6 @@ export class PersonalInfoComponent{
 
   ngOnInit(){
     this.authService.user$.subscribe((response) => {
-      console.log(response);
       this.user = response;
     });
   }

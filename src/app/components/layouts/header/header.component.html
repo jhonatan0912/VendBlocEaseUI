@@ -3,11 +3,13 @@
   <div>
     <span class="text-2xl text-vendblocblue font-bold opacity-75">VendBloc</span>
   </div>
+  @if(isAuthenticated){
   <!-- Links -->
   <div class="flex-col justify-end space-y-3 md:flex-row space-x-2 md:space-x-6 xl:space-x-8 md:items-center">
     <a class="active_nav_link" routerLink="/home" href="#">Home</a>
     <a class="nav_link" routerLink="/dashboard" href="#">Dashboard</a>
   </div>
+}
   <!-- auth buttons and cart -->
   <div class="flex items-center space-x-5">
     @if(isAuthenticated){
@@ -27,9 +29,9 @@
        
       </div>
     } @else {
-    <a class="hidden lg:block auth_button border-gray-500" routerLink="/register">SignUp</a>
+    <a class="block auth_button border-gray-500" routerLink="/register">SignUp</a>
     <a
-      class="hidden lg:block auth_button bg-black border-gray-500 text-white"
+      class="block auth_button bg-black border-gray-500 text-white"
       routerLink="/login"
       >LogIn</a
     >

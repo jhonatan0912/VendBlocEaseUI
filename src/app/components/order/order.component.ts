@@ -11,20 +11,26 @@ import { OrderService } from '../../data-access/services/order/order.service';
 import { LoadingService } from '../../data-access/services/loading/loading.service';
 import { LocalService } from '../../data-access/services/local/local.service';
 import { CartItemComponent } from "../cart-item/cart-item.component";
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeliveryOptionComponent } from "../delivery-option/delivery-option.component";
 import { OutletService } from '../../data-access/services/outlet/outlet.service';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { Outlet } from '../../models/outlet/outlet';
+import { UpdateProfile, User } from '../../models/user/user';
+import { AuthService } from '../../data-access/services/auth/auth.service';
 
 @Component({
     selector: 'app-order',
     standalone: true,
     templateUrl: './order.component.html',
     styleUrl: './order.component.css',
-    imports: [SideMenuItemComponent, CommonModule, CartItemComponent, FormsModule, DeliveryOptionComponent]
+    imports: [SideMenuItemComponent, CommonModule, CartItemComponent, FormsModule,ReactiveFormsModule, DeliveryOptionComponent]
 })
 export class OrderComponent {
+  profileUpdateForm = new FormGroup({
+    address: new FormControl(),
+    phone: new FormControl(),
+  })
+
   showModalCart : boolean = false;
   outletId:number = 0;
   outlet :Outlet | undefined = undefined;
@@ -40,6 +46,9 @@ export class OrderComponent {
   currentCategory = -1;
   selectedDeliveryMode : number = 1;
   delivery : boolean = true;
+  updateProfileModal : boolean = false;
+  serviceCharge : number  = 70;
+  user : User | null = null;
   
   constructor(private toastr: ToastrService, 
     private orderService:OrderService, 
@@ -47,30 +56,62 @@ export class OrderComponent {
     private route:ActivatedRoute, 
     private loadingService:LoadingService,
     private localStorage:LocalService,
-    private router:Router){
+    private router:Router,
+    private authService:AuthService){
   }
-
-  private outletSubject = new BehaviorSubject<any>('');
-
-  outlet$:Observable<any | null> = this.outletSubject.asObservable();
 
   ngOnInit() {
     this.route.params.subscribe(params =>{
       this.outletId = params['id']
-    })
+    });
+    this.authService.user$.subscribe({
+       next:(result)=>{
+        this.user = result as User
+        console.log('User from order', this.user);
+       },
+       error:()=> {
+        console.log("Something went wrong");
+      }
+    });
     this.fetchOutlet(this.outletId);
     this.fetchCategories(this.outletId);
     this.fetchInventory(this.outletId);
-    this.outlet$.subscribe((response) => {
-        this.outlet = response;
-        this.deliveryFee = this.outlet?.deliveryFee ?? 0
-    });
   }
+
+  updateProfile() {
+    const formValue = this.profileUpdateForm.value;
+    const contactData: UpdateProfile = {
+      phone: formValue.phone,
+      address: formValue.address,
+      email: this.user?.email as string
+    };
+    this.authService.updateContact(contactData).subscribe({
+      next:(result: ResponseDTO)=>{
+       if(result.status){
+        this.toastr.success('Profile updated successfully', 'Success');
+        this.toggleProfileModal();
+        const user : User = {
+           email:this.user?.email as string,
+           phone:contactData.phone as string,
+           address: contactData.address as string,
+           name: this.user?.name as string
+        };
+        this.authService.setUser(user);
+       }
+      },
+      error:()=> {
+        this.toastr.error("something went wrong");
+     }
+   })
+  }
+
   public fetchOutlet(outlet:number){
     this.outletService.getOutlet(outlet).subscribe({
       next:(result:ResponseDTO) => {
         if(result.status){
-          this.outletSubject.next(result.data);
+          const response = result.data
+          this.outlet = response;
+          this.deliveryFee = response?.deliveryFee ?? 0
         }
           else{
             console.log("something went wrong");
@@ -111,14 +152,22 @@ export class OrderComponent {
     })
   }
 
+  validateAddressAndPhone():boolean{
+    if(!this.user?.phone){
+      return false;
+    }
+    return true;
+  }
+
   deliveryModeChanged(delivery:boolean):void{
-    console.log("i got ", delivery);
     this.delivery = delivery;
     if(!delivery){
+      this.totalcost = this.totalcost - this.deliveryFee;
       this.deliveryFee = 0;
       this.selectedDeliveryMode = 0;
     }else{
       this.deliveryFee = this.outlet?.deliveryFee as number;
+      this.totalcost = this.totalcost + this.deliveryFee;
       this.selectedDeliveryMode = 1;
     }
   }
@@ -134,6 +183,7 @@ export class OrderComponent {
     const price = product.salesPrice * product.orderQuantity;
     product.price = price;
     this.ordersCost = this.ordersCost + (product.price);
+    this.totalcost = this.ordersCost + this.deliveryFee + this.serviceCharge;
     const isProductInCart = this.cart.findIndex(x=>x.productId == product.productId);
     if(isProductInCart < 0){
       this.cart.push({...product});
@@ -162,6 +212,7 @@ export class OrderComponent {
   removeFromCart(product:any){
     this.cartCount--;
     this.ordersCost = this.ordersCost - product.price;
+    this.totalcost = this.ordersCost + this.deliveryFee + this.serviceCharge;
     const itemIndex = this.cart.findIndex(x=>x.productId === product.productId);
     if(itemIndex !== -1){
       this.cart.splice(itemIndex, 1);
@@ -173,6 +224,10 @@ export class OrderComponent {
     const mydialog = document.getElementById('dialog');
   }
 
+  toggleProfileModal(){
+    this.updateProfileModal = !this.updateProfileModal;
+  }
+
   checkout(){
     const email = this.localStorage.getData('email');
     if(!email) this.router.navigate(['login'])
@@ -180,13 +235,21 @@ export class OrderComponent {
       this.toastr.warning("Add Items to cart Before Checking Out");
       return;
     }
+    if(!this.validateAddressAndPhone()) {
+      this.toastr.warning("Please update your phone and address");
+      this.toggleProfileModal();
+      return;
+    }
     this.loadingService.isLoading.next(true);
     const order : Order = {
       products : this.cart,
       outletId : this.outletId,
       customerEmail : email,
-      amount:this.ordersCost + this.deliveryFee,
-      deliveryMode:this.selectedDeliveryMode
+      amount:this.ordersCost + this.deliveryFee + this.serviceCharge,
+      deliveryMode:this.selectedDeliveryMode,
+      deliveryCost:this.deliveryFee,
+      orderCost : this.ordersCost,
+      serviceCharge:this.serviceCharge,
     };
     this.orderService.checkout(order).subscribe({
       next:(result:ResponseDTO)=>{

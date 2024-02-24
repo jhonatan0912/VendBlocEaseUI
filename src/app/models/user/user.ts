@@ -1,6 +1,8 @@
 export interface User {
     email:string,
-    name:string
+    name:string,
+    phone:string,
+    address:string
 }
 
 export interface RegisterUser{
@@ -18,6 +20,12 @@ export interface ResetPasswordDTO{
     email:string;
     password:string;
     code:string;
+}
+
+export interface UpdateProfile{
+    email:string;
+    phone:string;
+    address:string;
 }
 
 

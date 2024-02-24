@@ -35,6 +35,10 @@ export class AuthService {
     return this.http.post(this.url+'api/user/login', data, httpOptions);
   }
 
+  updateContact(data:any):Observable<any>{
+    return this.http.post(this.url+'api/user/UpdateContact', data, httpOptions);
+  }
+
   resetPassword(data:ResetPasswordDTO):Observable<any>{
     return this.http.post(this.url+'api/user/ResetPassword', data, httpOptions);
   }
@@ -68,7 +72,9 @@ export class AuthService {
     const decodedToken : any = jwtDecode(loginData.token);
     const newuser : User = {
       name : decodedToken.name as string,
-      email: decodedToken.email as string
+      email: decodedToken.email as string,
+      phone:loginData.phone,
+      address:loginData.address
     }
     this.storeData('name', newuser.name);
     this.setUser(newuser);
