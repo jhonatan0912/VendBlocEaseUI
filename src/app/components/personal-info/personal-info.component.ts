@@ -22,6 +22,7 @@ export class PersonalInfoComponent{
   ngOnInit(){
     this.authService.user$.subscribe((response) => {
       this.user = response;
+      console.log('User subscription from ngoninit',response);
     });
   }
   stats : any[] = 

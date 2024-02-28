@@ -229,7 +229,7 @@ export class OrderComponent {
   }
 
   checkout(){
-    const email = this.localStorage.getData('email');
+    const email = this.user?.email as string;
     if(!email) this.router.navigate(['login'])
     if(this.cartCount < 1){
       this.toastr.warning("Add Items to cart Before Checking Out");

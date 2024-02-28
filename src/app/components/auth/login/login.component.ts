@@ -46,7 +46,6 @@ export class LoginComponent {
         console.log(result);
         if (result.status) {
           this.authService.saveUserDetails(result.data);
-          this.authService.storeData('email', loginData.email);
         }
         else {
           this.toastr.error(result.message);

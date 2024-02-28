@@ -68,18 +68,17 @@ export class AuthService {
   }
 
   saveUserDetails(loginData:any){
-    this.storeData('token',loginData.token);
+    this.storeData('token', loginData.token);
     const decodedToken : any = jwtDecode(loginData.token);
+    console.log('Login user data', loginData);
     const newuser : User = {
       name : decodedToken.name as string,
       email: decodedToken.email as string,
-      phone:loginData.phone,
+      phone:loginData.phoneNumber,
       address:loginData.address
     }
-    this.storeData('name', newuser.name);
     this.setUser(newuser);
     console.log('user data', newuser);
-    console.log(this.user$)
   }
 
   isUserAuthenticated():boolean{
@@ -100,7 +99,6 @@ export class AuthService {
   logOut():void{
     this.local.removeData('token');
     this.local.removeData('user');
-    this.local.removeData('name');
     this.setAuthenticated(false)
   }
 
