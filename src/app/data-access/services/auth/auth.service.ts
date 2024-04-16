@@ -75,14 +75,15 @@ export class AuthService {
       name : decodedToken.name as string,
       email: decodedToken.email as string,
       phone:loginData.phoneNumber,
-      address:loginData.address
+      address:loginData.address,
+      id : loginData.id
     }
     this.setUser(newuser);
     console.log('user data', newuser);
   }
 
   isUserAuthenticated():boolean{
-    const token = this.fetchLocalData('token');
+    const token = localStorage.getItem('token');
     if(!token) return false;
     const decodedToken = jwtDecode(token);
     const now = new Date();

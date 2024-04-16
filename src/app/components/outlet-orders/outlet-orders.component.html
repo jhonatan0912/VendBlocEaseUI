@@ -1,0 +1,39 @@
+<app-outlet>
+
+<p-card header="Orders">
+    <p-table [value]="orders" [tableStyle]="{'min-width': '60rem'}">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                Products
+                <p-button icon="pi pi-refresh"></p-button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Customer</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Reviews</th>
+                <th>Status</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-order>
+            <tr>
+                <td>{{order.name}}</td>
+                <td>{{order.status}}</td>
+                <td>{{order.price }}</td>
+                <td>{{order.amount}}</td>
+                <td>{{order.deliveryMode}}</td>
+                <td>{{order.outlet}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                In total there are {{orders ? orders.length : 0 }} products.
+            </div>
+        </ng-template>
+    </p-table>
+</p-card>
+
+</app-outlet>

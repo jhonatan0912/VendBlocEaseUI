@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, EnvironmentProviders, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -6,8 +6,12 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
-import { DARK_THEME, DEFAULT_THEME, NbSidebarModule, NbThemeModule } from '@nebular/theme';
-import { NB_THEME_OPTIONS } from '@nebular/theme';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+import { FormsModule } from '@angular/forms';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
+registerLocaleData(en);
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),
@@ -15,5 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideToastr(),
     provideHttpClient(withFetch()),
     provideAnimations(),
-    provideToastr()]
+    provideToastr(),
+    importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient()
+  ]
 };

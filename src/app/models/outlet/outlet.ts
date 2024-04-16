@@ -7,3 +7,10 @@ export interface Outlet {
     currency : string
     deliveryFee?:number
 }
+
+
+export interface CreateOutlet {
+    name : string
+    storeId: number
+    currencyId: number
+}

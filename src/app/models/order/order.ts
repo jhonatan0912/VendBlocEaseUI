@@ -1,6 +1,6 @@
 import { Product } from "../product/product"
 
-export interface Order {
+export interface CreateOrder {
     customerEmail:string
     products:Product[]
     outletId:number
@@ -12,3 +12,26 @@ export interface Order {
     serviceCharge:number,
     orderDate?:Date
 }
+
+export interface Order {
+    id: number
+    outletId: number
+    storeId: number
+    amount: number
+    paymentType: string
+    deliveryMode: string
+    status: string
+    orderDate:Date,
+    outlet: string
+    store: string
+    products: OrderProduct[]
+  }
+  
+  export interface OrderProduct {
+    productId: number
+    product: string
+    amount: number
+    outletId: number
+    orderQuantity: number
+    inventoryId: number
+  }

@@ -1,0 +1,86 @@
+<app-dashboard>
+
+    <p-table #dt1 [value]="outlets" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <button class="bg-vendblocblue text-white py-2 px-6 rounded-md" pButton label="Add Outlet" (click)="showDialog()" icon="pi pi-plus"></button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Name
+                        <!-- <p-columnFilter type="text" field="name" display="menu"></p-columnFilter> -->
+                    </div>
+                </th>
+                <th style="min-width:10rem">
+                    <div class="flex align-items-center">
+                        Name
+                        <!-- <p-columnFilter type="date" field="date" display="menu"></p-columnFilter> -->
+                    </div>
+                </th>
+                <th style="min-width:10rem">
+                    <div class="flex align-items-center">
+                        Store
+                        <!-- <p-columnFilter type="numeric" field="balance" display="menu" currency="USD"></p-columnFilter> -->
+                    </div>
+                </th>
+                <th style="min-width:10rem">
+                    <div class="flex align-items-center">
+                        Action
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-outlet let-rowIndex="rowIndex">
+            <tr>
+                <td>
+                    {{ rowIndex + 1}}
+                </td>
+               
+                <td>
+                    {{ outlet.name }}
+                </td>
+
+                <td>
+                    {{ outlet.store }}
+                </td>
+                <td class="underline underline-offset-4 "><p-button (click)="navigateToOutlet(outlet.id)" icon="pi pi-external-link" label="Open"></p-button></td>
+            </tr>
+        </ng-template>
+        <!-- <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="7">No customers found.</td>
+            </tr>
+        </ng-template> -->
+    </p-table>
+
+    <p-dialog header="Add Outlet" [(visible)]="visible" position="top" [modal]="true" [style]="{ width: '50vw' }"
+        [draggable]="false" [resizable]="false">
+        <form [formGroup]="createOutletForm" (submit)="createOutlet()">
+            <div class="flex flex-col w-full space-y-2 mt-5">
+                <div class="form_div">
+                    <label for="">Store's Name</label>
+                    <input class="border p-3 rounded-md" placeholder="Outlet Name" formControlName="storeId" type="text"
+                        required />
+                </div>
+                <div class="form_div">
+                    <label for="">Outlet's Name</label>
+                    <input class="border p-3 rounded-md" placeholder="Outlet Name" formControlName="name" type="text"
+                        required />
+                </div>
+                <div class="form_div">
+                    <label for="">Select Outlet's Currency</label>
+                    <p-dropdown class="" [options]="currencies" formControlName="currency" placeholder="Select a Currency" optionLabel="name" inputId="float-label"></p-dropdown>       
+                  </div>
+                  <div class="w-full items-end flex justify-end">
+                    <button class="bg-vendblocblue text-white py-2 px-6 rounded-sm" type="submit">Create</button>
+                  </div>
+            </div>
+        </form>
+    </p-dialog>
+</app-dashboard>

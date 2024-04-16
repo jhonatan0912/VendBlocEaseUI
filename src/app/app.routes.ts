@@ -13,6 +13,9 @@ import { VerifyPaymentComponent } from './components/verify-payment/verify-payme
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './components/auth/verify-email/verify-email.component';
 import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
+import { MyOutletsComponent } from './components/my-outlets/my-outlets.component';
+import { OutletComponent } from './components/outlet/outlet.component';
+import { OutletOrdersComponent } from './components/outlet-orders/outlet-orders.component';
 
 export const routes: Routes = [
     {
@@ -22,7 +25,7 @@ export const routes: Routes = [
         path:'home', component:HomeComponent,
     },
     {
-        path:'login', component:LoginComponent
+        path:'login', component:LoginComponent, canActivate:[authGuard]
     },
     {
         path:'verify-email/:user/:code', component:VerifyEmailComponent
@@ -49,12 +52,21 @@ export const routes: Routes = [
         path:'info', component:PersonalInfoComponent
     },
     {
-        path:'order/:id', component:OrderComponent , canActivate:[authGuard]
+        path:'order/:id', component:OrderComponent, canActivate:[authGuard]
     },
     {
         path:'verify-payment', component:VerifyPaymentComponent
     },
     {
         path:'my-orders', component:MyOrdersComponent
+    },
+    {
+        path:'my-outlets', component:MyOutletsComponent
+    },
+    {
+        path:'outlet/:id', component:OutletComponent
+    },
+    {
+        path:'outlet-orders', component:OutletOrdersComponent
     }
 ];

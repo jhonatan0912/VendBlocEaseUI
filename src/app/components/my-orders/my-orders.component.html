@@ -1,34 +1,77 @@
 <app-dashboard>
 
-    <div class="font-semibold text-2xl text-vendblocblue mb-4">Order History</div>
-    
-    <!-- Content Div -->
-    <div class="flex flex-col min-h-[45%] mt-8 w-full bg-white">
+  <div class="font-semibold text-2xl text-vendblocblue mb-4">Order History</div>
 
-        <table class="table-auto">
-            <thead>
-              <tr class="text-center bg-vendblocblue text-white">
-                <th class="py-3">#</th>
-                <th>Date</th>
-                <th>Delivery</th>
-                <th>Status</th>
-                <th>Amount</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let order of orders;let i = index;" class="text-center border-b">
-                  <td class="py-3">{{i+1}}</td>
-                  <td class="py-3">{{order.formattedDate}}</td>
-                  <td>{{order.deliveryMode}}</td>
-                  <td>{{order.status}}</td>
-                  <td>{{order.amount}}</td>
-                  <td class="underline underline-offset-4 cursor-pointer">View Detail</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        
-    </div>
+  <!-- Content Div -->
+  <div class="flex flex-col min-h-[45%] mt-8 w-full bg-white">
+    <p-table [value]="orders" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="py-3">#</th>
+          <th>Date</th>
+          <th>Store(Outlet)</th>
+          <th>Delivery</th>
+          <th>Status</th>
+          <th>Payment</th>
+          <th>Amount</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-order let-rowIndex="rowIndex">
+        <tr>
+          <td class="py-3">{{rowIndex + 1}}</td>
+          <td>{{order.formattedDate}}</td>
+          <td>{{order.store }}-({{order.outlet}})</td>
+          <td>{{order.deliveryMode}}</td>
+          <td>{{order.status}}</td>
+          <td>Paid</td>
+          <td>{{order.amount}}</td>
+          <td class="underline underline-offset-4 "><p-button (click)="showDialog(rowIndex)" icon="pi pi-external-link" label="Show"></p-button></td>
+          
+        </tr>
+      </ng-template>
+    </p-table>
+    <app-modal-layout></app-modal-layout>
+  </div>
+
+
+  <p-dialog header="Order Invoice" [(visible)]="dialogVisible" [modal]="true" [style]="{ width: '50vw', height: '500px' }"
+            [draggable]="false" [resizable]="false">
+            <div class="flex flex-col space-y-2">
+              <div class="flex justify-between">
+                <span>Date : {{currentInvoiceOrder?.formattedDate}}</span>
+                <span>Total : {{currentInvoiceOrder?.amount}}</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Store : {{currentInvoiceOrder?.store }}-({{currentInvoiceOrder?.outlet}})</span>
+                <span>Total : {{currentInvoiceOrder?.status}}</span>
+              </div>
+
+              <div>
+                <p-table [value]="currentInvoiceOrder?.products" [tableStyle]="{ 'min-width': '30rem' }">
+                  <ng-template pTemplate="header">
+                      <tr>
+                          <th>#</th>
+                          <th>Name</th>
+                          <th>Category</th>
+                          <th>Quantity</th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
+                      <tr>
+                        <td>{{rowIndex + 1 }}</td>
+                          <td>{{ product.product }}</td>
+                          <td>{{ product.amount }}</td>
+                          <td>{{ product.orderQuantity }}</td>
+                      </tr>
+                  </ng-template>
+              </p-table>
+              </div>
+            </div>
+            
+
+           
+
+          </p-dialog>
 
 </app-dashboard>

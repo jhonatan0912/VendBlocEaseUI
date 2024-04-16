@@ -6,23 +6,33 @@ import { OrderStateService } from '../../data-access/state-management/order-stat
 import { AuthService } from '../../data-access/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { format } from 'date-fns';
-import { Order } from '../../models/order/order';
 import { CommonModule } from '@angular/common';
-import { NbButtonModule, NbCardModule, NbLayoutModule, NbSidebarModule, NbSortDirection, NbSortRequest, NbThemeModule, NbTreeGridDataSource, NbTreeGridDataSourceBuilder, NbTreeGridModule } from '@nebular/theme';
 import { User } from '../../models/user/user';
+import { TableModule } from 'primeng/table';
+import { ModalLayoutComponent } from "../layouts/modal-layout/modal-layout.component";
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { Order } from '../../models/order/order';
 
 @Component({
     selector: 'app-my-orders',
     standalone: true,
     templateUrl: './my-orders.component.html',
     styleUrl: './my-orders.component.css',
-    imports: [DashboardComponent, CommonModule,NbLayoutModule, NbSidebarModule, NbButtonModule, NbCardModule]
+    imports: [DashboardComponent, CommonModule, ModalLayoutComponent, TableModule, DialogModule, ButtonModule]
 })
 export class MyOrdersComponent {
 
     user : User | null = null ;
-    orders : any[] = [];
-   
+    orders : Order[] = [];
+    showDetail : boolean = false;
+    dialogVisible : boolean = false;
+    currentInvoiceOrder  : any =  null;
+
+    showDialog(index:number){
+        this.currentInvoiceOrder = this.orders[index];
+        this.dialogVisible = true;
+    }
 
     constructor(private orderService:OrderService,
          private authService:AuthService,
@@ -36,7 +46,10 @@ export class MyOrdersComponent {
             this.user = response;
           });
           this.fetchOrders();
+    }
 
+    showDetailEvent(){
+        this.showDetail = !this.showDetail;  
     }
 
     fetchOrders(){

@@ -3,7 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SideMenuItemComponent } from "../side-menu-item/side-menu-item.component";
 import { ResponseDTO } from '../../models/response/response';
 import { ProductCategory } from '../../models/product-category/product-category';
-import { Order } from '../../models/order/order';
+import { CreateOrder } from '../../models/order/order';
 import { Inventory } from '../../models/inventory/inventory';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,15 +17,28 @@ import { OutletService } from '../../data-access/services/outlet/outlet.service'
 import { Outlet } from '../../models/outlet/outlet';
 import { UpdateProfile, User } from '../../models/user/user';
 import { AuthService } from '../../data-access/services/auth/auth.service';
+import { Subject, takeUntil } from 'rxjs';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @Component({
     selector: 'app-order',
     standalone: true,
     templateUrl: './order.component.html',
     styleUrl: './order.component.css',
-    imports: [SideMenuItemComponent, CommonModule, CartItemComponent, FormsModule,ReactiveFormsModule, DeliveryOptionComponent]
+    imports: [SideMenuItemComponent,
+       CommonModule,
+       CartItemComponent, 
+       FormsModule,
+       ReactiveFormsModule, 
+       DeliveryOptionComponent, ButtonModule,
+      CardModule,
+      OverlayPanelModule]
 })
 export class OrderComponent {
+  date = new Date();
+
   profileUpdateForm = new FormGroup({
     address: new FormControl(),
     phone: new FormControl(),
@@ -59,12 +72,13 @@ export class OrderComponent {
     private router:Router,
     private authService:AuthService){
   }
-
+  destroy$: Subject<void> = new Subject<void>();
+  // .pipe(takeUntil(this.destroy$))
   ngOnInit() {
     this.route.params.subscribe(params =>{
       this.outletId = params['id']
     });
-    this.authService.user$.subscribe({
+    this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe({
        next:(result)=>{
         this.user = result as User
         console.log('User from order', this.user);
@@ -76,6 +90,11 @@ export class OrderComponent {
     this.fetchOutlet(this.outletId);
     this.fetchCategories(this.outletId);
     this.fetchInventory(this.outletId);
+  }
+
+  ngOnDestroy(){
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   updateProfile() {
@@ -94,7 +113,8 @@ export class OrderComponent {
            email:this.user?.email as string,
            phone:contactData.phone as string,
            address: contactData.address as string,
-           name: this.user?.name as string
+           name: this.user?.name as string,
+           id : this.user?.id as string
         };
         this.authService.setUser(user);
        }
@@ -241,7 +261,7 @@ export class OrderComponent {
       return;
     }
     this.loadingService.isLoading.next(true);
-    const order : Order = {
+    const order : CreateOrder = {
       products : this.cart,
       outletId : this.outletId,
       customerEmail : email,

@@ -15,18 +15,17 @@
     @if(isAuthenticated){
       <div class="relative inline-block text-left">
         <div>
-        <img (click)="toggleProfileDropdown()" src="../../../../assets/dashboarduser.png"  class="w-8 h-8 rounded-full object-cover cursor-pointer">
+        <img (click)="op.toggle($event)" src="../../../../assets/dashboarduser.png"  class="w-8 h-8 rounded-full object-cover cursor-pointer">
       </div>
-        @if(profileDropDown){
-          <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+      <p-overlayPanel #op>
+        <ng-template pTemplate="content">
             <div class="py-1" role="none">
-              <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-              <a routerLink="/dashboard" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Dashboard</a>
-            <a (click)="logout()" class="text-gray-700 block px-4 py-2 text-sm cursor-pointer hover:underline" role="menuitem" tabindex="-1" id="menu-item-1">Logout</a>
+              <a routerLink="/dashboard" class="text-gray-700 block px-2 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Dashboard</a>
+            <a (click)="logout()" class="text-gray-700 block px-2 py-2 text-sm cursor-pointer hover:underline" role="menuitem" tabindex="-1" id="menu-item-1">Logout</a>
             </div>
-          </div>
-        }
-       
+        </ng-template>
+    </p-overlayPanel>
+
       </div>
     } @else {
     <a class="block auth_button border-gray-500" routerLink="/register">SignUp</a>

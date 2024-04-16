@@ -2,7 +2,8 @@ export interface User {
     email:string,
     name:string,
     phone:string,
-    address:string
+    address:string,
+    id:string
 }
 
 export interface RegisterUser{
