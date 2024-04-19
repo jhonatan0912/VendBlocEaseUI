@@ -4,36 +4,81 @@
     <p-table [value]="orders" [tableStyle]="{'min-width': '60rem'}">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                Products
                 <p-button icon="pi pi-refresh"></p-button>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
                 <th>Customer</th>
-                <th>Image</th>
-                <th>Price</th>
-                <th>Category</th>
-                <th>Reviews</th>
+                <th>Amount</th>
                 <th>Status</th>
+                <th>D Mode</th>
+                <th>Date</th>
+                <th></th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-order>
+        <ng-template pTemplate="body" let-order let-rowIndex="rowIndex">
             <tr>
-                <td>{{order.name}}</td>
-                <td>{{order.status}}</td>
-                <td>{{order.price }}</td>
+                <td>{{order.customer.name}}</td>
                 <td>{{order.amount}}</td>
+                <td>{{order.status}}</td>
                 <td>{{order.deliveryMode}}</td>
-                <td>{{order.outlet}}</td>
+                <td>{{order.formattedDate}}</td>
+                <td><p-button icon="pi pi-external-link" (click)="showDialog(rowIndex)" label="Show"></p-button></td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">
-                In total there are {{orders ? orders.length : 0 }} products.
+                In total there are {{orders ? orders.length : 0 }} orders.
             </div>
         </ng-template>
     </p-table>
 </p-card>
+
+<p-dialog header="Order Invoice" [(visible)]="dialogVisible" [modal]="true" [style]="{ width: '50vw', height: '500px' }"
+[draggable]="false" [resizable]="false">
+<div class="flex flex-col space-y-3">
+  <div class="flex justify-between">
+    <span>Date : {{currentOrder?.formattedDate}}</span>
+    <span>Total : {{currentOrder?.amount}}</span>
+  </div>
+  <div class="flex justify-between">
+    <span>Store : {{currentOrder?.store }}-({{currentOrder?.outlet}})</span>
+    <span>Total : {{currentOrder?.status}}</span>
+  </div>
+  <div class="flex justify-between">
+    <span>Customer : {{currentOrder?.customer?.name }}-({{currentOrder?.customer?.phone}})</span>
+    <span>Payment Status : {{currentOrder?.status}}</span>
+  </div>
+  <div class="flex justify-center">
+    <span>Items</span>
+  </div>
+
+  <div>
+    <p-table [value]="currentOrder?.products" [tableStyle]="{ 'min-width': '30rem' }">
+      <ng-template pTemplate="header">
+          <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Quantity</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
+          <tr>
+            <td>{{rowIndex + 1 }}</td>
+              <td>{{ product.product }}</td>
+              <td>{{ product.amount }}</td>
+              <td>{{ product.orderQuantity }}</td>
+          </tr>
+      </ng-template>
+  </p-table>
+  </div>
+</div>
+
+
+
+
+</p-dialog>
 
 </app-outlet>

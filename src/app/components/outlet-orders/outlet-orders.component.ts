@@ -9,19 +9,19 @@ import { ResponseDTO } from '../../models/response/response';
 import { OutletService } from '../../data-access/services/outlet/outlet.service';
 import { Order } from '../../models/order/order';
 import { format } from 'date-fns';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
     selector: 'app-outlet-orders',
     standalone: true,
     templateUrl: './outlet-orders.component.html',
     styleUrl: './outlet-orders.component.css',
-    imports: [CardModule, TableModule, ButtonModule, TagModule, OutletComponent]
+    imports: [CardModule, TableModule, ButtonModule, TagModule, OutletComponent, DialogModule]
 })
 export class OutletOrdersComponent {
 
   constructor(private orderService:OrderService, private outletService:OutletService){
     this.outletService.outlet$.subscribe((result) => {
-        console.log('Result here', result);
         this.outlet = result;
       });
     this.fetchOrders(this.outlet?.id);
@@ -29,7 +29,15 @@ export class OutletOrdersComponent {
 
   outlet : any;
   
-  orders : any;
+  orders : Order[] = [];
+  currentOrder : any = null;
+  showDetail : boolean = false;
+  dialogVisible : boolean = false;
+
+  showDialog(index:number){
+    this.currentOrder = this.orders[index];
+    this.dialogVisible = true;
+}
 
   getSeverity(status: string) {
     switch (status) {

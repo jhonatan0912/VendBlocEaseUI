@@ -39,6 +39,16 @@ export class OutletService {
     return this.http.post(this.baseUrl+'api/outlets', model, httpOptions)
   }
 
+  getOutletProducts(id:number):Observable<any>{
+    console.log("Fetchign for ", id);
+    return this.http.get<ResponseDTO>(this.baseUrl+'api/Product/get-by-outlet/'+id);
+  }
+
+  getOutletProductCategories(id:number):Observable<any>{
+    console.log("Fetchign for ", id);
+    return this.http.get<ResponseDTO>(this.baseUrl+'api/ProductCategory/get-by-outlet/'+id);
+  }
+
   saveCurrentOutlet(outlet:Outlet){
       this.outletSubject.next(outlet);
       this.local.saveData('currentOutlet', JSON.stringify(outlet));

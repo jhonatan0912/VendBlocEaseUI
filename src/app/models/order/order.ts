@@ -1,3 +1,4 @@
+import { Customer } from "../customer/customer"
 import { Product } from "../product/product"
 
 export interface CreateOrder {
@@ -24,7 +25,8 @@ export interface Order {
     orderDate:Date,
     outlet: string
     store: string
-    products: OrderProduct[]
+    products: OrderProduct[],
+    customer:Customer
   }
   
   export interface OrderProduct {

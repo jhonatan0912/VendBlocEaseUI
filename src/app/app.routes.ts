@@ -16,6 +16,7 @@ import { ResetPasswordComponent } from './components/auth/reset-password/reset-p
 import { MyOutletsComponent } from './components/my-outlets/my-outlets.component';
 import { OutletComponent } from './components/outlet/outlet.component';
 import { OutletOrdersComponent } from './components/outlet-orders/outlet-orders.component';
+import { OutletProductsComponent } from './components/outlet-products/outlet-products.component';
 
 export const routes: Routes = [
     {
@@ -68,5 +69,9 @@ export const routes: Routes = [
     },
     {
         path:'outlet-orders', component:OutletOrdersComponent
+    }
+    ,
+    {
+        path:'outlet-products', component:OutletProductsComponent
     }
 ];

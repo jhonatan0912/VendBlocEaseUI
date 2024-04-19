@@ -1,0 +1,97 @@
+<app-outlet>
+
+    <p-card header="Products">
+        <!-- <p-toolbar styleClass="mb-4 gap-2">
+            <ng-template pTemplate="left">
+                <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" ></button>
+                <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"></button>
+            </ng-template>
+        
+            <ng-template pTemplate="right">
+                <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+            </ng-template>
+        </p-toolbar> -->
+
+        <p-table [value]="products" [tableStyle]="{'min-width': '60rem'}" [paginator]="true" [rows]="10"
+            [rowsPerPageOptions]="[10, 20, 50]">
+            <ng-template pTemplate="caption">
+                <div class="flex align-items-center justify-between">
+                    <button pButton pRipple label="Add" (click)="showDialog()" icon="pi pi-plus"
+                        class="p-button-help"></button>
+                    <p-button icon="pi pi-refresh"></p-button>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Unit</th>
+                    <th>Type</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{rowIndex+1}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.productCategory}}</td>
+                    <td>{{product.unit}}</td>
+                    <td>Perishable</td>
+                    <td><p-button label="Submit" icon="pi pi-check" iconPos="right"></p-button></td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div class="flex align-items-center justify-content-between">
+                    In total there are {{products ? products.length : 0 }} products.
+                </div>
+            </ng-template>
+        </p-table>
+    </p-card>
+
+    <p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true"
+        styleClass="p-fluid">
+        <ng-template pTemplate="content">
+            <form [formGroup]="createProductForm" (submit)="createProduct()">
+                <div class="flex flex-col w-full space-y-2 mt-5">
+                    <div class="form_div">
+                        <label for="">Store's Name</label>
+                        <input class="border p-3 rounded-md" placeholder="Outlet Name" formControlName="storeId"
+                            type="text" required />
+                    </div>
+                    <div class="form_div">
+                        <label for="">Outlet's Name</label>
+                        <input class="border p-3 rounded-md" placeholder="Outlet Name" formControlName="name"
+                            type="text" required />
+                    </div>
+                    <div class="flex w-full">
+                        <div class="flex flex-col w-auto justify-start space-y-2 mt-4">
+                            <label for="">Select Category</label>
+                            <p-dropdown class="" [options]="productCategories" formControlName="currency"
+                                placeholder="Select a Category" optionLabel="name" inputId="float-label"></p-dropdown>
+                        </div>
+                        <div class="flex flex-col w-auto justify-start space-y-2 mt-4">
+                            <label for="">Select Category</label>
+                            <p-dropdown class="" [options]="productCategories" formControlName="currency"
+                                placeholder="Select a Category" optionLabel="name" inputId="float-label"></p-dropdown>
+                        </div>
+                    </div>
+                    
+                </div>
+            </form>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                (click)="showDialog()"></button>
+            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                (click)="saveProduct()"></button>
+            <div class="items-end flex justify-end">
+                <button class="bg-vendblocblue text-white py-2 px-6 rounded-sm" type="submit">Create</button>
+            </div>
+        </ng-template>
+    </p-dialog>
+
+
+</app-outlet>

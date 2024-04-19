@@ -1,5 +1,5 @@
 <!-- Entire Div -->
-<div class="flex flex-row border-2">
+<div class="flex flex-row">
   <div class="flex h-fit rounded-md py-2 px-1 absolute">
     <p-sidebar [(visible)]="sidebarVisible">
       <section class="2xl:px-10 flex flex-col bg-white items-center pt-1">
@@ -23,7 +23,7 @@
     </p-sidebar>
     <!-- <p-button class="text-white" (click)="sidebarVisible = true" icon="pi pi-bars"></p-button> -->
   </div>
-  <div class="w-full h-[500px] bg-[#F2F2F2] flex flex-col px-10 2xl:px-20 py-6">
+  <div class="w-full h-auto min-h-[500px] bg-[#F2F2F2] flex flex-col px-10 2xl:px-20 py-6">
     <ng-content></ng-content>
   </div>
 </div>
