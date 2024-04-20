@@ -39,7 +39,12 @@
                     <td>{{product.productCategory}}</td>
                     <td>{{product.unit}}</td>
                     <td>Perishable</td>
-                    <td><p-button label="Submit" icon="pi pi-check" iconPos="right"></p-button></td>
+                    <td>
+                        <p-toast></p-toast>
+                        <p-confirmPopup></p-confirmPopup>
+                        <p-button [disabled]="true" icon="pi pi-pencil"></p-button>
+                        <p-button (click)="deleteProduct($event, product.id)" severity="danger" icon="pi pi-trash"></p-button>
+                    </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary">
@@ -50,48 +55,48 @@
         </p-table>
     </p-card>
 
-    <p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true"
+    <form [formGroup]="createProductForm" (submit)="saveProduct()">
+    <p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Add Product" [modal]="true"
         styleClass="p-fluid">
+
         <ng-template pTemplate="content">
-            <form [formGroup]="createProductForm" (submit)="createProduct()">
-                <div class="flex flex-col w-full space-y-2 mt-5">
+
+                <!-- <div class="flex flex-col w-full space-y-2"> -->
                     <div class="form_div">
-                        <label for="">Store's Name</label>
-                        <input class="border p-3 rounded-md" placeholder="Outlet Name" formControlName="storeId"
+                        <label for="">Product's Name</label>
+                        <input class="border p-3 rounded-md" placeholder="Name" formControlName="name"
                             type="text" required />
                     </div>
                     <div class="form_div">
-                        <label for="">Outlet's Name</label>
-                        <input class="border p-3 rounded-md" placeholder="Outlet Name" formControlName="name"
-                            type="text" required />
+                        <label for="">Select Category</label>
+                        <p-dropdown class="" [options]="productCategories" formControlName="productCategory"
+                            placeholder="Select a Category" optionLabel="name" inputId="float-label"></p-dropdown>
                     </div>
-                    <div class="flex w-full">
-                        <div class="flex flex-col w-auto justify-start space-y-2 mt-4">
-                            <label for="">Select Category</label>
-                            <p-dropdown class="" [options]="productCategories" formControlName="currency"
-                                placeholder="Select a Category" optionLabel="name" inputId="float-label"></p-dropdown>
-                        </div>
-                        <div class="flex flex-col w-auto justify-start space-y-2 mt-4">
-                            <label for="">Select Category</label>
-                            <p-dropdown class="" [options]="productCategories" formControlName="currency"
-                                placeholder="Select a Category" optionLabel="name" inputId="float-label"></p-dropdown>
-                        </div>
+                    <div class="form_div">
+                        <label for="">Select Type</label>
+                        <p-dropdown class="" [options]="productTypes" formControlName="productType"
+                            placeholder="Select a Type" optionLabel="name" inputId="float-label"></p-dropdown>
                     </div>
-                    
-                </div>
-            </form>
+                    <div class="form_div">
+                        <label for="">Select Unit</label>
+                        <p-dropdown class="" [options]="units" formControlName="unit"
+                            placeholder="Select a Unit" optionLabel="name" inputId="float-label"></p-dropdown>
+                    </div>
+                <!-- </div> -->
+
         </ng-template>
 
         <ng-template pTemplate="footer">
             <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
                 (click)="showDialog()"></button>
-            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
-                (click)="saveProduct()"></button>
-            <div class="items-end flex justify-end">
+            <button pButton type="submit" pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                ></button>
+            <!-- <div class="items-end flex justify-end">
                 <button class="bg-vendblocblue text-white py-2 px-6 rounded-sm" type="submit">Create</button>
-            </div>
+            </div> -->
         </ng-template>
-    </p-dialog>
 
+    </p-dialog>
+</form>
 
 </app-outlet>

@@ -28,7 +28,7 @@ export class OutletService {
   }
 
   public getOutletsByUser(userId:string):Observable<ResponseDTO>{
-    return this.http.get<ResponseDTO>(this.baseUrl+'api/outlets/getbyuser/'+userId);
+    return this.http.get<ResponseDTO>(this.baseUrl+'api/outlets/get-by-user/'+userId);
   }
 
   public getOutlet(id:number):Observable<ResponseDTO>{
@@ -40,8 +40,11 @@ export class OutletService {
   }
 
   getOutletProducts(id:number):Observable<any>{
-    console.log("Fetchign for ", id);
     return this.http.get<ResponseDTO>(this.baseUrl+'api/Product/get-by-outlet/'+id);
+  }
+
+  getOutletUnits(storeId:number):Observable<any>{
+    return this.http.get<ResponseDTO>(this.baseUrl+'api/Unit/get-by-store/'+storeId);
   }
 
   getOutletProductCategories(id:number):Observable<any>{
