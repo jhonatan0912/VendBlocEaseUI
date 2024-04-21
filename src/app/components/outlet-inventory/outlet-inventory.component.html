@@ -1,0 +1,61 @@
+<app-outlet>
+    <app-table [cols]="tableCols" [showAdd]="true" (addButtonPressed)="showAddDialog()"
+        (removeButtonPressed)="deleteInventory($event)" [tableData]="inventories" tableName="Inventory"></app-table>
+
+    <form [formGroup]="createInventoryForm" (submit)="addInventory()">
+        <p-dialog [(visible)]="addDialog" [style]="{ width: '700px', height:'500px' }" header="Add Inventory" [modal]="true"
+            styleClass="p-fluid">
+
+            <ng-template pTemplate="content">
+
+                <!-- <div class="flex flex-col w-full space-y-2"> -->
+                <div class="form_div mb-2">
+                    <label for="">Product</label>
+                    <p-dropdown [filter]="true" filterBy="name" [options]="products" formControlName="product"
+                    placeholder="Select a product" optionLabel="name" inputId="float-label"></p-dropdown>
+                </div>
+
+                <div class="flex space-x-2 mb-2">
+                    <div class="flex flex-col w-[50%]">
+                        <label for="">Cost Price</label>
+                        <p-inputNumber class="border p-3 rounded-md" inputId="locale-user" formControlName="costPrice" [minFractionDigits]="2"></p-inputNumber>
+                    </div>
+                    <div class="flex flex-col w-[50%]">
+                        <label for="">Sales Price</label>
+                        <p-inputNumber class="border p-3 rounded-md" inputId="locale-user" formControlName="salesPrice" [minFractionDigits]="2"></p-inputNumber>
+                    </div>
+                </div>
+
+                <div class="form_div mb-2">
+                    <label for="">Quantity</label>
+                    <p-inputNumber class="border p-3 rounded-md" inputId="locale-user" formControlName="quantity"></p-inputNumber>
+                </div>
+
+                <div class="flex space-x-2 mb-2">
+                    <div class="flex flex-col w-[50%]">
+                        <label for="">Manufacturing Date</label>
+                        <input class="border p-3 rounded-md" formControlName="manufacturingDate" type="date">
+                    </div>
+                    <div class="flex flex-col w-[50%]">
+                        <label for="">Expiring Date</label>
+                        <input class="border p-3 rounded-md" type="date"  formControlName="expiringDate">
+                    </div>
+                </div>
+
+                <div class="form_div mb-2">
+                    <label for="">Remark</label>
+                    <input class="border p-3 rounded-md"  formControlName="remark" type="text">
+                </div>
+
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <div class="items-end flex justify-end">
+                <button class="bg-vendblocblue text-white py-2 px-6 rounded-sm" type="submit">Create</button>
+            </div> 
+            </ng-template>
+
+        </p-dialog>
+    </form>
+
+</app-outlet>

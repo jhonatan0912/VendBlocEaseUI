@@ -83,7 +83,6 @@ error:(e)=>{
   }
 
   createOutlet(){
-    console.log("Trying to create");
     const formValue = this.createOutletForm.value;
     const data: CreateOutlet = {
         name : formValue.name,

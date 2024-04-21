@@ -25,12 +25,12 @@ export class OutletMenubarComponent {
 
   getMenuItems(): MenuItem[] {
     return [
-      { label: 'Sales', icon: PrimeIcons.SHOPPING_CART },
-      { label: 'Products', icon: PrimeIcons.BOOKMARK, routerLink:'/outlet-products' },
-      { label: 'Customers', icon: PrimeIcons.USER },
-      { label: 'Inventory', icon: PrimeIcons.LIST },   
+      { label: 'Sales', icon: PrimeIcons.SHOPPING_CART, disabled:true },
       { label: 'Orders', icon: PrimeIcons.SHOPPING_BAG, routerLink:'/outlet-orders' },
-      { label: 'Settings', icon: PrimeIcons.SHOPPING_CART },
+      { label: 'Products', icon: PrimeIcons.BOOKMARK, routerLink:'/outlet-products' },
+      { label: 'Inventory', icon: PrimeIcons.LIST, routerLink:'/outlet-inventory' },
+      { label: 'Customers', icon: PrimeIcons.USER, disabled:true },
+      { label: 'Settings', icon: PrimeIcons.SHOPPING_CART, routerLink:'/outlet-settings' },
     ]
   }
 }

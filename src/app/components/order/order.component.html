@@ -75,11 +75,12 @@
               {{ deliveryFee }}
             </div>
             }
+            @if(cartCount > 0){
             <app-delivery-option
               uniqueId="mobile"
               (selectedDeliveryModeEmitter)="deliveryModeChanged($event)"
             ></app-delivery-option>
-
+            }
             <div class="form_div">
               <button
                 (click)="checkout()"
@@ -419,10 +420,11 @@
           <div>
             <span class="font-bold">Total</span> : {{ totalcost }}
           </div>
-        
+          @if(cartCount > 0){
         <app-delivery-option
           (selectedDeliveryModeEmitter)="deliveryModeChanged($event)"
         ></app-delivery-option>
+          }
         <div class="form_div">
           <button
             (click)="checkout()"

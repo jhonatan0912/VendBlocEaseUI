@@ -39,6 +39,10 @@ export class OutletService {
     return this.http.post(this.baseUrl+'api/outlets', model, httpOptions)
   }
 
+  public updateOutlet(model:Outlet):Observable<any>{
+    return this.http.put(this.baseUrl+'api/outlets', model, httpOptions)
+  }
+
   getOutletProducts(id:number):Observable<any>{
     return this.http.get<ResponseDTO>(this.baseUrl+'api/Product/get-by-outlet/'+id);
   }

@@ -21,11 +21,7 @@ export class OrderService {
   constructor(private http:HttpClient) { }
 
   getProductsCategories(outletId:number):Observable<ResponseDTO>{
-    return this.http.get<ResponseDTO>(this.baseUrl+'api/ProductCategory/GetByOutlet/'+outletId);
-  }
-
-  getInventoryByOutlet(outletId:number):Observable<ResponseDTO>{
-    return this.http.get<ResponseDTO>(this.baseUrl+'api/Inventory/get-by-outlet/'+outletId);
+    return this.http.get<ResponseDTO>(this.baseUrl+'api/ProductCategory/get-by-outlet/'+outletId);
   }
 
   checkout(order:CreateOrder):Observable<any>{

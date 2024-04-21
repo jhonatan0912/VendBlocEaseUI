@@ -20,21 +20,10 @@ export class OutletComponent {
 
   outlet :Outlet | undefined = undefined;
   outletId : number = 0;
-  menuItems : MenuItem[];
 
   constructor(private outletService:OutletService,private route:ActivatedRoute,private router:Router){
-    this.menuItems = this.getMenuItems()
   }
 
-  getMenuItems(): MenuItem[] {
-    return [
-      { label: 'Sales', icon: PrimeIcons.SHOPPING_CART },
-      { label: 'Products', icon: PrimeIcons.BOOKMARK,  },
-      { label: 'Customers', icon: PrimeIcons.USER },
-      { label: 'Inventory', icon: PrimeIcons.LIST },   
-      { label: 'Orders', icon: PrimeIcons.SHOPPING_BAG, routerLink:'/outlet-orders' },
-    ]
-  }
 
   ngOnInit() {
     this.route.params.subscribe(params =>{

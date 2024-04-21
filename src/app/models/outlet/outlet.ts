@@ -6,6 +6,8 @@ export interface Outlet {
     currencyId: number
     currency : string
     deliveryFee?:number
+    address?:string
+    phone?:string
 }
 
 

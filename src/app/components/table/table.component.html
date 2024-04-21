@@ -1,0 +1,51 @@
+<p-card header={{tableName}}>
+    <p-table [columns]="cols" [value]="tableData" [tableStyle]="{'min-width': '60rem'}" [paginator]="true" [rows]="10"
+        [rowsPerPageOptions]="[10, 20, 50]">
+        <ng-template pTemplate="caption">
+            @if(showAdd){
+                <div class="flex align-items-center justify-between">
+                    <button (click)="addAction()" pButton pRipple label="Add" icon="pi pi-plus"
+                        class="p-button-help"></button>
+                    <p-button icon="pi pi-refresh"></p-button>
+                </div>   
+            }
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>#</th>
+                <th *ngFor="let col of columns">
+                    {{ col.header }}
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
+            <tr>
+                <td>{{rowIndex+1}}</td>
+                <td *ngFor="let col of cols">
+                    {{ product[col.field] }}
+                </td>
+
+                <td>
+                    <p-toast></p-toast>
+                    <p-confirmPopup></p-confirmPopup>
+                    @if(showOpen){
+                    <p-button icon="pi pi-external-link" (click)="showAction(rowIndex)" label="Show"></p-button>
+                    }
+                    @if(showEdit){
+                    <p-button [disabled]="true" icon="pi pi-pencil"></p-button>
+                    }
+                    @if(showDelete){
+                    <p-button (click)="removeAction($event, product.id)" severity="danger"
+                        icon="pi pi-trash"></p-button>
+                    }
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                In total there are {{tableData ? tableData.length : 0 }} {{tableName}}.
+            </div>
+        </ng-template>
+    </p-table>
+</p-card>

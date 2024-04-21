@@ -22,15 +22,16 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
+import { TableComponent } from "../table/table.component";
 
 @Component({
-  selector: 'app-outlet-products',
-  standalone: true,
-  templateUrl: './outlet-products.component.html',
-  styleUrl: './outlet-products.component.css',
-  imports: [OutletComponent, CardModule, CardModule, TableModule, ButtonModule, DialogModule,
-    ToolbarModule, FileUploadModule, InputNumberModule, DropdownModule, InputTextModule, RippleModule,
-  ReactiveFormsModule,ConfirmPopupModule, ToastModule]
+    selector: 'app-outlet-products',
+    standalone: true,
+    templateUrl: './outlet-products.component.html',
+    styleUrl: './outlet-products.component.css',
+    imports: [OutletComponent, CardModule, CardModule, TableModule, ButtonModule, DialogModule,
+        ToolbarModule, FileUploadModule, InputNumberModule, DropdownModule, InputTextModule, RippleModule,
+        ReactiveFormsModule, ConfirmPopupModule, ToastModule, TableComponent]
 })
 export class OutletProductsComponent {
 
@@ -41,6 +42,11 @@ export class OutletProductsComponent {
   units: Unit[] = [];
   productCategories: ProductCategory[] = [];
   productDialog: boolean = false;
+  tableCols : any[] = [
+  { field: 'name', header: 'Name' },
+  { field: 'productCategory', header: 'Category' },
+  { field: 'unit', header: 'Unit' },
+  { field: 'productType', header: 'Type' }];
 
   constructor(private outletService: OutletService, private confirmationService:ConfirmationService, private messageService:MessageService,  private productService:ProductService, private toastr: ToastrService,) {
     this.outletService.outlet$.subscribe((result) => {
@@ -105,7 +111,9 @@ export class OutletProductsComponent {
     })
   }
 
-  deleteProduct(event: Event, id:number) {
+  deleteProduct(eventAndId: { event: Event, id: number }) {
+    const event : Event = eventAndId.event;
+    const id : number = eventAndId.id;
     this.confirmationService.confirm({
         target: event.target as EventTarget,
         message: 'Do you want to delete this record?',

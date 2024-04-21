@@ -21,6 +21,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { InventoryService } from '../../data-access/services/inventory/inventory.service';
 
 @Component({
     selector: 'app-order',
@@ -52,7 +53,7 @@ export class OrderComponent {
   allproducts : Inventory[] = [];
   products : any[] = [];
   cart: any[] = [];
-  deliveryFee : number = this.outlet?.deliveryFee ?? 0;
+  deliveryFee : number = 0;
   ordersCost: number = 0;
   totalcost:number = 0;
   canCheckOut:boolean = false;
@@ -70,7 +71,8 @@ export class OrderComponent {
     private loadingService:LoadingService,
     private localStorage:LocalService,
     private router:Router,
-    private authService:AuthService){
+    private authService:AuthService,
+  private inventoryService:InventoryService){
   }
   destroy$: Subject<void> = new Subject<void>();
   // .pipe(takeUntil(this.destroy$))
@@ -81,7 +83,6 @@ export class OrderComponent {
     this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe({
        next:(result)=>{
         this.user = result as User
-        console.log('User from order', this.user);
        },
        error:()=> {
         console.log("Something went wrong");
@@ -129,9 +130,11 @@ export class OrderComponent {
     this.outletService.getOutlet(outlet).subscribe({
       next:(result:ResponseDTO) => {
         if(result.status){
-          const response = result.data
-          this.outlet = response;
-          this.deliveryFee = response?.deliveryFee ?? 0
+          console.log('outlet',result.data);
+          this.outlet = result.data;
+          if(this.delivery){
+            this.deliveryFee += this.outlet?.deliveryFee as number;
+          }
         }
           else{
             console.log("something went wrong");
@@ -160,7 +163,7 @@ export class OrderComponent {
   }
 
   public fetchInventory(outlet:number){
-    this.orderService.getInventoryByOutlet(outlet).subscribe({
+    this.inventoryService.getInventoryByOutlet(outlet).subscribe({
       next:(result:ResponseDTO)=>{
         if(result.status){
           this.allproducts = result.data
@@ -180,16 +183,11 @@ export class OrderComponent {
   }
 
   deliveryModeChanged(delivery:boolean):void{
+    const deliveryFeeChange = delivery ? (this.outlet?.deliveryFee as number) : -this.deliveryFee;
+    this.totalcost += deliveryFeeChange;
+    this.deliveryFee = delivery ? deliveryFeeChange : 0;
+    this.selectedDeliveryMode = delivery ? 1 : 0;
     this.delivery = delivery;
-    if(!delivery){
-      this.totalcost = this.totalcost - this.deliveryFee;
-      this.deliveryFee = 0;
-      this.selectedDeliveryMode = 0;
-    }else{
-      this.deliveryFee = this.outlet?.deliveryFee as number;
-      this.totalcost = this.totalcost + this.deliveryFee;
-      this.selectedDeliveryMode = 1;
-    }
   }
 
   categoryProducts(event: Event, productCategoryId:number){

@@ -10,13 +10,14 @@ import { OutletService } from '../../data-access/services/outlet/outlet.service'
 import { Order } from '../../models/order/order';
 import { format } from 'date-fns';
 import { DialogModule } from 'primeng/dialog';
+import { TableComponent } from "../table/table.component";
 
 @Component({
     selector: 'app-outlet-orders',
     standalone: true,
     templateUrl: './outlet-orders.component.html',
     styleUrl: './outlet-orders.component.css',
-    imports: [CardModule, TableModule, ButtonModule, TagModule, OutletComponent, DialogModule]
+    imports: [CardModule, TableModule, ButtonModule, TagModule, OutletComponent, DialogModule, TableComponent]
 })
 export class OutletOrdersComponent {
 
@@ -34,7 +35,15 @@ export class OutletOrdersComponent {
   showDetail : boolean = false;
   dialogVisible : boolean = false;
 
+  tableCols : any[] = [
+    { field: 'customerName', header: 'Customer' },
+    { field: 'amount', header: 'Amount' },
+    { field: 'status', header: 'Status' },
+    { field: 'deliveryMode', header: 'Delivery' },
+    { field: 'formattedDate', header: 'Date' },];
+
   showDialog(index:number){
+    console.log("Button Pushed");
     this.currentOrder = this.orders[index];
     this.dialogVisible = true;
 }
@@ -56,7 +65,7 @@ fetchOrders(id:number){
     this.orderService.getOutletOrders(id).subscribe({
         next:(result:ResponseDTO)=>{
             if(result.status){
-                this.orders = result.data.map((o:Order) => ({...o, formattedDate:format(o.orderDate as Date, 'dd MMM yyyy')}))
+                this.orders = result.data.map((o:Order) => ({...o, formattedDate:format(o.orderDate as Date, 'dd MMM yyyy'), customerName:o.customer.name}))
                 console.log(result.data);
             }
         },

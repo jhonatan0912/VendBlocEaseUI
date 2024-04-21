@@ -27,6 +27,7 @@ export interface Order {
     store: string
     products: OrderProduct[],
     customer:Customer
+    deliveryCost:number
   }
   
   export interface OrderProduct {
@@ -35,5 +36,5 @@ export interface Order {
     amount: number
     outletId: number
     orderQuantity: number
-    inventoryId: number
+    id: number //inventoryID
   }
