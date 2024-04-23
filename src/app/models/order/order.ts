@@ -28,6 +28,12 @@ export interface Order {
     products: OrderProduct[],
     customer:Customer
     deliveryCost:number
+    paid:boolean
+  }
+
+  export interface OrderReport{
+    orders:Order[],
+    total:number
   }
   
   export interface OrderProduct {

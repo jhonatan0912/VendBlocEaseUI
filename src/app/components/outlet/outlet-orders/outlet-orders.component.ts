@@ -4,13 +4,13 @@ import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import {TagModule} from 'primeng/tag'
 import { OutletComponent } from "../outlet/outlet.component";
-import { OrderService } from '../../data-access/services/order/order.service';
-import { ResponseDTO } from '../../models/response/response';
-import { OutletService } from '../../data-access/services/outlet/outlet.service';
-import { Order } from '../../models/order/order';
+import { OrderService } from '../../../data-access/services/order/order.service';
+import { ResponseDTO } from '../../../models/response/response';
+import { OutletService } from '../../../data-access/services/outlet/outlet.service';
+import { Order } from '../../../models/order/order';
 import { format } from 'date-fns';
 import { DialogModule } from 'primeng/dialog';
-import { TableComponent } from "../table/table.component";
+import { TableComponent } from "../../table/table.component";
 
 @Component({
     selector: 'app-outlet-orders',
@@ -29,7 +29,6 @@ export class OutletOrdersComponent {
   }
 
   outlet : any;
-  
   orders : Order[] = [];
   currentOrder : any = null;
   showDetail : boolean = false;
@@ -39,6 +38,7 @@ export class OutletOrdersComponent {
     { field: 'customerName', header: 'Customer' },
     { field: 'amount', header: 'Amount' },
     { field: 'status', header: 'Status' },
+    { field: 'paid', header: 'Paid' },
     { field: 'deliveryMode', header: 'Delivery' },
     { field: 'formattedDate', header: 'Date' },];
 
@@ -65,7 +65,7 @@ fetchOrders(id:number){
     this.orderService.getOutletOrders(id).subscribe({
         next:(result:ResponseDTO)=>{
             if(result.status){
-                this.orders = result.data.map((o:Order) => ({...o, formattedDate:format(o.orderDate as Date, 'dd MMM yyyy'), customerName:o.customer.name}))
+                this.orders = result.data.orders.map((o:Order) => ({...o, formattedDate:format(o.orderDate as Date, 'dd MMM yyyy'), customerName:o.customer.name}))
                 console.log(result.data);
             }
         },

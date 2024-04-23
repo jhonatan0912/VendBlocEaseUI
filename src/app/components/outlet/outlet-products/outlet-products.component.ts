@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { OutletService } from '../../data-access/services/outlet/outlet.service';
-import { ResponseDTO } from '../../models/response/response';
+import { OutletService } from '../../../data-access/services/outlet/outlet.service';
+import { ResponseDTO } from '../../../models/response/response';
 import { OutletComponent } from "../outlet/outlet.component";
 import { TableModule } from 'primeng/table';
 import { format } from 'date-fns';
@@ -14,15 +14,15 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { FormControl, FormGroup,ReactiveFormsModule } from '@angular/forms';
-import { Unit } from '../../models/unit/unit';
-import { CreateProduct, Product } from '../../models/product/product';
-import { ProductCategory } from '../../models/product-category/product-category';
-import { ProductService } from '../../data-access/services/product/product.service';
+import { Unit } from '../../../models/unit/unit';
+import { CreateProduct, Product } from '../../../models/product/product';
+import { ProductCategory } from '../../../models/product-category/product-category';
+import { ProductService } from '../../../data-access/services/product/product.service';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
-import { TableComponent } from "../table/table.component";
+import { TableComponent } from "../../table/table.component";
 
 @Component({
     selector: 'app-outlet-products',

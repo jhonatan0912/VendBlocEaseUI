@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { DashboardComponent } from "../dashboard/dashboard.component";
+import { DashboardComponent } from "../../dashboard/dashboard.component";
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
-import { OutletService } from '../../data-access/services/outlet/outlet.service';
-import { ResponseDTO } from '../../models/response/response';
-import { Outlet } from '../../models/outlet/outlet';
+import { OutletService } from '../../../data-access/services/outlet/outlet.service';
+import { ResponseDTO } from '../../../models/response/response';
+import { Outlet } from '../../../models/outlet/outlet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem, PrimeIcons } from 'primeng/api';

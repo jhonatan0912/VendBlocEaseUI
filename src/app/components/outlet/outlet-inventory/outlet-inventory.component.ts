@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { OutletService } from '../../data-access/services/outlet/outlet.service';
-import { InventoryService } from '../../data-access/services/inventory/inventory.service';
-import { ResponseDTO } from '../../models/response/response';
-import { Outlet } from '../../models/outlet/outlet';
+import { OutletService } from '../../../data-access/services/outlet/outlet.service';
+import { InventoryService } from '../../../data-access/services/inventory/inventory.service';
+import { ResponseDTO } from '../../../models/response/response';
+import { Outlet } from '../../../models/outlet/outlet';
 import { OutletComponent } from "../outlet/outlet.component";
-import { TableComponent } from "../table/table.component";
+import { TableComponent } from "../../table/table.component";
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormControl, FormGroup,ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { CreateInventory, Inventory } from '../../models/inventory/inventory';
+import { CreateInventory, Inventory } from '../../../models/inventory/inventory';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

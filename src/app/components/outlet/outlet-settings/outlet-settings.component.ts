@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { OutletComponent } from "../outlet/outlet.component";
-import { OutletService } from '../../data-access/services/outlet/outlet.service';
+import { OutletService } from '../../../data-access/services/outlet/outlet.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CardModule } from 'primeng/card';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ButtonModule } from 'primeng/button';
-import { Outlet } from '../../models/outlet/outlet';
-import { ResponseDTO } from '../../models/response/response';
+import { Outlet } from '../../../models/outlet/outlet';
+import { ResponseDTO } from '../../../models/response/response';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -22,7 +22,6 @@ export class OutletSettingsComponent {
 
   constructor(private outletService:OutletService, private toastr: ToastrService){
     this.outletService.outlet$.subscribe((result) => {
-      console.log('Skin', result);
       this.outlet = result;
     });
     this.updateOutletForm.setValue({name:this.outlet?.name, phone:this.outlet?.phone, address:this.outlet?.address, deliveryFee:this.outlet?.deliveryFee});

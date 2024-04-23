@@ -25,15 +25,19 @@ export class OrderService {
   }
 
   checkout(order:CreateOrder):Observable<any>{
-    return this.http.post(this.baseUrl+'api/Order/Checkout', order, httpOptions)
+    return this.http.post(this.baseUrl+'api/Order/checkout', order, httpOptions)
   }
 
   getUserOrders(email:string):Observable<any>{
-    return this.http.get<ResponseDTO>(this.baseUrl+'api/Order/GetOrdersByUser/'+email);
+    return this.http.get<ResponseDTO>(this.baseUrl+'api/Order/get-orders-by-user/'+email);
   }
 
   getOutletOrders(id:number):Observable<any>{
-    return this.http.get<ResponseDTO>(this.baseUrl+'api/Order/GetOrdersByOutlet/'+id);
+    return this.http.get<ResponseDTO>(this.baseUrl+'api/Order/get-orders-by-outlet/'+id);
+  }
+
+  getOutletOrdersWithDate(id:number, date:string):Observable<any>{
+    return this.http.get<ResponseDTO>(this.baseUrl+'api/Order/get-orders-by-outlet/'+id+'?date='+date);
   }
 
   getOrder(id:number):Observable<any>{

@@ -13,8 +13,9 @@
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th>#</th>
-                <th *ngFor="let col of columns">
-                    {{ col.header }}
+                <!-- [pSortableColumn]="col.field" <p-sortIcon [field]="col.field"></p-sortIcon> -->
+                <th *ngFor="let col of columns" >
+                    {{ col.header }} 
                 </th>
                 <th></th>
             </tr>

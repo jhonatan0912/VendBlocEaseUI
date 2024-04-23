@@ -14,11 +14,13 @@ import { ForgotPasswordComponent } from './components/auth/forgot-password/forgo
 import { VerifyEmailComponent } from './components/auth/verify-email/verify-email.component';
 import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 import { MyOutletsComponent } from './components/my-outlets/my-outlets.component';
-import { OutletComponent } from './components/outlet/outlet.component';
-import { OutletOrdersComponent } from './components/outlet-orders/outlet-orders.component';
-import { OutletProductsComponent } from './components/outlet-products/outlet-products.component';
-import { OutletInventoryComponent } from './components/outlet-inventory/outlet-inventory.component';
-import { OutletSettingsComponent } from './components/outlet-settings/outlet-settings.component';
+import { OutletComponent } from './components/outlet/outlet/outlet.component';
+import { OutletOrdersComponent } from './components/outlet/outlet-orders/outlet-orders.component';
+import { OutletProductsComponent } from './components/outlet/outlet-products/outlet-products.component';
+import { OutletInventoryComponent } from './components/outlet/outlet-inventory/outlet-inventory.component';
+import { OutletSettingsComponent } from './components/outlet/outlet-settings/outlet-settings.component';
+import { OutletCustomersComponent } from './components/outlet/outlet-customers/outlet-customers.component';
+import { OutletReportComponent } from './components/outlet/outlet-report/outlet-report.component';
 
 export const routes: Routes = [
     {
@@ -70,15 +72,21 @@ export const routes: Routes = [
         path:'outlet/:id', component:OutletComponent
     },
     {
-        path:'outlet-orders', component:OutletOrdersComponent
+        path:'outlet/:id/orders', component:OutletOrdersComponent
     },
     {
-        path:'outlet-products', component:OutletProductsComponent
+        path:'outlet/:id/products', component:OutletProductsComponent
     },
     {
-        path:'outlet-inventory', component:OutletInventoryComponent
+        path:'outlet/:id/inventory', component:OutletInventoryComponent
     },
     {
-        path:'outlet-settings', component:OutletSettingsComponent
+        path:'outlet/:id/settings', component:OutletSettingsComponent
+    },
+    {
+        path:'outlet/:id/customers', component:OutletCustomersComponent
+    },
+    {
+        path:'outlet/:id/report', component:OutletReportComponent
     }
 ];

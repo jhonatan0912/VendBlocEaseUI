@@ -1,0 +1,35 @@
+<app-outlet>
+
+    <p-card header="Report">
+        <form>
+            <div class="flex justify-between lg:pr-10">
+                <div class="flex space-x-2 mb-2 lg:w-[50%] justify-start items-center">
+                    <div class="flex flex-col space-y-2">
+                        <label for="">Report Type</label>
+                        <p-dropdown class="border rounded-lg" [options]="reports" optionLabel="name" showClear="true"
+                            placeholder="Select a Type"></p-dropdown>
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <label for="">Date</label>
+                        <p-calendar class="border py-3 px-2 rounded-lg" (onSelect)="dateChanged($event)" (ngModel)="date" showIcon=true inputId="templatedisplay">
+                            <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
+                                <i class="pi pi-user pointer-events-none" (click)="clickCallBack($event)"></i>
+                            </ng-template>
+                        </p-calendar>
+                    </div>
+                   
+                </div>
+                <div>
+                    <div class="flex flex-col space-y-4 justify-end">
+                        <label class="" for="">Total Cost</label>
+                        <span class="font-bold text-center justify-center">{{total}}</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <app-table [cols]="tableCols" [showEdit]="false" [showOpen]="true" (showButtonPressed)="showDialog($event)"
+        [showDelete]="false" [showAdd]="false" [tableData]="orders" tableName="Orders"></app-table>
+    </p-card>
+
+</app-outlet>
