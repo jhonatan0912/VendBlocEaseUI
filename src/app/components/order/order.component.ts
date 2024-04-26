@@ -24,18 +24,18 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { InventoryService } from '../../data-access/services/inventory/inventory.service';
 
 @Component({
-    selector: 'app-order',
-    standalone: true,
-    templateUrl: './order.component.html',
-    styleUrl: './order.component.css',
-    imports: [SideMenuItemComponent,
-       CommonModule,
-       CartItemComponent, 
-       FormsModule,
-       ReactiveFormsModule, 
-       DeliveryOptionComponent, ButtonModule,
-      CardModule,
-      OverlayPanelModule]
+  selector: 'app-order',
+  standalone: true,
+  templateUrl: './order.component.html',
+  styleUrl: './order.component.css',
+  imports: [SideMenuItemComponent,
+    CommonModule,
+    CartItemComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    DeliveryOptionComponent, ButtonModule,
+    CardModule,
+    OverlayPanelModule]
 })
 export class OrderComponent {
   date = new Date();
@@ -45,46 +45,50 @@ export class OrderComponent {
     phone: new FormControl(),
   })
 
-  showModalCart : boolean = false;
-  outletId:number = 0;
-  outlet :Outlet | undefined = undefined;
-  cartCount : number = 0;
-  categories : ProductCategory[] = [];
-  allproducts : Inventory[] = [];
-  products : any[] = [];
+  showModalCart: boolean = false;
+  outletId: number = 0;
+  outlet: Outlet | undefined = undefined;
+  categories: ProductCategory[] = [];
+  allproducts: Inventory[] = [];
+  products: Inventory[] = [];
   cart: any[] = [];
-  deliveryFee : number = 0;
+  cartCount: number = 0;
+  deliveryFee: number = 0;
   ordersCost: number = 0;
-  totalcost:number = 0;
-  canCheckOut:boolean = false;
+  totalcost: number = 0;
+  canCheckOut: boolean = false;
   currentCategory = -1;
-  selectedDeliveryMode : number = 1;
-  delivery : boolean = true;
-  updateProfileModal : boolean = false;
-  serviceCharge : number  = 70;
-  user : User | null = null;
-  
-  constructor(private toastr: ToastrService, 
-    private orderService:OrderService, 
-    private outletService:OutletService,
-    private route:ActivatedRoute, 
-    private loadingService:LoadingService,
-    private localStorage:LocalService,
-    private router:Router,
-    private authService:AuthService,
-  private inventoryService:InventoryService){
+  selectedDeliveryMode: number = 1;
+  delivery: boolean = true;
+  updateProfileModal: boolean = false;
+  serviceCharge: number = 70;
+  user: User | null = null;
+  currentOrder: number = 0;
+  yen: number = 0;
+
+
+  constructor(private toastr: ToastrService,
+    private orderService: OrderService,
+    private outletService: OutletService,
+    private route: ActivatedRoute,
+    private loadingService: LoadingService,
+    private localStorage: LocalService,
+    private router: Router,
+    private authService: AuthService,
+    private inventoryService: InventoryService) {
   }
+
   destroy$: Subject<void> = new Subject<void>();
   // .pipe(takeUntil(this.destroy$))
   ngOnInit() {
-    this.route.params.subscribe(params =>{
+    this.route.params.subscribe(params => {
       this.outletId = params['id']
     });
     this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe({
-       next:(result)=>{
+      next: (result) => {
         this.user = result as User
-       },
-       error:()=> {
+      },
+      error: () => {
         console.log("Something went wrong");
       }
     });
@@ -93,9 +97,14 @@ export class OrderComponent {
     this.fetchInventory(this.outletId);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  newOrder() {
+    this.currentOrder++;
+    this.toastr.info('New Order Started', 'New Order')
   }
 
   updateProfile() {
@@ -106,83 +115,84 @@ export class OrderComponent {
       email: this.user?.email as string
     };
     this.authService.updateContact(contactData).subscribe({
-      next:(result: ResponseDTO)=>{
-       if(result.status){
-        this.toastr.success('Profile updated successfully', 'Success');
-        this.toggleProfileModal();
-        const user : User = {
-           email:this.user?.email as string,
-           phone:contactData.phone as string,
-           address: contactData.address as string,
-           name: this.user?.name as string,
-           id : this.user?.id as string
-        };
-        this.authService.setUser(user);
-       }
+      next: (result: ResponseDTO) => {
+        if (result.status) {
+          this.toastr.success('Profile updated successfully', 'Success');
+          this.toggleProfileModal();
+          const user: User = {
+            email: this.user?.email as string,
+            phone: contactData.phone as string,
+            address: contactData.address as string,
+            name: this.user?.name as string,
+            id: this.user?.id as string
+          };
+          this.authService.setUser(user);
+        }
       },
-      error:()=> {
+      error: () => {
         this.toastr.error("something went wrong");
-     }
-   })
+      }
+    })
   }
 
-  public fetchOutlet(outlet:number){
+  public fetchOutlet(outlet: number) {
     this.outletService.getOutlet(outlet).subscribe({
-      next:(result:ResponseDTO) => {
-        if(result.status){
-          console.log('outlet',result.data);
+      next: (result: ResponseDTO) => {
+        if (result.status) {
+          console.log('outlet', result.data);
           this.outlet = result.data;
-          if(this.delivery){
+          if (this.delivery) {
             this.deliveryFee += this.outlet?.deliveryFee as number;
           }
         }
-          else{
-            console.log("something went wrong");
-          }
-        },
-        error:()=> {
-          console.log("Something went wrong");
-        }
-    })
-  }  
-
-  public fetchCategories(outlet:number){
-    this.orderService.getProductsCategories(outlet).subscribe({
-      next:(result:ResponseDTO)=>{
-        if(result.status){
-          this.categories = result.data
-        }
-        else{
+        else {
           console.log("something went wrong");
         }
       },
-      error:()=> {
+      error: () => {
         console.log("Something went wrong");
       }
     })
   }
 
-  public fetchInventory(outlet:number){
-    this.inventoryService.getInventoryByOutlet(outlet).subscribe({
-      next:(result:ResponseDTO)=>{
-        if(result.status){
-          this.allproducts = result.data
+  public fetchCategories(outlet: number) {
+    this.orderService.getProductsCategories(outlet).subscribe({
+      next: (result: ResponseDTO) => {
+        if (result.status) {
+          this.categories = result.data;
         }
-        else{
+        else {
+          console.log("something went wrong");
+        }
+      },
+      error: () => {
+        console.log("Something went wrong");
+      }
+    })
+  }
+
+  public fetchInventory(outlet: number) {
+    this.inventoryService.getInventoryByOutlet(outlet).subscribe({
+      next: (result: ResponseDTO) => {
+        if (result.status) {
+          this.allproducts = result.data;
+          this.categories = this.categories.map((c:ProductCategory) => ({...c, quantity:this.allproducts?.filter(x=>x.productCategoryId === c.id).length + ""}))
+        }
+        else {
           console.log("Unable to fetch inventory")
         }
       }
     })
   }
 
-  validateAddressAndPhone():boolean{
-    if(!this.user?.phone){
+  validateAddressAndPhone(): boolean {
+    if (!this.user?.phone) {
       return false;
     }
     return true;
   }
 
-  deliveryModeChanged(delivery:boolean):void{
+  deliveryModeChanged(delivery: boolean): void {
     const deliveryFeeChange = delivery ? (this.outlet?.deliveryFee as number) : -this.deliveryFee;
     this.totalcost += deliveryFeeChange;
     this.deliveryFee = delivery ? deliveryFeeChange : 0;
@@ -190,99 +200,112 @@ export class OrderComponent {
     this.delivery = delivery;
   }
 
-  categoryProducts(event: Event, productCategoryId:number){
+  categoryProducts(event: Event, productCategoryId: number) {
     event.preventDefault();
     this.currentCategory = productCategoryId;
-    this.products = this.allproducts.filter(x=>x.productCategoryId === productCategoryId);
-    console.log(this.products);
+    this.products = this.allproducts.filter(x => x.productCategoryId === productCategoryId);
   }
 
-  addToCart(product:any){
+  addToCart(product: any) {
     const price = product.salesPrice * product.orderQuantity;
     product.price = price;
     this.ordersCost = this.ordersCost + (product.price);
     this.totalcost = this.ordersCost + this.deliveryFee + this.serviceCharge;
-    const isProductInCart = this.cart.findIndex(x=>x.productId == product.productId);
-    if(isProductInCart < 0){
-      this.cart.push({...product});
-      this.cartCount++;
+    if (this.currentOrder >= 0 && this.currentOrder < this.cart.length) {
+      //Order cart exist in general cart
+      const currentCart: Inventory[] = this.cart[this.currentOrder];
+      const isProductInCurrentCart = currentCart.findIndex(x => x.productId === product.productId);
+      if (isProductInCurrentCart < 0) {
+        currentCart.push({ ...product });
+      }
+      else {
+        currentCart[isProductInCurrentCart].orderQuantity += product.orderQuantity;
+        currentCart[isProductInCurrentCart].price += (product.price);
+      }
+    } else {
+      // Is not in general cart 
+      const orderCart: any[] = [];
+      orderCart.push({ ...product });
+      this.cart.push(orderCart);
     }
-    else{
-      this.cart[isProductInCart].orderQuantity += product.orderQuantity;
-      this.cart[isProductInCart].price += (product.price);
-    }
+    console.log(this.cart);
     product.orderQuantity = 1;
-    this.toastr.success('Added To Cart', 'Success')
+    this.toastr.success('Added To Cart', 'Success');
+    this.cartCount++;
   }
 
-  updateProductQuantity(productId:number, increment : boolean){
-    const index = this.products.findIndex(x=>x.productId === productId);
-    if(increment){
+  updateProductQuantity(productId: number, increment: boolean) {
+    const index = this.products.findIndex(x => x.productId === productId);
+    if (increment) {
       this.products[index].orderQuantity = this.products[index].orderQuantity + 1;
     }
-    else{
-      if(this.products[index].orderQuantity > 1){
+    else {
+      if (this.products[index].orderQuantity > 1) {
         this.products[index].orderQuantity = this.products[index].orderQuantity - 1;
       }
     }
   }
 
-  removeFromCart(product:any){
+  removeFromCart(product: any, orderIndex:number) {
     this.cartCount--;
     this.ordersCost = this.ordersCost - product.price;
     this.totalcost = this.ordersCost + this.deliveryFee + this.serviceCharge;
-    const itemIndex = this.cart.findIndex(x=>x.productId === product.productId);
-    if(itemIndex !== -1){
-      this.cart.splice(itemIndex, 1);
+    const currentCart: Inventory[] = this.cart[orderIndex];
+    const itemIndex = currentCart.findIndex(x => x.productId === product.productId);
+    if (itemIndex !== -1) {
+      currentCart.splice(itemIndex, 1);
+      if(currentCart.length < 1){
+        this.cart.splice(orderIndex, 1);
+      }
     }
   }
 
-  showmodal(){
+  showmodal() {
     this.showModalCart = !this.showModalCart;
     const mydialog = document.getElementById('dialog');
   }
 
-  toggleProfileModal(){
+  toggleProfileModal() {
     this.updateProfileModal = !this.updateProfileModal;
   }
 
-  checkout(){
+  checkout() {
     const email = this.user?.email as string;
-    if(!email) this.router.navigate(['login'])
-    if(this.cartCount < 1){
+    if (!email) this.router.navigate(['login'])
+    if (this.cartCount < 1) {
       this.toastr.warning("Add Items to cart Before Checking Out");
       return;
     }
-    if(!this.validateAddressAndPhone()) {
+    if (!this.validateAddressAndPhone()) {
       this.toastr.warning("Please update your phone and address");
       this.toggleProfileModal();
       return;
     }
     this.loadingService.isLoading.next(true);
-    const order : CreateOrder = {
-      products : this.cart,
-      outletId : this.outletId,
-      customerEmail : email,
-      amount:this.ordersCost + this.deliveryFee + this.serviceCharge,
-      deliveryMode:this.selectedDeliveryMode,
-      deliveryCost:this.deliveryFee,
-      orderCost : this.ordersCost,
-      serviceCharge:this.serviceCharge,
+    const order: CreateOrder = {
+      products: this.cart,
+      outletId: this.outletId,
+      customerEmail: email,
+      amount: this.ordersCost + this.deliveryFee + this.serviceCharge,
+      deliveryMode: this.selectedDeliveryMode,
+      deliveryCost: this.deliveryFee,
+      orderCost: this.ordersCost,
+      serviceCharge: this.serviceCharge,
     };
     this.orderService.checkout(order).subscribe({
-      next:(result:ResponseDTO)=>{
-        if(result.status){
+      next: (result: ResponseDTO) => {
+        if (result.status) {
           this.loadingService.isLoading.next(false);
           this.toastr.success('Trying to set up your payment link', 'Order Created')
           window.location.href = result.data;
-         
+
         }
-        else{
+        else {
           this.toastr.error(result.message);
           this.loadingService.isLoading.next(false);
         }
       },
-      error:(e) => {        
+      error: (e) => {
         this.loadingService.isLoading.next(false);
       }
     })

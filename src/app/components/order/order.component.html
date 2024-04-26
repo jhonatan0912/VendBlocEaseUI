@@ -1,73 +1,43 @@
 <div class="flex flex-col h-full w-full">
   <!-- Restaurant Header -->
   <div class="relative flex flex-col h-[10%] w-full">
-    <div
-      class="absolute w-full bg-transparent h-full justify-center text-white flex flex-col"
-    >
-      <span
-        class="text-white font-semibold text-lg md:text-[50px] xl:text-5xl text-center font-inter"
-        >{{ outlet?.store }}</span
-      >
-      <span
-        class="text-white font-medium text-xs md:text-sm xl:text-lg text-center font-inter"
-        >{{ outlet?.name }}</span
-      >
+    <div class="absolute w-full bg-transparent h-full justify-center text-white flex flex-col">
+      <span class="text-white font-semibold text-lg md:text-[50px] xl:text-5xl text-center font-inter">{{ outlet?.store
+        }}</span>
+      <span class="text-white font-medium text-xs md:text-sm xl:text-lg text-center font-inter">{{ outlet?.name
+        }}</span>
     </div>
-    <img
-      class="w-full h-auto object-cover"
-      src="../../../../assets/background-image.png"
-      alt=""
-    />
+    <img class="w-full h-auto object-cover" src="../../../../assets/background-image.png" alt="" />
   </div>
 
   @if(showModalCart){
   <!-- Modal [ngClass]="showModalCart ? 'opacity-50' : 'hidden opacity-0'"-->
-  <div
-    id="dialog"
-    class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen z-50"
-  >
+  <div id="dialog" class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen z-50">
     <!-- Close Button -->
-    <div
-      (click)="showmodal()"
-      class="group absolute top-16 right-2 flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full md:bg-white md:top-4 hover:cursor-pointer hover:-translate-y-0.5 transition duration-150"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-6 h-6 text-black group-hover:text-gray-600"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
+    <div (click)="showmodal()"
+      class="group absolute top-16 right-2 flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full md:bg-white md:top-4 hover:cursor-pointer hover:-translate-y-0.5 transition duration-150">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-black group-hover:text-gray-600" viewBox="0 0 24 24"
+        stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <line x1="18" y1="6" x2="6" y2="18" />
         <line x1="6" y1="6" x2="18" y2="18" />
       </svg>
     </div>
-    <div
-      class="bg-white rounded-xl shadow-md p-4 mx-auto my-20 w-[90%] max-h-[80%] border"
-    >
+    <div class="bg-white rounded-xl shadow-md p-4 mx-auto my-20 w-[90%] max-h-[80%] border">
       <div class="flex items-center gap-5">
-        <div
-          class="m-0 md:flex-col shadow-lg w-full md:p-1 lg:p-3 xl:p-4 bg-[#0f172a08] space-y-6"
-        >
+        <div class="m-0 md:flex-col shadow-lg w-full md:p-1 lg:p-3 xl:p-4 bg-[#0f172a08] space-y-6">
           <div class="flex flex-col space-y-3">
             <span class="font-bold">My Cart ({{ cartCount }})</span>
             <!-- Cart list -->
             <div class="flex max-h-[300px] flex-col overflow-auto">
               @for(cartItem of cart; track cartItem.id){
-              <app-cart-item
-                (cartItemEmitted)="removeFromCart($event)"
-                [cartItem]="cartItem"
-              ></app-cart-item>
+              <app-cart-item (cartItemEmitted)="removeFromCart($event, cartItem.id)" [cartItem]="cartItem"></app-cart-item>
               }
             </div>
 
             <div>
               <span class="font-semibold">Item(s) Cost</span> : {{ ordersCost }}
-              <span class="flex font-semibold">Service Charge : {{ serviceCharge }}</span> 
+              <span class="flex font-semibold">Service Charge : {{ serviceCharge }}</span>
             </div>
             @if(delivery){
             <div>
@@ -76,18 +46,13 @@
             </div>
             }
             @if(cartCount > 0){
-            <app-delivery-option
-              uniqueId="mobile"
-              (selectedDeliveryModeEmitter)="deliveryModeChanged($event)"
-            ></app-delivery-option>
+            <app-delivery-option uniqueId="mobile"
+              (selectedDeliveryModeEmitter)="deliveryModeChanged($event)"></app-delivery-option>
             }
             <div class="form_div">
-              <button
-                (click)="checkout()"
-                style="background-color: #0f172a"
+              <button (click)="checkout()" style="background-color: #0f172a"
                 class="create_button flex justify-center p-3 space-x-4 text-white hover:shadow-lg duration-300"
-                type="submit"
-              >
+                type="submit">
                 <span>Checkout</span>
               </button>
             </div>
@@ -100,74 +65,43 @@
 
   @if(updateProfileModal){
   <!-- Profile Update -->
-  <div
-    id="dialog"
-    class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen z-50"
-  >
+  <div id="dialog" class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen z-50">
     <!-- Close Button -->
-    <div
-      (click)="toggleProfileModal()"
-      class="group absolute top-16 right-2 flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full md:bg-white md:top-4 hover:cursor-pointer hover:-translate-y-0.5 transition duration-150"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-6 h-6 text-black group-hover:text-gray-600"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
+    <div (click)="toggleProfileModal()"
+      class="group absolute top-16 right-2 flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full md:bg-white md:top-4 hover:cursor-pointer hover:-translate-y-0.5 transition duration-150">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-black group-hover:text-gray-600" viewBox="0 0 24 24"
+        stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <line x1="18" y1="6" x2="6" y2="18" />
         <line x1="6" y1="6" x2="18" y2="18" />
       </svg>
     </div>
-    <div
-      class="bg-white rounded-xl shadow-md p-4 mx-auto my-20 w-[90%] max-h-[80%] border"
-    >
+    <div class="bg-white rounded-xl shadow-md p-4 mx-auto my-20 w-[90%] max-h-[80%] border">
       <div class="flex items-center gap-5">
-        <div
-          class="m-0 md:flex-col shadow-lg w-full md:p-1 lg:p-3 xl:p-4 bg-[#0f172a08] space-y-6"
-        >
-        <form [formGroup]="profileUpdateForm" (submit)="updateProfile()">
-          <div class="flex flex-col space-y-3">
-            <span class="font-bold">Update your profile</span>
-            <!-- Cart list -->
-            <div class="form_div">
-              <label for="">Enter Your Phone</label>
-              <input
-                required
-                class="border p-3 rounded-md"
-                placeholder="Input Your Phone"
-                formControlName="phone"
-                type="text"
-                required
-              />
+        <div class="m-0 md:flex-col shadow-lg w-full md:p-1 lg:p-3 xl:p-4 bg-[#0f172a08] space-y-6">
+          <form [formGroup]="profileUpdateForm" (submit)="updateProfile()">
+            <div class="flex flex-col space-y-3">
+              <span class="font-bold">Update your profile</span>
+              <!-- Cart list -->
+              <div class="form_div">
+                <label for="">Enter Your Phone</label>
+                <input required class="border p-3 rounded-md" placeholder="Input Your Phone" formControlName="phone"
+                  type="text" required />
+              </div>
+              <div class="form_div">
+                <label for="">Enter Your Address</label>
+                <input required class="border p-3 rounded-md" placeholder="Enter Your Address" formControlName="address"
+                  type="text" required />
+              </div>
+              <div class="form_div">
+                <button style="background-color: #0f172a"
+                  class="create_button flex justify-center p-3 space-x-4 text-white hover:shadow-lg duration-300"
+                  type="submit">
+                  <span>Update</span>
+                </button>
+              </div>
             </div>
-            <div class="form_div">
-              <label for="">Enter Your Address</label>
-              <input
-                required
-                class="border p-3 rounded-md"
-                placeholder="Enter Your Address"
-                formControlName="address"
-                type="text"
-                required
-              />
-            </div>
-            <div class="form_div">
-              <button
-                style="background-color: #0f172a"
-                class="create_button flex justify-center p-3 space-x-4 text-white hover:shadow-lg duration-300"
-                type="submit"
-              >
-                <span>Update</span>
-              </button>
-            </div>
-          </div>
-        </form>
+          </form>
         </div>
       </div>
     </div>
@@ -179,25 +113,12 @@
       <div class="flex flex-col space-y-3">
         <span class="font-bold">Search Food</span>
         <div class="flex items-center relative w-full">
-          <input
-            class="py-3 pl-12 px-1 rounded-lg w-full bg-[#7676801f] focus:outline-none"
-            type="text"
-            name=""
-            placeholder="Search"
-            id=""
-            disabled
-          />
+          <input class="py-3 pl-12 px-1 rounded-lg w-full bg-[#7676801f] focus:outline-none" type="text" name=""
+            placeholder="Search" id="" disabled />
           <button class="absolute pl-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-8 text-gray-300 duration-200 hover:scale-110"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 text-gray-300 duration-200 hover:scale-110"
+              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <circle cx="10" cy="10" r="7" />
               <line x1="21" y1="21" x2="15" y2="15" />
@@ -210,18 +131,12 @@
         <div class="overflow-x-auto flex py-2">
           @for( category of categories;track category.id){
           <div class="flex flex-row my-3 mx-3">
-            <div
-              (click)="categoryProducts($event, category.id)"
-              class="category_item_div group"
-            >
-              <span
-                class="flex whitespace-nowrap px-1 text-[#0F172A] group-hover:text-white"
-                href=""
-                >{{ category.name }}</span
-              >
+            <div (click)="categoryProducts($event, category.id)" class="category_item_div group">
+              <span class="flex whitespace-nowrap px-1 text-[#0F172A] group-hover:text-white" href="">{{ category.name
+                }}</span>
               <span class="text-[#0F172A] opacity-50 group-hover:text-white">{{
                 category.quantity
-              }}</span>
+                }} 5</span>
             </div>
           </div>
           }
@@ -232,35 +147,20 @@
 
   <!-- Content Div -->
   <div
-    class="flex px-1 lg:px-10 xl:px-12 2xl:px-24 w-full pt-4 space-x-5 lg:space-x-8 items-center md:items-start justify-between mb-20"
-  >
+    class="flex px-1 lg:px-10 xl:px-12 2xl:px-24 w-full pt-4 space-x-5 lg:space-x-8 items-center md:items-start justify-between mb-20">
     <!-- Categories Div -->
     <div
-      class="hidden md:w-[25%] lg:w-[22%] 2xl:w-[27%] p-0 shadow-lg md:p-2 lg:p-4 h-fit md:flex md:flex-col bg-[#0f172a08] space-y-6"
-    >
+      class="hidden md:w-[25%] lg:w-[22%] 2xl:w-[27%] p-0 shadow-lg md:p-2 lg:p-4 h-fit md:flex md:flex-col bg-[#0f172a08] space-y-6">
       <!-- Search Div -->
       <div class="flex flex-col space-y-3">
         <span class="font-bold">Search Food</span>
         <div class="flex items-center w-full">
-          <input
-            class="py-3 pl-12 px-1 rounded-lg w-full bg-[#7676801f] focus:border focus:border-[#E91E63]"
-            type="text"
-            name=""
-            placeholder="Search"
-            id=""
-            disabled
-          />
+          <input class="py-3 pl-12 px-1 rounded-lg w-full bg-[#7676801f] focus:border focus:border-[#E91E63]"
+            type="text" name="" placeholder="Search" id="" disabled />
           <button class="absolute pl-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-8 text-gray-300 duration-200 hover:scale-110"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 text-gray-300 duration-200 hover:scale-110"
+              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <circle cx="10" cy="10" r="7" />
               <line x1="21" y1="21" x2="15" y2="15" />
@@ -271,10 +171,8 @@
       <div class="flex flex-col space-y-0">
         <span class="sm:mb-2 lg:mb-4">Food Categories</span>
         <div class="overflow-auto" *ngFor="let category of categories">
-          <app-side-menu-item
-            (click)="categoryProducts($event, category.id)"
-            [menuName]="category.name"
-          ></app-side-menu-item>
+          <app-side-menu-item (click)="categoryProducts($event, category.id)"
+            [menuName]="category.name" [menuProp]="category.quantity"></app-side-menu-item>
         </div>
       </div>
     </div>
@@ -284,93 +182,47 @@
       <div class="px-0 sm:px-1 md:px-2 lg:px-6 2xl:px-10">
         @for(product of products; track product.productId){
         <div
-          class="flex items-center justify-start md:justify-between space-x-0 sm:space-x-2 md:space-x-1 w-full border-b py-2 sm:py-1 my-1"
-        >
+          class="flex items-center justify-start md:justify-between space-x-0 sm:space-x-2 md:space-x-1 w-full border-b py-2 sm:py-1 my-1">
           <!-- Food Image and Info -->
-          <div
-            class="flex flex-row w-[60%] md:w-[70%] xl:w-3/4 space-x-3 sm:space-x-1 xl:space-x-4 sm:items-center"
-          >
+          <div class="flex flex-row w-[60%] md:w-[70%] xl:w-3/4 space-x-3 sm:space-x-1 xl:space-x-4 sm:items-center">
             <img class="product_image" src="../../../assets/meal.png" alt="" />
             <!-- Info -->
             <div class="flex flex-col text-sm text-vendblocblue justify-start">
               <span class="font-inter">{{ product.product }}</span>
-              <div
-                class="flex space-x-5 md:space-x-4 items-center justify-start"
-              >
+              <div class="flex space-x-5 md:space-x-4 items-center justify-start">
                 <span class="opacity-50 font-inter">Qty</span>
                 <span class="flex items-center space-x-3 lg:space-x-1">
-                  <span
-                    (click)="updateProductQuantity(product.productId, false)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="14"
-                      height="2"
-                      viewBox="0 0 13 2"
-                      fill="none"
-                    >
-                      <path
-                        d="M1 1H12.0194"
-                        stroke="#0F172A"
-                        stroke-width="1.57419"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
+                  <span (click)="updateProductQuantity(product.productId, false)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="2" viewBox="0 0 13 2" fill="none">
+                      <path d="M1 1H12.0194" stroke="#0F172A" stroke-width="1.57419" stroke-linecap="round"
+                        stroke-linejoin="round" />
                     </svg>
                   </span>
-                  <span
-                    ><input
-                      class="w-6 text-sm text-vendblocblue bg-gray-300 align-middle rounded-md p-1 px-0.5 text-center"
-                      min="1"
-                      value="{{ product.orderQuantity }}"
-                      name=""
-                      id=""
-                  /></span>
+                  <span><input
+                      class="w-7 text-sm text-vendblocblue bg-gray-300 align-middle rounded-sm lg:rounded-md p-1 px-0.5 text-center"
+                      min="1" value="{{ product.orderQuantity }}" name="" id="" /></span>
 
-                  <span
-                    (click)="updateProductQuantity(product.productId, true)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="13"
-                      height="14"
-                      viewBox="0 0 13 14"
-                      fill="none"
-                    >
-                      <path
-                        d="M6.52881 1.49023V12.5096"
-                        stroke="#0F172A"
-                        stroke-width="1.57419"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M1.01953 7H12.0389"
-                        stroke="#0F172A"
-                        stroke-width="1.57419"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
+                  <span (click)="updateProductQuantity(product.productId, true)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                      <path d="M6.52881 1.49023V12.5096" stroke="#0F172A" stroke-width="1.57419" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                      <path d="M1.01953 7H12.0389" stroke="#0F172A" stroke-width="1.57419" stroke-linecap="round"
+                        stroke-linejoin="round" />
                     </svg>
                   </span>
                 </span>
               </div>
               <div class="flex space-x-1">
                 <span class="opacity-50 font-inter">Price</span>
-                <span class="pl-2 sm:pl-0 opacity-70 font-inter"
-                  >₦{{ product.salesPrice }} @if(product.orderQuantity > 1){({{ product.salesPrice * product.orderQuantity }})}</span
-                >
-               
+                <span class="pl-2 sm:pl-0 opacity-70 font-inter">₦{{ product.salesPrice }} @if(product.orderQuantity >
+                  1){({{ product.salesPrice * product.orderQuantity }})}</span>
+
               </div>
             </div>
           </div>
           <!-- Add To Cart -->
           <div class="flex w-[40%] justify-end pr-1 sm:w-1/2 xl:w-1/4">
-            <button
-              (click)="addToCart(product)"
-              style="background-color: #0f172a"
-              class="add_to_cart"
-            >
+            <button (click)="addToCart(product)" style="background-color: #0f172a" class="add_to_cart">
               <span class="text-white">Add to Cart</span>
             </button>
           </div>
@@ -394,44 +246,48 @@
 
     <!-- My Cart -->
     <div
-      class="hidden md:flex m-0 md:flex-col md:w-[36%] lg:w-[30%] 2xl:w-[55%] shadow-lg md:p-1 lg:p-3 xl:p-4 bg-[#0f172a08] space-y-6"
-    >
+      class="hidden md:flex m-0 md:flex-col md:w-[36%] lg:w-[30%] 2xl:w-[55%] shadow-lg md:p-1 lg:p-3 xl:p-4 bg-[#0f172a08] space-y-6">
       <div class="flex flex-col space-y-3">
-        <span class="font-bold">My Cart ({{ cartCount }})</span>
+        <span class="font-bold">My Cart</span>
         <!-- Cart list -->
         <div class="flex max-h-[300px] flex-col overflow-auto">
-          @for(cartItem of cart; track cartItem.id){
-          <app-cart-item
-            (cartItemEmitted)="removeFromCart($event)"
-            [cartItem]="cartItem"
-          ></app-cart-item>
+          @for(orderCart of cart; track orderCart; let  i = $index){
+            @if(cart.length > 1){
+            <span class="font-semibold">Order {{ i+ 1}} ({{ orderCart.length }})</span>
+            }
+            @for(orderItem of orderCart;  track orderItem.id){
+              <app-cart-item (cartItemEmitted)="removeFromCart($event, i)" [cartItem]="orderItem"></app-cart-item>
+            }
           }
         </div>
-        <div>
-          @if(cartCount > 0){
-            <span class="flex font-semibold">Item(s) Cost : {{ ordersCost }}</span> 
+        @if(cartCount > 0){
+        <div class="space-y-1">
+          
+          <span class="flex font-semibold">Item(s) Cost : {{ ordersCost }}</span>
           @if(delivery){
-            <span class="flex font-semibold">Delivery Cost : {{ deliveryFee }}</span> 
+          <span class="flex font-semibold">Delivery Cost : {{ deliveryFee }}</span>
           }
-          <span class="flex font-semibold">Service Charge : {{ serviceCharge }}</span> 
-        }
+          <span class="flex font-semibold">Service Charge : {{ serviceCharge }}</span>
+         
         </div>
-        
-          <div>
-            <span class="font-bold">Total</span> : {{ totalcost }}
-          </div>
-          @if(cartCount > 0){
-        <app-delivery-option
-          (selectedDeliveryModeEmitter)="deliveryModeChanged($event)"
-        ></app-delivery-option>
-          }
+
+        <div>
+          <span class="font-bold">Total</span> : {{ totalcost }}
+        </div>
+
+        <app-delivery-option (selectedDeliveryModeEmitter)="deliveryModeChanged($event)"></app-delivery-option>
+        }
         <div class="form_div">
-          <button
-            (click)="checkout()"
-            style="background-color: #0f172a"
+        @if(cartCount > 0){
+          <button (click)="newOrder()" style="background-color: #E7E8EA"
+            class="create_button flex justify-center p-3 space-x-4 text-vendblocblue hover:shadow-lg duration-300"
+            type="submit">
+            <span>New Order</span>
+          </button>
+        }
+          <button (click)="checkout()" style="background-color: #0f172a"
             class="create_button flex justify-center p-3 space-x-4 text-white hover:shadow-lg duration-300"
-            type="submit"
-          >
+            type="submit">
             <span>Checkout</span>
           </button>
         </div>
@@ -439,40 +295,20 @@
     </div>
 
     <!-- Floating Cart -->
-    <div
-      (click)="showmodal()"
-      class="flex md:hidden bg-[hsl(222,47%,11%)] fixed p-4 rounded-full right-[50px] bottom-20 z-10 hover:p-5 duration-100 shadow-2xl mb-12"
-    >
+    <div (click)="showmodal()"
+      class="flex md:hidden bg-[hsl(222,47%,11%)] fixed p-4 rounded-full right-[50px] bottom-20 z-10 hover:p-5 duration-100 shadow-2xl mb-12">
       <!-- <div class="absolute bg-red-600 rounded-full bottom-6 px-0.5 right-1">2</div> -->
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 20 20"
-        fill="none"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <g clip-path="url(#clip0_226_3727)">
           <path
             d="M7.49984 18.3334C7.96007 18.3334 8.33317 17.9603 8.33317 17.5001C8.33317 17.0398 7.96007 16.6667 7.49984 16.6667C7.0396 16.6667 6.6665 17.0398 6.6665 17.5001C6.6665 17.9603 7.0396 18.3334 7.49984 18.3334Z"
-            stroke="#FAFAFA"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+            stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           <path
             d="M16.6668 18.3334C17.1271 18.3334 17.5002 17.9603 17.5002 17.5001C17.5002 17.0398 17.1271 16.6667 16.6668 16.6667C16.2066 16.6667 15.8335 17.0398 15.8335 17.5001C15.8335 17.9603 16.2066 18.3334 16.6668 18.3334Z"
-            stroke="#FAFAFA"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+            stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           <path
             d="M0.833496 0.833252H4.16683L6.40016 11.9916C6.47637 12.3752 6.68509 12.7199 6.98978 12.9652C7.29448 13.2104 7.67574 13.3407 8.06683 13.3333H16.1668C16.5579 13.3407 16.9392 13.2104 17.2439 12.9652C17.5486 12.7199 17.7573 12.3752 17.8335 11.9916L19.1668 4.99992H5.00016"
-            stroke="#FAFAFA"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+            stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
         </g>
         <defs>
           <clipPath id="clip0_226_3727">

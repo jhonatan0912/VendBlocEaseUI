@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SideMenuItemComponent {
   @Input() menuName : string = '';
+  @Input() menuProp : string | null= '';
   @Input() link : string = '';
 
 
