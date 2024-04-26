@@ -5,13 +5,6 @@ import { environment } from '../../../../environments/environment';
 import { CreateOrder, Order } from '../../../models/order/order';
 import { ResponseDTO } from '../../../models/response/response';
 
-
-const httpOptions:any = {
-  Headers:new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -25,7 +18,7 @@ export class OrderService {
   }
 
   checkout(order:CreateOrder):Observable<any>{
-    return this.http.post(this.baseUrl+'api/Order/checkout', order, httpOptions)
+    return this.http.post(this.baseUrl+'api/Order/checkout', order)
   }
 
   getUserOrders(email:string):Observable<any>{

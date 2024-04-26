@@ -1,16 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { LocalService } from '../local/local.service';
 import { LoginDTO, RegisterUser, ResetPasswordDTO, User } from '../../../models/user/user';
 import { environment } from '../../../../environments/environment';
-
-const httpOptions:any = {
-  Headers:new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-}
 
 @Injectable({
   providedIn: 'root'
@@ -28,19 +22,19 @@ export class AuthService {
   constructor(private http : HttpClient, private local:LocalService) {}
 
   registerUser(data:RegisterUser): Observable<any> {
-    return this.http.post(this.url+'api/User/Register', data, httpOptions);
+    return this.http.post(this.url+'api/User/Register', data);
   }
 
   loginUser(data:LoginDTO):Observable<any>{
-    return this.http.post(this.url+'api/user/login', data, httpOptions);
+    return this.http.post(this.url+'api/user/login', data);
   }
 
   updateContact(data:any):Observable<any>{
-    return this.http.post(this.url+'api/user/UpdateContact', data, httpOptions);
+    return this.http.post(this.url+'api/user/UpdateContact', data);
   }
 
   resetPassword(data:ResetPasswordDTO):Observable<any>{
-    return this.http.post(this.url+'api/user/ResetPassword', data, httpOptions);
+    return this.http.post(this.url+'api/user/ResetPassword', data);
   }
 
   requestEmailVerification(email:string):Observable<any>{

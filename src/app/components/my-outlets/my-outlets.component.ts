@@ -16,59 +16,61 @@ import { AuthService } from '../../data-access/services/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-my-outlets',
-    standalone: true,
-    templateUrl: './my-outlets.component.html',
-    styleUrl: './my-outlets.component.css',
-    imports: [TableModule, DashboardComponent,ReactiveFormsModule, DropdownModule, ButtonModule, DialogModule]
+  selector: 'app-my-outlets',
+  standalone: true,
+  templateUrl: './my-outlets.component.html',
+  styleUrl: './my-outlets.component.css',
+  imports: [TableModule, DashboardComponent, ReactiveFormsModule, DropdownModule, ButtonModule, DialogModule]
 })
 export class MyOutletsComponent {
-  customers : any = null
-  loading:boolean = false;
-  visible:boolean = false;
-  currencies : any;
-  user : User | null = null;
-  outlets : any;
-  showDialog(){
+  customers: any = null
+  loading: boolean = false;
+  visible: boolean = false;
+  currencies: any;
+  user: User | null = null;
+  outlets: any;
+  showDialog() {
     this.visible = true;
   }
 
-  constructor(private currencyService:CurrencyService,
-     private outletService:OutletService,
-     private toastr: ToastrService,
-    private authService:AuthService,
-    private router: Router,){
+  constructor(private currencyService: CurrencyService,
+    private outletService: OutletService,
+    private toastr: ToastrService,
+    private authService: AuthService,
+    private router: Router,) {
 
   }
 
   ngOnInit(): void {
-  this.authService.user$.subscribe((response) => {
-    this.user = response;
-    console.log(this.user);
-  });
+    this.authService.user$.subscribe((response) => {
+      this.user = response;
+      console.log(this.user);
+    });
 
     this.currencyService.getCurrencies().subscribe({
-      next:(result:ResponseDTO)=>{
-      if(result.status){
+      next: (result: ResponseDTO) => {
+        if (result.status) {
           this.currencies = result.data;
+        }
+      },
+      error: (e) => {
+        console.log(e);
       }
-  },
-  error:(e)=>{
-      console.log(e);
-  }});
+    });
 
 
-  this.outletService.getOutletsByUser(this.user?.id as string).subscribe({
-    next:(result:ResponseDTO)=>{
-    if(result.status){
-        this.currencies = result.data;
-        this.outlets = result.data as Outlet[];
-    }
-},
-error:(e)=>{
-    console.log(e);
-}});
-}
+    this.outletService.getOutletsByUser(this.user?.id as string).subscribe({
+      next: (result: ResponseDTO) => {
+        if (result.status) {
+          this.currencies = result.data;
+          this.outlets = result.data as Outlet[];
+        }
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    });
+  }
 
   createOutletForm = new FormGroup({
     name: new FormControl(),
@@ -76,30 +78,30 @@ error:(e)=>{
     storeId: new FormControl(),
   });
 
-  navigateToOutlet(id:number){
-    const outletRoute = 'outlet/'+id;
+  navigateToOutlet(id: number) {
+    const outletRoute = 'outlet/' + id;
     console.log(outletRoute);
     this.router.navigate([outletRoute]);
   }
 
-  createOutlet(){
+  createOutlet() {
     const formValue = this.createOutletForm.value;
     const data: CreateOutlet = {
-        name : formValue.name,
-        currencyId: formValue.currency.id,
-        storeId: formValue.storeId
+      name: formValue.name,
+      currencyId: formValue.currency.id,
+      storeId: formValue.storeId
     };
     this.outletService.createOutlet(data).subscribe({
-      next:(response:ResponseDTO)=>{
-        if(response.status){
+      next: (response: ResponseDTO) => {
+        if (response.status) {
           this.toastr.success(response.message);
           this.visible = false;
         }
-        else{
+        else {
           this.toastr.error(response.message);
         }
       },
-      error:(err) => {
+      error: (err) => {
         this.toastr.error("Something went wrong");
       },
     })

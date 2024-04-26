@@ -6,11 +6,7 @@ import { ResponseDTO } from '../../../models/response/response';
 import { CreateOutlet, Outlet } from '../../../models/outlet/outlet';
 import { LocalService } from '../local/local.service';
 
-const httpOptions:any = {
-  Headers:new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-}
+
 
 @Injectable({
   providedIn: 'root'
@@ -40,11 +36,11 @@ export class OutletService {
   }
 
   public createOutlet(model:CreateOutlet):Observable<any>{
-    return this.http.post(this.baseUrl+'api/outlets', model, httpOptions)
+    return this.http.post(this.baseUrl+'api/outlets', model)
   }
 
   public updateOutlet(model:Outlet):Observable<any>{
-    return this.http.put(this.baseUrl+'api/outlets', model, httpOptions)
+    return this.http.put(this.baseUrl+'api/outlets', model)
   }
 
   getOutletProducts(id:number):Observable<any>{

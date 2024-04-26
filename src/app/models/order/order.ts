@@ -3,7 +3,7 @@ import { Product } from "../product/product"
 
 export interface CreateOrder {
     customerEmail:string
-    products:Product[]
+    orders:Product[][]
     outletId:number
     amount:number
     deliveryCost:number

@@ -216,7 +216,7 @@ export class OrderComponent {
       const currentCart: Inventory[] = this.cart[this.currentOrder];
       const isProductInCurrentCart = currentCart.findIndex(x => x.productId === product.productId);
       if (isProductInCurrentCart < 0) {
-        currentCart.push({ ...product });
+        currentCart.push({ ...product, group:this.currentOrder+1 });
       }
       else {
         currentCart[isProductInCurrentCart].orderQuantity += product.orderQuantity;
@@ -225,7 +225,7 @@ export class OrderComponent {
     } else {
       // Is not in general cart 
       const orderCart: any[] = [];
-      orderCart.push({ ...product });
+      orderCart.push({ ...product, group:this.currentOrder+1 });
       this.cart.push(orderCart);
     }
     console.log(this.cart);
@@ -283,7 +283,7 @@ export class OrderComponent {
     }
     this.loadingService.isLoading.next(true);
     const order: CreateOrder = {
-      products: this.cart,
+      orders: this.cart,
       outletId: this.outletId,
       customerEmail: email,
       amount: this.ordersCost + this.deliveryFee + this.serviceCharge,

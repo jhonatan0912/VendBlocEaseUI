@@ -4,12 +4,6 @@ import { environment } from '../../../../environments/environment';
 import { CreateProduct } from '../../../models/product/product';
 import { Observable } from 'rxjs';
 
-const httpOptions:any = {
-  Headers:new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -19,11 +13,11 @@ export class ProductService {
   private baseUrl : string = environment.baseUrl;
 
   public createProduct(model:CreateProduct):Observable<any>{
-    return this.http.post(this.baseUrl+'api/product', model, httpOptions)
+    return this.http.post(this.baseUrl+'api/product', model)
   }
 
   public deleteProduct(id:number):Observable<any>{
-    return this.http.delete(this.baseUrl+'api/product/'+id, httpOptions)
+    return this.http.delete(this.baseUrl+'api/product/'+id)
   }
 
 }

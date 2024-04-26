@@ -5,13 +5,6 @@ import { Observable } from 'rxjs';
 import { ResponseDTO } from '../../../models/response/response';
 import { CreateInventory } from '../../../models/inventory/inventory';
 
-
-const httpOptions:any = {
-  Headers:new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -25,6 +18,6 @@ export class InventoryService {
   }
 
   public createInventory(model:CreateInventory):Observable<any>{
-    return this.http.post(this.baseUrl+'api/inventory', model, httpOptions)
+    return this.http.post(this.baseUrl+'api/inventory', model)
   }
 }
