@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from '../../models/user/user';
 import { AuthService } from '../../data-access/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-my-outlets',
@@ -47,7 +48,7 @@ export class MyOutletsComponent {
       console.log(this.user);
     });
 
-    this.currencyService.getCurrencies().subscribe({
+    this.currencyService.getCurrencies().pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         if (result.status) {
           this.currencies = result.data;
@@ -59,7 +60,7 @@ export class MyOutletsComponent {
     });
 
 
-    this.outletService.getOutletsByUser(this.user?.id as string).subscribe({
+    this.outletService.getOutletsByUser(this.user?.id as string).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         if (result.status) {
           this.currencies = result.data;
@@ -91,7 +92,7 @@ export class MyOutletsComponent {
       currencyId: formValue.currency.id,
       storeId: formValue.storeId
     };
-    this.outletService.createOutlet(data).subscribe({
+    this.outletService.createOutlet(data).pipe(first()).subscribe({
       next: (response: ResponseDTO) => {
         if (response.status) {
           this.toastr.success(response.message);

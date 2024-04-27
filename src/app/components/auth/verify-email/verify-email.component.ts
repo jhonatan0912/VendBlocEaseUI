@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/route
 import { AuthService } from '../../../data-access/services/auth/auth.service';
 import { ResponseDTO } from '../../../models/response/response';
 import { ToastrService } from 'ngx-toastr';
+import { first } from 'rxjs';
 
 @Component({
     selector: 'app-verify-email',
@@ -19,11 +20,11 @@ export class VerifyEmailComponent {
   constructor(private route:ActivatedRoute, private router:Router, private authService:AuthService, private toastr:ToastrService){}
   
   ngOnInit() {
-    this.route.params.subscribe(params =>{
+    this.route.params.pipe(first()).subscribe(params =>{
       this.code = params['code'];
       this.userId = params['user'];
     });
-    this.authService.EmailVerification(this.userId, this.code).subscribe({
+    this.authService.EmailVerification(this.userId, this.code).pipe(first()).subscribe({
       next : (response:ResponseDTO)=>{
         if(response.status){
           this.toastr.success(response.message);

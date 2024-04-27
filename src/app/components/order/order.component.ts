@@ -17,7 +17,7 @@ import { OutletService } from '../../data-access/services/outlet/outlet.service'
 import { Outlet } from '../../models/outlet/outlet';
 import { UpdateProfile, User } from '../../models/user/user';
 import { AuthService } from '../../data-access/services/auth/auth.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, first, takeUntil } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
@@ -79,12 +79,12 @@ export class OrderComponent {
   }
 
   destroy$: Subject<void> = new Subject<void>();
-  // .pipe(takeUntil(this.destroy$))
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.outletId = params['id']
     });
-    this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe({
+   // this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe({
+      this.authService.user$.pipe(first()).subscribe({
       next: (result) => {
         this.user = result as User
       },
@@ -114,7 +114,7 @@ export class OrderComponent {
       address: formValue.address,
       email: this.user?.email as string
     };
-    this.authService.updateContact(contactData).subscribe({
+    this.authService.updateContact(contactData).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         if (result.status) {
           this.toastr.success('Profile updated successfully', 'Success');
@@ -136,7 +136,7 @@ export class OrderComponent {
   }
 
   public fetchOutlet(outlet: number) {
-    this.outletService.getOutlet(outlet).subscribe({
+    this.outletService.getOutlet(outlet).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         if (result.status) {
           console.log('outlet', result.data);
@@ -156,7 +156,7 @@ export class OrderComponent {
   }
 
   public fetchCategories(outlet: number) {
-    this.orderService.getProductsCategories(outlet).subscribe({
+    this.orderService.getProductsCategories(outlet).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         if (result.status) {
           this.categories = result.data;
@@ -172,7 +172,7 @@ export class OrderComponent {
   }
 
   public fetchInventory(outlet: number) {
-    this.inventoryService.getInventoryByOutlet(outlet).subscribe({
+    this.inventoryService.getInventoryByOutlet(outlet).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         if (result.status) {
           this.allproducts = result.data;
@@ -292,7 +292,7 @@ export class OrderComponent {
       orderCost: this.ordersCost,
       serviceCharge: this.serviceCharge,
     };
-    this.orderService.checkout(order).subscribe({
+    this.orderService.checkout(order).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         if (result.status) {
           this.loadingService.isLoading.next(false);

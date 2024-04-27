@@ -13,6 +13,7 @@ import { ModalLayoutComponent } from "../layouts/modal-layout/modal-layout.compo
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { Order } from '../../models/order/order';
+import { first } from 'rxjs';
 
 @Component({
     selector: 'app-my-orders',
@@ -55,7 +56,7 @@ export class MyOrdersComponent {
     fetchOrders(){
         const email = this.user?.email as string;
         if(!email) this.router.navigate(['login'])
-        this.orderService.getUserOrders(email).subscribe({
+        this.orderService.getUserOrders(email).pipe(first()).subscribe({
             next:(result:ResponseDTO)=>{
                 if(result.status){
                     this.orders = result.data.map((o:Order) => ({...o, formattedDate:format(o.orderDate as Date, 'dd MMM yyyy')}))

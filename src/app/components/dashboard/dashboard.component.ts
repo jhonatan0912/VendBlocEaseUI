@@ -5,6 +5,7 @@ import { AuthService } from '../../data-access/services/auth/auth.service';
 import { User } from '../../models/user/user';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,11 +21,12 @@ export class DashboardComponent {
   constructor(private router:Router, private authService:AuthService){}
 
   ngOnInit(){
-    this.authService.user$.subscribe((response) => {
-      console.log(response);
+    this.authService.user$.pipe(first()).subscribe((response) => {
       this.user = response;
     });
   }
+
+  
 
   navigate(event:Event, link:string){
     event.preventDefault();

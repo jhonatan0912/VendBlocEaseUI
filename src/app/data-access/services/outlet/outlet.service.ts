@@ -13,6 +13,7 @@ import { LocalService } from '../local/local.service';
 })
 export class OutletService {
   private outletSubject = new BehaviorSubject<Outlet | null>(this.getInitialCurrentOutletState());
+  private outlets$ = new BehaviorSubject<Outlet[]>([]);
 
   outlet$:Observable<Outlet | null> = this.outletSubject.asObservable();
   

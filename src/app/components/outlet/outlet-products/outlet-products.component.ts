@@ -23,6 +23,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
 import { TableComponent } from "../../table/table.component";
+import { first } from 'rxjs';
 
 @Component({
     selector: 'app-outlet-products',
@@ -77,7 +78,7 @@ export class OutletProductsComponent {
       productCategoryId : formData.productCategory.id,
       productType: formData.productType.id
     };
-    this.productService.createProduct(data).subscribe({
+    this.productService.createProduct(data).pipe(first()).subscribe({
       next:(response:ResponseDTO)=>{
         if(response.status){
           this.toastr.success(response.message);
@@ -96,7 +97,7 @@ export class OutletProductsComponent {
   }
 
   deleteProductAPI(id:number){
-    this.productService.deleteProduct(id).subscribe({
+    this.productService.deleteProduct(id).pipe(first()).subscribe({
       next:(response:ResponseDTO)=>{
         if(response.status){
          this.products = this.products.filter(x => x.id !== id);
@@ -130,7 +131,7 @@ export class OutletProductsComponent {
 }
 
   public fetchProducts(outlet: number) {
-    this.outletService.getOutletProducts(outlet).subscribe({
+    this.outletService.getOutletProducts(outlet).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         console.log('Result', result);
         if (result.status) {
@@ -149,7 +150,7 @@ export class OutletProductsComponent {
 
   public fetchProductCategories(outlet:number)
   {
-    this.outletService.getOutletProductCategories(outlet).subscribe({
+    this.outletService.getOutletProductCategories(outlet).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         console.log('Result', result);
         if (result.status) {
@@ -167,7 +168,7 @@ export class OutletProductsComponent {
   
   public fetchUnits(store:number)
   {
-    this.outletService.getOutletUnits(store).subscribe({
+    this.outletService.getOutletUnits(store).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         if (result.status) {
         console.log(' unit Result', result);

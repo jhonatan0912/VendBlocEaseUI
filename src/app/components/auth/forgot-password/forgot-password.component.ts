@@ -6,6 +6,7 @@ import { LoadingService } from '../../../data-access/services/loading/loading.se
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ResponseDTO } from '../../../models/response/response';
+import { first } from 'rxjs';
 
 @Component({
     selector: 'app-forgot-password',
@@ -27,7 +28,7 @@ export class ForgotPasswordComponent {
         this.authService.logOut();
         this.loadingService.isLoading.next(true);
         const formValue = this.forgotPasswordForm.value;
-        this.authService.ForgotPassword(formValue.email).subscribe({
+        this.authService.ForgotPassword(formValue.email).pipe(first()).subscribe({
           next: (result: ResponseDTO) => {
             console.log(result);
             if (result.status) {

@@ -8,6 +8,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthLayoutComponent } from '../../layouts/auth-layout/auth-layout.component';
 import { AuthService } from '../../../data-access/services/auth/auth.service';
 import { LoadingService } from '../../../data-access/services/loading/loading.service';
+import { first } from 'rxjs';
 
 
 @Component({
@@ -41,7 +42,7 @@ export class LoginComponent {
       email: formValue.email,
       password: formValue.password
     };
-    this.authService.loginUser(loginData).subscribe({
+    this.authService.loginUser(loginData).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         console.log(result);
         if (result.status) {

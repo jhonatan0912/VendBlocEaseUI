@@ -9,6 +9,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../data-access/services/auth/auth.service';
 import { LoadingService } from '../../../data-access/services/loading/loading.service';
 import { InfoComponent } from "../../info/info.component";
+import { first } from 'rxjs';
 @Component({
     selector: 'app-register',
     standalone: true,
@@ -36,7 +37,7 @@ export class RegisterComponent {
       email:formvalue?.email ?? '',
       password:formvalue?.password ?? ''
     };
-   this.authService.registerUser(userData).subscribe({
+   this.authService.registerUser(userData).pipe(first()).subscribe({
     next:(result : ResponseDTO)=>{
       if(result.status){
         this.toastr.success(result.message, 'Proceed to your email for verification')

@@ -4,6 +4,7 @@ import { TableComponent } from "../../table/table.component";
 import { Customer } from '../../../models/customer/customer';
 import { OutletService } from '../../../data-access/services/outlet/outlet.service';
 import { ResponseDTO } from '../../../models/response/response';
+import { first } from 'rxjs';
 
 @Component({
     selector: 'app-outlet-customers',
@@ -32,7 +33,7 @@ export class OutletCustomersComponent {
 
 
     fetchCustomers(id:number){
-      this.outletService.getOutletCustomers(id).subscribe({
+      this.outletService.getOutletCustomers(id).pipe(first()).subscribe({
           next:(result:ResponseDTO)=>{
               if(result.status){
                   this.customers = result.data as Customer[];

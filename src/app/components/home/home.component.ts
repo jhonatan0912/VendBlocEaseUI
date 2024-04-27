@@ -3,6 +3,7 @@ import { RestaurantCardComponent } from "../../components/restaurant-card/restau
 import { Outlet } from '../../models/outlet/outlet';
 import { ResponseDTO } from '../../models/response/response';
 import { OutletService } from '../../data-access/services/outlet/outlet.service';
+import { first } from 'rxjs';
 
 @Component({
     selector: 'app-home',
@@ -22,7 +23,7 @@ export class HomeComponent {
     }
 
     getRestuarants(){
-        this.outletService.getOutlets().subscribe({
+        this.outletService.getOutlets().pipe(first()).subscribe({
             next:(result:ResponseDTO)=>{
                 if(result.status){
                     this.restaurants = result.data

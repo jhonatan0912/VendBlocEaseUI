@@ -12,6 +12,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CreateInventory, Inventory } from '../../../models/inventory/inventory';
 import { ToastrService } from 'ngx-toastr';
+import { first } from 'rxjs';
 
 @Component({
     selector: 'app-outlet-inventory',
@@ -79,7 +80,7 @@ export class OutletInventoryComponent {
       quantity:formData.quantity,
       outletId:this.outlet.id
     }
-    this.inventoryService.createInventory(data).subscribe({
+    this.inventoryService.createInventory(data).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         if (result.status) {
           const newInventory =result.data as Inventory; 
@@ -106,7 +107,7 @@ export class OutletInventoryComponent {
   }
 
   public fetchInventory(outlet: number) {
-    this.inventoryService.getInventoryByOutlet(outlet).subscribe({
+    this.inventoryService.getInventoryByOutlet(outlet).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         if (result.status) {
           this.inventories = result.data;
@@ -123,7 +124,7 @@ export class OutletInventoryComponent {
   }
 
   public fetchProducts(outlet: number) {
-    this.outletService.getOutletProducts(outlet).subscribe({
+    this.outletService.getOutletProducts(outlet).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         if (result.status) {
           this.products = result.data;

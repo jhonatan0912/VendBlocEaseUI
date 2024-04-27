@@ -10,6 +10,7 @@ import { OrderService } from '../../../data-access/services/order/order.service'
 import { ResponseDTO } from '../../../models/response/response';
 import { format } from 'date-fns';
 import { OutletService } from '../../../data-access/services/outlet/outlet.service';
+import { first } from 'rxjs';
 
 @Component({
     selector: 'app-outlet-report',
@@ -50,7 +51,7 @@ export class OutletReportComponent {
   }
 
   fetchOrders(id:number, date:string){
-    this.orderService.getOutletOrdersWithDate(id,date).subscribe({
+    this.orderService.getOutletOrdersWithDate(id,date).pipe(first()).subscribe({
         next:(result:ResponseDTO)=>{
             if(result.status){
               console.log(result.data);

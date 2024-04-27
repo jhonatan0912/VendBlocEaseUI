@@ -5,6 +5,7 @@ import { ResponseDTO } from '../../../models/response/response';
 import { ToastrService } from 'ngx-toastr';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../data-access/services/auth/auth.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-email-verification',
@@ -24,7 +25,7 @@ export class EmailVerificationComponent {
 
   requestVerification(){
     const formValue = this.requestVerificationForm.value;
-    this.authService.requestEmailVerification(formValue.email).subscribe({
+    this.authService.requestEmailVerification(formValue.email).pipe(first()).subscribe({
       next : (response:ResponseDTO)=>{
         if(response.status){
           this.toastr.success(response.message);

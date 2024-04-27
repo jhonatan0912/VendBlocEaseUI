@@ -11,6 +11,7 @@ import { Order } from '../../../models/order/order';
 import { format } from 'date-fns';
 import { DialogModule } from 'primeng/dialog';
 import { TableComponent } from "../../table/table.component";
+import { first } from 'rxjs';
 
 @Component({
     selector: 'app-outlet-orders',
@@ -62,7 +63,7 @@ export class OutletOrdersComponent {
 }
 
 fetchOrders(id:number){
-    this.orderService.getOutletOrders(id).subscribe({
+    this.orderService.getOutletOrders(id).pipe(first()).subscribe({
         next:(result:ResponseDTO)=>{
             if(result.status){
                 this.orders = result.data.orders.map((o:Order) => ({...o, formattedDate:format(o.orderDate as Date, 'dd MMM yyyy'), customerName:o.customer.name}))

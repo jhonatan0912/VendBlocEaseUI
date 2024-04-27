@@ -7,6 +7,7 @@ import { LoadingService } from '../../../data-access/services/loading/loading.se
 import { ToastrService } from 'ngx-toastr';
 import { LoginDTO, ResetPasswordDTO } from '../../../models/user/user';
 import { ResponseDTO } from '../../../models/response/response';
+import { first } from 'rxjs';
 
 @Component({
     selector: 'app-reset-password',
@@ -32,11 +33,11 @@ export class ResetPasswordComponent {
 
   ngOnInit() {
     this.loadingService.isLoading.next(true);
-    this.route.params.subscribe(params =>{
+    this.route.params.pipe(first()).subscribe(params =>{
       this.user = params['user'];
       this.code = params['code'];
     });
-    this.authService.GetUserById(this.user).subscribe({
+    this.authService.GetUserById(this.user).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         console.log("Getting user response",result);
         if (result.status) {
@@ -59,7 +60,7 @@ export class ResetPasswordComponent {
       password: formValue.password,
       code:this.code
     };
-    this.authService.resetPassword(resetData).subscribe({
+    this.authService.resetPassword(resetData).pipe(first()).subscribe({
       next: (result: ResponseDTO) => {
         console.log(result);
         if (result.status) {

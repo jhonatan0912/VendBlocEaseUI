@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem, PrimeIcons } from 'primeng/api';
 import { OutletMenubarComponent } from "../outlet-menubar/outlet-menubar.component";
+import { first } from 'rxjs';
 @Component({
     selector: 'app-outlet',
     standalone: true,
@@ -37,7 +38,7 @@ export class OutletComponent {
   }
 
   public fetchOutlet(outlet:number){
-    this.outletService.getOutlet(outlet).subscribe({
+    this.outletService.getOutlet(outlet).pipe(first()).subscribe({
       next:(result:ResponseDTO) => {
         if(result.status){
           this.outlet = result.data;
