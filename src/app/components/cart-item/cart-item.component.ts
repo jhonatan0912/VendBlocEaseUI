@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Cart } from '../../models/cart/cart';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Cart } from '@models/index';
 
 @Component({
   selector: 'app-cart-item',
@@ -9,11 +9,12 @@ import { Cart } from '../../models/cart/cart';
   styleUrl: './cart-item.component.css'
 })
 export class CartItemComponent {
-@Input() cartItem : any; 
-@Input() cart : any[] = []; 
-@Output() cartItemEmitted = new EventEmitter<Cart>();
+  @Input() cartItem: any;
+  @Input() cart: any[] = [];
 
-removeItem(cart:Cart){
-  this.cartItemEmitted.emit(cart);
-}
+  @Output() cartItemEmitted = new EventEmitter<Cart>();
+
+  removeItem(cart: Cart) {
+    this.cartItemEmitted.emit(cart);
+  }
 }

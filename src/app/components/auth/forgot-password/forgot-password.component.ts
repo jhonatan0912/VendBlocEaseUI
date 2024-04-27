@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { AuthLayoutComponent } from "../../layouts/auth-layout/auth-layout.component";
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../../data-access/services/auth/auth.service';
-import { LoadingService } from '../../../data-access/services/loading/loading.service';
 import { Router } from '@angular/router';
+import { AuthLayoutComponent } from '@components/layouts';
+import { AuthService, LoadingService } from '@data-access/services';
+import { ResponseDTO } from '@models/index';
 import { ToastrService } from 'ngx-toastr';
-import { ResponseDTO } from '../../../models/response/response';
 import { first } from 'rxjs';
 
 @Component({

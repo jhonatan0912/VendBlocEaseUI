@@ -1,20 +1,15 @@
 import { Component } from '@angular/core';
 import { TableModule } from 'primeng/table';
-import { DashboardComponent } from "../dashboard/dashboard.component";
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CurrencyService } from '../../data-access/services/currency/currency.service';
-import { Currency } from '../../models/currency/currency';
-import { ResponseDTO } from '../../models/response/response';
-import { CreateOutlet, Outlet } from '../../models/outlet/outlet';
-import { OutletService } from '../../data-access/services/outlet/outlet.service';
 import { ToastrService } from 'ngx-toastr';
-import { User } from '../../models/user/user';
-import { AuthService } from '../../data-access/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
+import { DashboardComponent } from '@components/dashboard/dashboard.component';
+import { CreateOutlet, Outlet, ResponseDTO, User } from '@models/index';
+import { AuthService, CurrencyService, OutletService } from '@data-access/services';
 
 @Component({
   selector: 'app-my-outlets',

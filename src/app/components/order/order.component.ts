@@ -1,27 +1,17 @@
-import { Component } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { SideMenuItemComponent } from "../side-menu-item/side-menu-item.component";
-import { ResponseDTO } from '../../models/response/response';
-import { ProductCategory } from '../../models/product-category/product-category';
-import { CreateOrder } from '../../models/order/order';
-import { Inventory } from '../../models/inventory/inventory';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { OrderService } from '../../data-access/services/order/order.service';
-import { LoadingService } from '../../data-access/services/loading/loading.service';
-import { LocalService } from '../../data-access/services/local/local.service';
-import { CartItemComponent } from "../cart-item/cart-item.component";
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DeliveryOptionComponent } from "../delivery-option/delivery-option.component";
-import { OutletService } from '../../data-access/services/outlet/outlet.service';
-import { Outlet } from '../../models/outlet/outlet';
-import { UpdateProfile, User } from '../../models/user/user';
-import { AuthService } from '../../data-access/services/auth/auth.service';
-import { Subject, first, takeUntil } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService, InventoryService, LoadingService, LocalService, OrderService, OutletService } from '@data-access/services';
+import { CreateOrder, Inventory, Outlet, ProductCategory, ResponseDTO, UpdateProfile, User } from '@models/index';
+import { ToastrService } from 'ngx-toastr';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
-import { InventoryService } from '../../data-access/services/inventory/inventory.service';
+import { Subject, first } from 'rxjs';
+import { CartItemComponent } from "../cart-item/cart-item.component";
+import { DeliveryOptionComponent } from "../delivery-option/delivery-option.component";
+import { SideMenuItemComponent } from "../side-menu-item/side-menu-item.component";
 
 @Component({
   selector: 'app-order',
@@ -43,7 +33,7 @@ export class OrderComponent {
   profileUpdateForm = new FormGroup({
     address: new FormControl(),
     phone: new FormControl(),
-  })
+  });
 
   showModalCart: boolean = false;
   outletId: number = 0;
@@ -81,12 +71,12 @@ export class OrderComponent {
   destroy$: Subject<void> = new Subject<void>();
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.outletId = params['id']
+      this.outletId = params['id'];
     });
-   // this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe({
-      this.authService.user$.pipe(first()).subscribe({
+    // this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe({
+    this.authService.user$.pipe(first()).subscribe({
       next: (result) => {
-        this.user = result as User
+        this.user = result as User;
       },
       error: () => {
         console.log("Something went wrong");
@@ -104,7 +94,7 @@ export class OrderComponent {
 
   newOrder() {
     this.currentOrder++;
-    this.toastr.info('New Order Started', 'New Order')
+    this.toastr.info('New Order Started', 'New Order');
   }
 
   updateProfile() {
@@ -132,7 +122,7 @@ export class OrderComponent {
       error: () => {
         this.toastr.error("something went wrong");
       }
-    })
+    });
   }
 
   public fetchOutlet(outlet: number) {
@@ -152,7 +142,7 @@ export class OrderComponent {
       error: () => {
         console.log("Something went wrong");
       }
-    })
+    });
   }
 
   public fetchCategories(outlet: number) {
@@ -168,7 +158,7 @@ export class OrderComponent {
       error: () => {
         console.log("Something went wrong");
       }
-    })
+    });
   }
 
   public fetchInventory(outlet: number) {
@@ -176,13 +166,13 @@ export class OrderComponent {
       next: (result: ResponseDTO) => {
         if (result.status) {
           this.allproducts = result.data;
-          this.categories = this.categories.map((c:ProductCategory) => ({...c, quantity:this.allproducts?.filter(x=>x.productCategoryId === c.id).length + ""}))
+          this.categories = this.categories.map((c: ProductCategory) => ({ ...c, quantity: this.allproducts?.filter(x => x.productCategoryId === c.id).length + "" }));
         }
         else {
-          console.log("Unable to fetch inventory")
+          console.log("Unable to fetch inventory");
         }
       }
-    })
+    });
   }
 
   validateAddressAndPhone(): boolean {
@@ -216,16 +206,16 @@ export class OrderComponent {
       const currentCart: Inventory[] = this.cart[this.currentOrder];
       const isProductInCurrentCart = currentCart.findIndex(x => x.productId === product.productId);
       if (isProductInCurrentCart < 0) {
-        currentCart.push({ ...product, group:this.currentOrder+1 });
+        currentCart.push({ ...product, group: this.currentOrder + 1 });
       }
       else {
         currentCart[isProductInCurrentCart].orderQuantity += product.orderQuantity;
         currentCart[isProductInCurrentCart].price += (product.price);
       }
     } else {
-      // Is not in general cart 
+      // Is not in general cart
       const orderCart: any[] = [];
-      orderCart.push({ ...product, group:this.currentOrder+1 });
+      orderCart.push({ ...product, group: this.currentOrder + 1 });
       this.cart.push(orderCart);
     }
     console.log(this.cart);
@@ -246,7 +236,7 @@ export class OrderComponent {
     }
   }
 
-  removeFromCart(product: any, orderIndex:number) {
+  removeFromCart(product: any, orderIndex: number) {
     this.cartCount--;
     this.ordersCost = this.ordersCost - product.price;
     this.totalcost = this.ordersCost + this.deliveryFee + this.serviceCharge;
@@ -254,7 +244,7 @@ export class OrderComponent {
     const itemIndex = currentCart.findIndex(x => x.productId === product.productId);
     if (itemIndex !== -1) {
       currentCart.splice(itemIndex, 1);
-      if(currentCart.length < 1){
+      if (currentCart.length < 1) {
         this.cart.splice(orderIndex, 1);
       }
     }
@@ -271,7 +261,7 @@ export class OrderComponent {
 
   checkout() {
     const email = this.user?.email as string;
-    if (!email) this.router.navigate(['login'])
+    if (!email) this.router.navigate(['login']);
     if (this.cartCount < 1) {
       this.toastr.warning("Add Items to cart Before Checking Out");
       return;
@@ -296,7 +286,7 @@ export class OrderComponent {
       next: (result: ResponseDTO) => {
         if (result.status) {
           this.loadingService.isLoading.next(false);
-          this.toastr.success('Trying to set up your payment link', 'Order Created')
+          this.toastr.success('Trying to set up your payment link', 'Order Created');
           window.location.href = result.data;
 
         }
@@ -308,7 +298,7 @@ export class OrderComponent {
       error: (e) => {
         this.loadingService.isLoading.next(false);
       }
-    })
+    });
   }
 
 }

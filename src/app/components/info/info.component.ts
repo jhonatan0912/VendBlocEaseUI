@@ -8,5 +8,5 @@ import { Component, Input } from '@angular/core';
   styleUrl: './info.component.css'
 })
 export class InfoComponent {
-@Input() textItem : string = '';
+  @Input() textItem: string = '';
 }

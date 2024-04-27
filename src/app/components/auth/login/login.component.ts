@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from '../../../components/layouts/header/header.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { LoginDTO } from '../../../models/user/user';
-import { ToastrService } from 'ngx-toastr';
-import { ResponseDTO } from '../../../models/response/response';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { AuthLayoutComponent } from '../../layouts/auth-layout/auth-layout.component';
-import { AuthService } from '../../../data-access/services/auth/auth.service';
-import { LoadingService } from '../../../data-access/services/loading/loading.service';
+import { AuthLayoutComponent, HeaderComponent } from '@components/layouts';
+import { AuthService, LoadingService } from '@data-access/services';
+import { LoginDTO, ResponseDTO } from '@models/index';
+import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs';
 
 
@@ -31,9 +28,9 @@ export class LoginComponent {
   loginForm = new FormGroup({
     email: new FormControl(),
     password: new FormControl(),
-  })
+  });
 
- async login() {
+  async login() {
     this.authService.logOut();
     this.loadingService.isLoading.next(true);
     // await new Promise(resolve => setTimeout(resolve, 3000));
@@ -61,12 +58,12 @@ export class LoginComponent {
           this.router.navigate(['home']);
         }
       },
-      error: (e:any) => {
+      error: (e: any) => {
         console.log(e);
         this.toastr.error("Something went wrong", "Something went wrong");
         this.loadingService.isLoading.next(false);
       }
-    })
+    });
   }
 
 }

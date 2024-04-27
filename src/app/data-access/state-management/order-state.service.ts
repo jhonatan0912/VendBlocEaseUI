@@ -1,20 +1,20 @@
 import { Injectable, OnInit } from "@angular/core";
+import { OrderService } from '@data-access/services';
+import { Order } from '@models/index';
 import { BehaviorSubject } from "rxjs";
-import { Order } from "../../models/order/order";
-import { OrderService } from "../services/order/order.service";
 
 @Injectable({
-    providedIn: 'root'
-  })
+  providedIn: 'root'
+})
 
-export class OrderStateService implements OnInit{
-    private userOrdersSubject = new BehaviorSubject<Order[]>([]);
+export class OrderStateService implements OnInit {
+  private userOrdersSubject = new BehaviorSubject<Order[]>([]);
 
-    userOrders$ = this.userOrdersSubject.asObservable();
+  userOrders$ = this.userOrdersSubject.asObservable();
 
-    constructor(private orderService:OrderService){}
+  constructor(private orderService: OrderService) { }
 
-    ngOnInit(): void {
-        
-    }
+  ngOnInit(): void {
+
+  }
 }

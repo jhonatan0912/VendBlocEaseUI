@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink,  RouterOutlet } from '@angular/router';
-import { environment } from '../../../../environments/environment';
-import { AuthService } from '../../../data-access/services/auth/auth.service';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ButtonModule } from 'primeng/button';
+import { environment } from '@environments/environment';
+import { AuthService } from '@data-access/services';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ 
+  imports: [
     RouterOutlet,
     RouterLink, CommonModule, OverlayPanelModule, ButtonModule],
   templateUrl: './header.component.html',
@@ -18,25 +18,25 @@ import { ButtonModule } from 'primeng/button';
 export class HeaderComponent {
   isAuthenticated = true;
   profileDropDown = false;
-  name:string = environment.me
+  name: string = environment.me;
 
-  constructor(private authService:AuthService, private router:Router){
-    console.log('Initial',this.isAuthenticated);
+  constructor(private authService: AuthService, private router: Router) {
+    console.log('Initial', this.isAuthenticated);
     this.authService.isAuthenticated$.subscribe((result) => {
-      console.log(result)
+      console.log(result);
       this.isAuthenticated = result;
-    })
+    });
   }
 
-  ngOnInit(){
-    
+  ngOnInit() {
+
   }
 
   toggleProfileDropdown() {
-    this.profileDropDown = !this.profileDropDown
+    this.profileDropDown = !this.profileDropDown;
   }
 
-  logout(){
+  logout() {
     this.authService.logOut();
     this.router.navigate(['login']);
   }

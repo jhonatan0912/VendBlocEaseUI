@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { RestaurantCardComponent } from "../../components/restaurant-card/restaurant-card.component";
-import { Outlet } from '../../models/outlet/outlet';
-import { ResponseDTO } from '../../models/response/response';
-import { OutletService } from '../../data-access/services/outlet/outlet.service';
+import { RestaurantCardComponent } from '@components/restaurant-card/restaurant-card.component';
+import { OutletService } from '@data-access/services';
+import { Outlet, ResponseDTO } from '@models/index';
 import { first } from 'rxjs';
 
 @Component({
@@ -14,30 +13,30 @@ import { first } from 'rxjs';
 })
 export class HomeComponent {
 
-    constructor(private outletService: OutletService){}
+    constructor(private outletService: OutletService) { }
 
-    restaurants : Outlet[] = []
+    restaurants: Outlet[] = [];
 
     ngOnInit() {
         this.getRestuarants();
     }
 
-    getRestuarants(){
+    getRestuarants() {
         this.outletService.getOutlets().pipe(first()).subscribe({
-            next:(result:ResponseDTO)=>{
-                if(result.status){
-                    this.restaurants = result.data
+            next: (result: ResponseDTO) => {
+                if (result.status) {
+                    this.restaurants = result.data;
                 }
-                else{
+                else {
                     console.log("Unable to fetch outlets");
                 }
             },
-            complete:()=>{
+            complete: () => {
 
             },
-            error:(e)=>{
-                console.log(e)
+            error: (e) => {
+                console.log(e);
             }
-        })
+        });
     }
 }

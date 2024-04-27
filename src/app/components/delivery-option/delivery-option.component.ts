@@ -9,13 +9,13 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './delivery-option.component.css'
 })
 export class DeliveryOptionComponent {
-  selectedDeliveryMode :string = '1';
-  delivery : boolean = true;
+  selectedDeliveryMode: string = '1';
+  delivery: boolean = true;
 
-  @Input() uniqueId : string = '';  
+  @Input() uniqueId: string = '';
   @Output() selectedDeliveryModeEmitter = new EventEmitter<boolean>();
 
-  deliveryModeChanged(event:Event):void{
+  deliveryModeChanged(event: Event): void {
     this.delivery = !this.delivery;
     this.selectedDeliveryModeEmitter.emit(this.delivery);
   }
